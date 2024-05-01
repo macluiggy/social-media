@@ -8,15 +8,17 @@ WORKDIR /app
 COPY package.json ./
 COPY tsconfig.json ./
 
+# Bundle app source
+COPY . .
+
 # RUN bun install -g @nestjs/cli
 # RUN bun install
 RUN npm install -g @nestjs/cli
 RUN npm install --omit=dev
 RUN npm run build
 
-# Bundle app source
-COPY . .
 
+ENV NODE_ENV=production
 # Expose port 3000 
 EXPOSE 4000
 
