@@ -4,6 +4,7 @@ import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { SuccesResponseInterceptor } from './common/interceptors/succes-request-response.interceptor';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
+const port = process.env.PORT || 4000;
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalFilters(new HttpExceptionFilter());
@@ -24,6 +25,13 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
-  await app.listen(process.env.PORT || 3000);
+  await app.listen(
+    port,
+    // hostname
+    'jkdjfk',
+    () => {
+      console.log(`Server running on http://localhost:${port}`);
+    },
+  );
 }
 bootstrap();
