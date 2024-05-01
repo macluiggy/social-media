@@ -3,7 +3,6 @@ import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { SuccesResponseInterceptor } from './common/interceptors/succes-request-response.interceptor';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-console.log(process.env.PORT);
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
