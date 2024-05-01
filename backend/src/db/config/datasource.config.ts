@@ -6,8 +6,11 @@ import UserSeeder from '../seeders/user.seeder';
 import userFactory from '../factories/user.factory';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import entities from '../entities';
+import envVariablesConfig from '../../common/config';
 import * as dotenv from 'dotenv';
 dotenv.config();
+
+const { db } = envVariablesConfig;
 
 const migrationsPath = path.join(process.cwd(), 'src/db/migrations/*{.ts,.js}');
 // const entitiesPath = path.join(
@@ -19,10 +22,10 @@ export const config: DataSourceOptions & SeederOptions & TypeOrmModuleOptions =
   {
     type: 'postgres',
     host: 'localhost',
-    port: parseInt(process.env.DB_PORT, 10) || 5432,
-    password: process.env.DB_PASSWORD || 'postgres',
-    database: process.env.DB_NAME || 'postgres',
-    username: process.env.DB_USER || 'postgres',
+    port: db.port || 5432,
+    password: db.password || 'postgres',
+    database: db.databaseName || 'postgres',
+    username: db.username || 'postgres',
     migrations: [migrationsPath],
     // migrations: ['dist/db/migrations/*{.ts,.js}'],
     // entities: [entitiesPath],
