@@ -6,6 +6,8 @@ import UserSeeder from '../seeders/user.seeder';
 import userFactory from '../factories/user.factory';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import entities from '../entities';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 const migrationsPath = path.join(process.cwd(), 'src/db/migrations/*{.ts,.js}');
 // const entitiesPath = path.join(
