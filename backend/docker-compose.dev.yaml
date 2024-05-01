@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  # nest app - in case you only want to use docker compose for database, comment out this service
+  # app:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.dev
+  #   ports:
+  #     - ${PORT}:${PORT}
+  #   env_file: .env
+  #   depends_on:
+  #     - db
+  #   networks:
+  #     - app-network
+  #   volumes:
+  #     - .:/app
+
+  # postgres db
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - ${DB_PORT}:5432
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+networks:
+  app-network:
+
+volumes:
+  postgres_data:
