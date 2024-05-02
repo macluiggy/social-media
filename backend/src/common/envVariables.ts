@@ -25,7 +25,7 @@ console.log(databaseUrl, 'fhjahfjhdjhjfdf', process.env.DATABASE_URL);
 
 const envVariables = {
   apiVersion: process.env.API_VERSION || 'v1',
-  port: process.env.PORT || 4000,
+  port: process.env.PORT || 3000,
   db: {
     host: DB_HOST || 'db',
     port: parseInt(DB_PORT, 10) || 5432,

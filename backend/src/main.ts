@@ -5,7 +5,8 @@ import { SuccesResponseInterceptor } from './common/interceptors/succes-request-
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import envVariables from './common/envVariables';
 
-const port = envVariables.port || 3000;
+const port = envVariables.port;
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalFilters(new HttpExceptionFilter());
