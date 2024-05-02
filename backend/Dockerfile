@@ -51,5 +51,8 @@ EXPOSE 3000
 EXPOSE 4000
 
 # Run the app
-CMD ["npm", "run", "typeorm:run-migrations", "&&", "npm", "run", "start:prod:bun"]
+COPY start.sh .
+RUN chmod +x start.sh
+CMD ["./start.sh"]
+# CMD ["npm", "run", "typeorm:run-migrations", "&&", "npm", "run", "start:prod:bun"]
 # CMD ["bun", "run", "start:prod:bun"]
