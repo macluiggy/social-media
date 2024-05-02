@@ -47,7 +47,8 @@ RUN npm install --omit=dev
 # ARG JWT_SECRET
 # ARG JWT_EXPIRES_IN
 
-RUN npm run build && npm run typeorm:run-migrations
+RUN npm run build
+# RUN npm run typeorm:run-migrations
 
 # RUN echo "DATABASE_URL=$DATABASE_URL" >
 
