@@ -1,5 +1,6 @@
 # FROM node:18-alpine3.16
-FROM oven/bun
+FROM node:22-alpine3.18
+# FROM oven/bun
 
 # Create app directory
 WORKDIR /app
@@ -11,13 +12,13 @@ COPY tsconfig.json ./
 # Bundle app source
 COPY . .
 
-RUN bun install -g @nestjs/cli
-RUN bun install
-RUN bun run build
+# RUN bun install -g @nestjs/cli
+# RUN bun install
+# RUN bun run build
 
-# RUN npm install -g @nestjs/cli
-# RUN npm install --omit=dev
-# RUN npm run build
+RUN npm install -g @nestjs/cli
+RUN npm install --omit=dev
+RUN npm run build
 
 ARG DATABASE_URL
 ARG JWT_SECRET
@@ -33,5 +34,5 @@ ENV NODE_ENV=production
 EXPOSE 3000
 
 # Run the app
-# CMD ["npm", "run", "start:prod"]
-CMD ["bun", "run", "start:prod:bun"]
+CMD ["npm", "run", "start:prod"]
+# CMD ["bun", "run", "start:prod:bun"]
