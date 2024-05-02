@@ -24,10 +24,10 @@ ARG DATABASE_URL
 ARG JWT_SECRET
 ARG JWT_EXPIRES_IN
 
-# Set environment variables
-ENV DATABASE_URL='postgresql://postgres:fRGODMjpQZhlvLXRcHxTrduObsTDAYdF@viaduct.proxy.rlwy.net:46988/railway'
-ENV JWT_SECRET='secret'
-ENV JWT_EXPIRES_IN='1d'
+# # Set environment variables
+# ENV DATABASE_URL='postgresql://postgres:fRGODMjpQZhlvLXRcHxTrduObsTDAYdF@viaduct.proxy.rlwy.net:46988/railway'
+# ENV JWT_SECRET='secret'
+# ENV JWT_EXPIRES_IN='1d'
 
 ENV NODE_ENV=production
 # Expose port 3000 
