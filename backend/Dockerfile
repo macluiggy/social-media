@@ -1,3 +1,9 @@
+
+
+ARG DATABASE_URL
+ARG JWT_SECRET
+ARG JWT_EXPIRES_IN
+
 # FROM node:18-alpine3.16
 FROM node:22-alpine3.18
 # FROM oven/bun
@@ -11,12 +17,6 @@ COPY tsconfig.json ./
 
 # Bundle app source
 COPY . .
-
-
-
-ARG DATABASE_URL
-ARG JWT_SECRET
-ARG JWT_EXPIRES_IN
 
 # RUN bun install -g @nestjs/cli
 # RUN bun install
