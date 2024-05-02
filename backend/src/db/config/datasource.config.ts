@@ -21,11 +21,12 @@ const migrationsPath = path.join(process.cwd(), 'src/db/migrations/*{.ts,.js}');
 export const config: DataSourceOptions & SeederOptions & TypeOrmModuleOptions =
   {
     type: 'postgres',
-    host: 'localhost',
-    port: db.port || 5432,
-    password: db.password || 'postgres',
-    database: db.databaseName || 'postgres',
-    username: db.username || 'postgres',
+    // host: 'localhost',
+    // port: db.port || 5432,
+    // password: db.password || 'postgres',
+    // database: db.databaseName || 'postgres',
+    // username: db.username || 'postgres',
+    url: db.databaseUrl,
     migrations: [migrationsPath],
     // migrations: ['dist/db/migrations/*{.ts,.js}'],
     // entities: [entitiesPath],

@@ -17,6 +17,9 @@ const DB_USER = process.env.DB_USER;
 const DB_PASSWORD = process.env.DB_PASSWORD;
 const DB_NAME = process.env.DB_NAME;
 const DB_PORT = process.env.DB_PORT;
+const databaseUrl =
+  process.env.DATABASE_URL ||
+  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`;
 
 const config = {
   apiVersion: process.env.API_VERSION || 'v1',
@@ -27,6 +30,7 @@ const config = {
     password: DB_PASSWORD || 'postgres',
     databaseName: DB_NAME || 'postgres',
     username: DB_USER || 'postgres',
+    databaseUrl,
   },
   nodeEnviroment: NODE_ENV,
   isProduction,
