@@ -14,6 +14,7 @@ async function bootstrap() {
     origin: [
       'http://localhost:4200',
       'https://social-media-sosote.up.railway.app/',
+      'https://social-media-44lb.onrender.com/',
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     allowedHeaders: 'Content-Type, Accept, Authorization',
