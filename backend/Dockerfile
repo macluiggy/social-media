@@ -44,7 +44,6 @@ ENV DATABASE_URL='postgresql://postgres:fRGODMjpQZhlvLXRcHxTrduObsTDAYdF@viaduct
 ENV JWT_SECRET='secret'
 ENV JWT_EXPIRES_IN='1d'
 
-# RUN npm run typeorm:run-migrations
 
 ENV NODE_ENV=production
 # Expose port 3000 
