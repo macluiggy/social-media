@@ -3,8 +3,9 @@ import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { SuccesResponseInterceptor } from './common/interceptors/succes-request-response.interceptor';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import envVariables from './common/envVariables';
 
-const port = process.env.PORT || 4000;
+const port = envVariables.port || 3000;
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalFilters(new HttpExceptionFilter());

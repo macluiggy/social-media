@@ -21,6 +21,8 @@ const databaseUrl =
   process.env.DATABASE_URL ||
   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`;
 
+console.log(databaseUrl, 'fhjahfjhdjhjfdf', process.env.DATABASE_URL);
+
 const envVariables = {
   apiVersion: process.env.API_VERSION || 'v1',
   port: process.env.PORT || 4000,
