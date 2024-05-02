@@ -26,7 +26,7 @@ RUN npm install -g @nestjs/cli
 RUN npm install --omit=dev
 RUN npm run build
 
-RUN echo "DATABASE_URL=$DATABASE_URL" >
+# RUN echo "DATABASE_URL=$DATABASE_URL" >
 
 # ARG DATABASE_URL
 # ARG JWT_SECRET
