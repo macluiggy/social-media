@@ -12,6 +12,12 @@ COPY tsconfig.json ./
 # Bundle app source
 COPY . .
 
+
+
+ARG DATABASE_URL
+ARG JWT_SECRET
+ARG JWT_EXPIRES_IN
+
 # RUN bun install -g @nestjs/cli
 # RUN bun install
 # RUN bun run build
@@ -20,9 +26,11 @@ RUN npm install -g @nestjs/cli
 RUN npm install --omit=dev
 RUN npm run build
 
-ARG DATABASE_URL
-ARG JWT_SECRET
-ARG JWT_EXPIRES_IN
+RUN echo "DATABASE_URL=$DATABASE_URL" >
+
+# ARG DATABASE_URL
+# ARG JWT_SECRET
+# ARG JWT_EXPIRES_IN
 
 # # Set environment variables
 # ENV DATABASE_URL='postgresql://postgres:fRGODMjpQZhlvLXRcHxTrduObsTDAYdF@viaduct.proxy.rlwy.net:46988/railway'
