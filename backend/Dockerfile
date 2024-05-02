@@ -44,7 +44,7 @@ ENV DATABASE_URL='postgresql://postgres:fRGODMjpQZhlvLXRcHxTrduObsTDAYdF@viaduct
 ENV JWT_SECRET='secret'
 ENV JWT_EXPIRES_IN='1d'
 
-RUN npm run typeorm:run-migrations
+# RUN npm run typeorm:run-migrations
 
 ENV NODE_ENV=production
 # Expose port 3000 
@@ -52,5 +52,5 @@ EXPOSE 3000
 EXPOSE 4000
 
 # Run the app
-CMD ["npm", "run", "start:prod"]
+CMD ["npm", "run", "typeorm:run-migrations", "&&", "npm", "run", "start:prod:bun"]
 # CMD ["bun", "run", "start:prod:bun"]
