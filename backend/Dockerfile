@@ -1,6 +1,5 @@
 # FROM node:18-alpine3.16
 FROM node:22-alpine3.18
-FROM oven/bun
 # FROM oven/bun
 
 
@@ -56,5 +55,5 @@ EXPOSE 4000
 # RUN chmod +x start.sh
 # CMD ["./start.sh"]
 # CMD ["npm", "run", "typeorm:run-migrations", "&&", "npm", "run", "start:prod:bun"]
-CMD ["npm", "run", "start:prod:bun"]
+CMD ["npm", "run", "start:prod"]
 # CMD ["bun", "run", "start:prod:bun"]
