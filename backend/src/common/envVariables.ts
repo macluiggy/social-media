@@ -21,7 +21,7 @@ const databaseUrl =
   process.env.DATABASE_URL ||
   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`;
 
-const config = {
+const envVariables = {
   apiVersion: process.env.API_VERSION || 'v1',
   port: process.env.PORT || 4000,
   db: {
@@ -34,6 +34,7 @@ const config = {
   },
   nodeEnviroment: NODE_ENV,
   isProduction,
+  jwtSecret: process.env.JWT_SECRET,
 };
 
-export default config;
+export default envVariables;

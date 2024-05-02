@@ -5,9 +5,9 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 import { SeederOptions } from 'typeorm-extension';
 import subscribers from './src/db/subscribers';
-import config from './src/common/config';
+import envVariables from './src/common/envVariables';
 
-const { db } = config;
+const { db } = envVariables;
 
 const migrationsPath = path.join(process.cwd(), 'src/db/migrations/*{.ts}');
 

@@ -6,7 +6,7 @@ import UserSeeder from '../seeders/user.seeder';
 import userFactory from '../factories/user.factory';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import entities from '../entities';
-import envVariablesConfig from '../../common/config';
+import envVariablesConfig from '../../common/envVariables';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
