@@ -12,6 +12,8 @@ COPY tsconfig.json ./
 # Bundle app source
 COPY . .
 
+COPY .env .
+
 # RUN bun install -g @nestjs/cli
 # RUN bun install
 # RUN bun run build
