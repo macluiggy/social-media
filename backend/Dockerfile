@@ -32,12 +32,6 @@ COPY . .
 RUN npm install -g @nestjs/cli
 RUN npm install --omit=dev
 
-
-
-
-RUN npm run build
-
-
 # railway env variables
 ARG RAILWAY_PUBLIC_DOMAIN
 ARG RAILWAY_PRIVATE_DOMAIN
@@ -63,6 +57,8 @@ ARG JWT_EXPIRES_IN
 #   RAILWAY_PROJECT_ID=$RAILWAY_PROJECT_ID \
 #   RAILWAY_ENVIRONMENT_ID=$RAILWAY_ENVIRONMENT_ID \
 #   RAILWAY_SERVICE_ID=$RAILWAY_SERVICE_ID
+
+RUN npm run build
 
 # RUN npm run typeorm:run-migrations
 
