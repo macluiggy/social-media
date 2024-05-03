@@ -11,15 +11,10 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalFilters(new HttpExceptionFilter());
   app.enableCors({
-    origin: [
-      'http://localhost:4200',
-      'https://social-media-sosote.up.railway.app',
-      'https://social-media-44lb.onrender.com',
-      'https://socialmedia-ac4q9weo.b4a.run',
-    ],
+    origin: ['http://localhost:4200', 'https://social-media-8yq.pages.dev'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     allowedHeaders: 'Content-Type, Accept, Authorization',
-    credentials: true,
+    // credentials: true,
   });
   app.useGlobalInterceptors(new SuccesResponseInterceptor());
 
