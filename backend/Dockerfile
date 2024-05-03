@@ -38,8 +38,6 @@ RUN npm install --omit=dev
 
 RUN npm run build
 
-# RUN npm run typeorm:run-migrations
-
 # RUN echo "DATABASE_URL=$DATABASE_URL" >
 
 # ARG DATABASE_URL
