@@ -14,7 +14,7 @@ async function bootstrap() {
     origin: ['http://localhost:4200', 'https://social-media-8yq.pages.dev'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     allowedHeaders: 'Content-Type, Accept, Authorization',
-    // credentials: true,
+    credentials: true,
   });
   app.useGlobalInterceptors(new SuccesResponseInterceptor());
 
