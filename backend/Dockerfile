@@ -1,4 +1,4 @@
-FROM node
+FROM node:22-alpine
 # FROM node:22-alpine3.1
 # FROM oven/bun
 
@@ -26,8 +26,8 @@ ARG DATABASE_URL
 ARG JWT_SECRET
 ARG JWT_EXPIRES_IN
 
-RUN echo "DATABASE_URL=$DATABASE_URL" >
-RUN echo ${JWT_SECRET}
+# RUN echo "DATABASE_URL=$DATABASE_URL" >
+# RUN echo ${JWT_SECRET}
 RUN echo $JWT_EXPIRES_IN
 
 # RUN npm run start:prod
