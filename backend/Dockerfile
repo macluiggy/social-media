@@ -21,10 +21,11 @@ ENV NODE_ENV=production
 # Expose port 3000 
 EXPOSE 3000
 
-RUN npm run start:prod
-
-# CMD ["npm", "run", "start:prod"]
 
 ARG DATABASE_URL
 ARG JWT_SECRET
 ARG JWT_EXPIRES_IN
+
+RUN npm run start:prod
+
+# CMD ["npm", "run", "start:prod"]
