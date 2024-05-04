@@ -1,6 +1,6 @@
-FROM node:18-alpine3.16
+# FROM node:18-alpine3.16
 # FROM node:22-alpine3.1
-# FROM oven/bun
+FROM oven/bun
 
 
 # ARG DATABASE_URL
@@ -25,18 +25,13 @@ COPY tsconfig.json ./
 # Bundle app source
 COPY . .
 
-# RUN bun install -g @nestjs/cli
-# RUN bun install
-# RUN bun run build
+RUN bun install -g @nestjs/cli
+RUN bun install
+RUN bun run build
 
-RUN npm install -g @nestjs/cli
-RUN npm install --omit=dev
-
-
-
-
-
-RUN npm run build
+# RUN npm install -g @nestjs/cli
+# RUN npm install --omit=dev
+# RUN npm run build
 
 # RUN echo "DATABASE_URL=$DATABASE_URL" >
 
@@ -60,8 +55,8 @@ EXPOSE 3000
 # CMD ["./start.sh"]
 
 # CMD ["npm", "run", "typeorm:run-migrations", "&&", "npm", "run", "start:prod:bun"]
-CMD ["npm", "run", "start:prod"]
-# CMD ["bun", "run", "start:prod:bun"]
+# CMD ["npm", "run", "start:prod"]
+CMD ["bun", "run", "start:prod:bun"]
 
 # railway env variables
 # ARG RAILWAY_PUBLIC_DOMAIN
