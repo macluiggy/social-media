@@ -26,6 +26,10 @@ ARG DATABASE_URL
 ARG JWT_SECRET
 ARG JWT_EXPIRES_IN
 
-RUN npm run start:prod
+RUN echo "DATABASE_URL=$DATABASE_URL" >
+RUN echo ${JWT_SECRET}
+RUN echo $JWT_EXPIRES_IN
+
+# RUN npm run start:prod
 
 # CMD ["npm", "run", "start:prod"]
