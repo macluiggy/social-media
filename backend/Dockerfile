@@ -8,6 +8,10 @@ RUN echo $DATABASE_URL
 RUN echo $JWT_SECRET
 RUN echo $JWT_EXPIRES_IN
 
+ENV DATABASE_URL=$DATABASE_URL
+ENV JWT_SECRET=$JWT_SECRET
+ENV JWT_EXPIRES_IN=$JWT_EXPIRES_IN
+
 # FROM node:22-alpine3.1
 # FROM oven/bun
 
@@ -23,7 +27,6 @@ COPY tsconfig.json ./
 COPY . .
 
 RUN npm install -g @nestjs/cli
-RUN npm install --omit=dev
 RUN npm run build
 
 ENV NODE_ENV=production
