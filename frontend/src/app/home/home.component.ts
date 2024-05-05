@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user/user.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -10,6 +11,8 @@ import { UserService } from '../services/user/user.service';
 })
 export class HomeComponent implements OnInit {
   content?: string
+
+  test = environment.test;
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
