@@ -22,6 +22,7 @@ EXPOSE 3000
 
 
 # RUN npm run start:prod
+CMD ["npm", "run", "start:prod"]
 
 ARG DATABASE_URL
 ARG JWT_SECRET
@@ -34,4 +35,3 @@ ENV JWT_EXPIRES_IN=$JWT_EXPIRES_IN
 RUN echo $DATABASE_URL
 RUN echo $JWT_SECRET
 RUN echo $JWT_EXPIRES_IN
-CMD ["npm", "run", "start:prod"]
