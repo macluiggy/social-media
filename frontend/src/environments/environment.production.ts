@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://api.example.com/api/v1',
+  apiUrl: 'social-media-sosote.up.railway.app/api/v1',
   test: 'PRODUCTION ENVIRONMENT',
 };

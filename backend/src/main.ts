@@ -11,7 +11,11 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalFilters(new HttpExceptionFilter());
   app.enableCors({
-    origin: ['http://localhost:4200', 'https://social-media-8yq.pages.dev'],
+    origin: [
+      'http://localhost:4200',
+      'https://social-media-8yq.pages.dev',
+      'https://staging-social-media.pages.dev',
+    ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     allowedHeaders: 'Content-Type, Accept, Authorization',
     credentials: true,
