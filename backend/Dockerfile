@@ -13,7 +13,7 @@ COPY tsconfig.json ./
 COPY . .
 
 RUN npm install -g @nestjs/cli
-# RUN npm install --omit=dev
+RUN npm install --omit=dev
 RUN npm run build
 
 ENV NODE_ENV=production
