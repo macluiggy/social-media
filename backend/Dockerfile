@@ -11,6 +11,7 @@ WORKDIR /app
 # Install app dependencies
 COPY package.json ./
 COPY tsconfig.json ./
+COPY bun.lockb ./
 
 # Bundle app source
 COPY . .
