@@ -1,4 +1,4 @@
-FROM oven/bun:1.1.7-alpine
+FROM oven/bun
 
 
 ARG DATABASE_URL
