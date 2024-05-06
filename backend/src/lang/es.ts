@@ -1,10 +1,19 @@
 import Lang from './lang.type';
+function getGenericCrudMessagesES(entity: string) {
+  return {
+    UPDATED: `${entity} actualizado correctamente`,
+    ALREADY_EXISTS: `${entity} ya existe`,
+    CREATED: `${entity} creado correctamente`,
+    NOT_FOUND: `${entity} no encontrado`,
+  };
+}
 
 const ES: Lang = {
   USER: {
-    UPDATED: 'Usuario actualizado correctamente',
-    ALREADY_EXISTS: 'El usuario ya existe',
-    CREATED: 'Usuario creado correctamente',
+    ...getGenericCrudMessagesES('Usuario'),
+  },
+  POST: {
+    ...getGenericCrudMessagesES('Publicación'),
   },
 };
 

@@ -20,8 +20,8 @@ export class SuccesResponseInterceptor<T>
       map((data) => {
         return {
           statusCode: context.switchToHttp().getResponse().statusCode,
-          message: data.message || 'OK',
-          data: data.data || data,
+          message: data?.message || 'OK',
+          data: data?.data || data,
         };
       }),
     ) as unknown as Observable<Response<T>>;
