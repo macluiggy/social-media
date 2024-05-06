@@ -22,6 +22,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
+    "test:e2e:vitest": "vitest run --config ./vitest.config.e2e.ts",
     "typeorm": "npx ts-node -r tsconfig-paths/register --transpile-only ./node_modules/typeorm/cli.js",
     "typeorm:run-migrations": "npm run typeorm migration:run -- -d ./src/db/config/datasource.config.ts",
     "typeorm:create-migration": "npm run typeorm -- migration:create ./src/db/migrations/$npm_config_name",
