@@ -20,12 +20,12 @@ export class PostsService {
     const lang = this.request['preferredLanguage'];
     this.messages = getMessages(lang);
   }
-  create(createPostDto: CreatePostDto) {
-    return this.postsRepository.save(createPostDto);
+  async create(createPostDto: CreatePostDto) {
+    return await this.postsRepository.save(createPostDto);
   }
 
-  findAll() {
-    return this.postsRepository.find();
+  async findAll() {
+    return await this.postsRepository.find();
   }
 
   async findOne(id: string) {
@@ -41,7 +41,7 @@ export class PostsService {
     return await this.postsRepository.update(id, updatePostDto);
   }
 
-  remove(id: string) {
-    return this.postsRepository.delete(id);
+  async remove(id: string) {
+    return await this.postsRepository.delete(id);
   }
 }
