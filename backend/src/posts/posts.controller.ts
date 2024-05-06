@@ -10,8 +10,9 @@ import {
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
+import getApiEndpoint from '../common/utils/getApiEndpoint';
 
-@Controller('posts')
+@Controller(getApiEndpoint('posts'))
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
