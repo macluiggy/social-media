@@ -30,7 +30,6 @@ export class PostsService {
 
   async findOne(id: string) {
     const post = await this.postsRepository.findOneBy({ id });
-    console.log(post);
 
     if (!post) {
       throw new NotFoundException(this.messages.POST.NOT_FOUND);
@@ -38,11 +37,11 @@ export class PostsService {
     return;
   }
 
-  update(id: number, updatePostDto: UpdatePostDto) {
+  update(id: string, updatePostDto: UpdatePostDto) {
     return this.postsRepository.update(id, updatePostDto);
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return this.postsRepository.delete(id);
   }
 }

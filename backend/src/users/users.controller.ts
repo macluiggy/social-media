@@ -13,7 +13,6 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UserDto } from './dto/users.dto';
-import { API_VERSION } from '../common/constants';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import ApiStandardResponse from '../common/interceptors/api-response';
@@ -21,12 +20,13 @@ import getMessages from '../lang/getMessages';
 import Lang from '../lang/lang.type';
 import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
+import getApiEndpoint from '../common/utils/getApiEndpoint';
 
 @ApiTags('users')
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 @Controller({
-  path: `api/${API_VERSION}/users`,
+  path: getApiEndpoint('users'),
   scope: Scope.REQUEST,
 })
 export class UsersController {

@@ -28,9 +28,10 @@ async function bootstrap() {
     .setDescription('The NestJS API description')
     .setVersion('1.0')
     .addTag('nestjs')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, options);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('swagger', app, document);
   await app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
   });
