@@ -34,11 +34,11 @@ export class PostsService {
     if (!post) {
       throw new NotFoundException(this.messages.POST.NOT_FOUND);
     }
-    return;
+    return post;
   }
 
-  update(id: string, updatePostDto: UpdatePostDto) {
-    return this.postsRepository.update(id, updatePostDto);
+  async update(id: string, updatePostDto: UpdatePostDto) {
+    return await this.postsRepository.update(id, updatePostDto);
   }
 
   remove(id: string) {

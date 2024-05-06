@@ -6,6 +6,7 @@ function getGenericCrudMessagesEN(entity: string): BasicCrud {
     ALREADY_EXISTS: `${entity} already exists`,
     CREATED: `${entity} created successfully`,
     NOT_FOUND: `${entity} not found`,
+    DELETED: `${entity} deleted successfully`,
   };
 }
 

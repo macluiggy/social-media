@@ -7,6 +7,8 @@ import {
   Param,
   Delete,
   UseGuards,
+  Scope,
+  Inject,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
@@ -14,18 +16,32 @@ import { UpdatePostDto } from './dto/update-post.dto';
 import getApiEndpoint from '../common/utils/getApiEndpoint';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import ApiStandardResponse from '../common/interceptors/api-response';
+import Lang from '../lang/lang.type';
+import getMessages from '../lang/getMessages';
 
-@Controller(getApiEndpoint('posts'))
+@Controller({
+  path: getApiEndpoint('posts'),
+  scope: Scope.REQUEST,
+})
 @UseGuards(JwtAuthGuard)
 @ApiTags('posts')
 @ApiBearerAuth()
 export class PostsController {
-  constructor(private readonly postsService: PostsService) {}
+  private messages: Lang;
+  constructor(
+    private readonly postsService: PostsService,
+    @Inject('REQUEST') private readonly request: Request,
+  ) {
+    const lang = this.request['preferredLanguage'];
+    this.messages = getMessages(lang);
+  }
 
   @Post()
   @ApiOperation({ summary: 'Create a new post' })
   create(@Body() createPostDto: CreatePostDto) {
-    return this.postsService.create(createPostDto);
+    const created = this.postsService.create(createPostDto);
+    return new ApiStandardResponse(created, this.messages.POST.CREATED);
   }
 
   @Get()
@@ -42,8 +58,9 @@ export class PostsController {
 
   @Patch(':id')
   @ApiOperation({ summary: 'Update a post by id' })
-  update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
-    return this.postsService.update(id, updatePostDto);
+  async update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
+    const updated = await this.postsService.update(id, updatePostDto);
+    return new ApiStandardResponse(updated, this.messages.POST.UPDATED);
   }
 
   @Delete(':id')
@@ -52,6 +69,7 @@ export class PostsController {
     description: 'Only the owner can delete the post',
   })
   remove(@Param('id') id: string) {
-    return this.postsService.remove(id);
+    const deleted = this.postsService.remove(id);
+    return new ApiStandardResponse(deleted, this.messages.POST.DELETED);
   }
 }
