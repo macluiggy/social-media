@@ -50,9 +50,6 @@ export class PostsController {
   @ApiOperation({
     summary: 'Delete a post by id',
     description: 'Only the owner can delete the post',
-    servers: {
-      at: 'https://social-media-8yq.pages.dev',
-    },
   })
   remove(@Param('id') id: string) {
     return this.postsService.remove(id);
