@@ -6,7 +6,7 @@ import {
   Scope,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from './users.entity';
+import { Users } from './users.entity';
 import { DataSource, Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { UserDto } from './dto/users.dto';
@@ -21,8 +21,8 @@ import Lang from '../lang/lang.type';
 export class UsersService {
   private messages: Lang;
   constructor(
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
+    @InjectRepository(Users)
+    private readonly userRepository: Repository<Users>,
     @Inject(REQUEST) private readonly request: Request,
     private dataSource: DataSource,
   ) {
@@ -36,7 +36,7 @@ export class UsersService {
     return await bcrypt.compare(attempt, password);
   }
 
-  async create(user: UserDto): Promise<User> {
+  async create(user: UserDto): Promise<Users> {
     const queryRunner = this.dataSource.createQueryRunner();
 
     await queryRunner.connect();
@@ -65,11 +65,11 @@ export class UsersService {
     return !!user;
   }
 
-  async findAll(): Promise<User[]> {
+  async findAll(): Promise<Users[]> {
     return await this.userRepository.find();
   }
 
-  async findOne(id: string): Promise<User> {
+  async findOne(id: string): Promise<Users> {
     const user = await this.userRepository.findOne({
       where: { id },
     });
@@ -79,7 +79,7 @@ export class UsersService {
     return user;
   }
 
-  async update(id: string, userDto: UserDto): Promise<User> {
+  async update(id: string, userDto: UserDto): Promise<Users> {
     delete userDto.password; // Don't update the password here
     const user = await this.findOne(id);
     const updatedUserData = {
@@ -97,13 +97,13 @@ export class UsersService {
     await this.userRepository.delete(id);
   }
 
-  async findByUsername(username: string): Promise<User> {
+  async findByUsername(username: string): Promise<Users> {
     return await this.userRepository.findOneOrFail({
       where: { username },
     });
   }
 
-  async findByEmail(email: string): Promise<User> {
+  async findByEmail(email: string): Promise<Users> {
     return await this.userRepository.findOneOrFail({
       where: { email },
     });

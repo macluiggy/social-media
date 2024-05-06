@@ -3,7 +3,7 @@ import * as bcrypt from 'bcrypt';
 import { DEFAULT_LANG } from '../lang';
 
 @Entity()
-export class User {
+export class Users {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
