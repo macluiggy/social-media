@@ -16,7 +16,8 @@ import { signInUser } from '../auth/utils/singInUser';
 import { AuthModule } from '../auth/auth.module';
 import setupTestingModule from '../../test/setUpTestingModule';
 import { Repository } from 'typeorm';
-describe('AppController (e2e)', () => {
+
+describe('Post Controller (e2e)', () => {
   let app: INestApplication;
   let user: Users;
   let post: Post;
