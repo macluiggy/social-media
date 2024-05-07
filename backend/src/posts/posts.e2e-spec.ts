@@ -1,8 +1,5 @@
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
-// import { AppModule } from './../src/app.module';
-// import { AuthModule } from './auth.module';
-
 import { TypeOrmModule, getRepositoryToken } from '@nestjs/typeorm';
 import typeOrmConfig from '../../typeorm.config';
 import getApiEndpoint from '../common/utils/getApiEndpoint';
