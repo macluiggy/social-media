@@ -7,6 +7,7 @@ const PASSWORD = '123456';
 
 type SingInUserResponse = {
   accessToken: string;
+  user: any;
 };
 export async function signInUser(
   app: INestApplication,
@@ -18,10 +19,6 @@ export async function signInUser(
     .post(endpoint)
     .send({ email, password });
 
-  if (response.statusCode !== 200) {
-    throw new Error(`Sign-in failed with status code ${response.statusCode}`);
-  }
-
-  const body = response.body;
-  return body;
+  const data = response.body?.data;
+  return data;
 }

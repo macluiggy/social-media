@@ -35,6 +35,7 @@
     "seed": "ts-node ./node_modules/typeorm-extension/bin/cli.cjs seed:run -d src/db/seeders/index.ts"
   },
   "dependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@nestjs/common": "^10.0.0",
     "@nestjs/core": "^10.0.0",
     "@nestjs/jwt": "^10.2.0",

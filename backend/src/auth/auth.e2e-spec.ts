@@ -38,9 +38,9 @@ describe('AppController (e2e)', () => {
     return res.expect(201);
   });
 
-  it('/auth/signin (POST)', () => {
+  it('/auth/signin (POST)', async() => {
     const endpoint = getApiEndpoint('auth/signin');
-    const res = request(app.getHttpServer()).post(endpoint).send(user);
+    const res = await request(app.getHttpServer()).post(endpoint).send(user);
 
     return res.expect(201);
   });
