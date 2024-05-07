@@ -3,14 +3,15 @@ import { PostsController } from './posts.controller';
 import { PostsService } from './posts.service';
 import { Post } from './entities/post.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { vi } from 'vitest';
 
 // Mock implementation of the Post repository
 const mockPostRepository = {
-  find: jest.fn(),
-  findOneBy: jest.fn(),
-  save: jest.fn(),
-  update: jest.fn(),
-  delete: jest.fn(),
+  find: vi.fn(),
+  findOneBy: vi.fn(),
+  save: vi.fn(),
+  update: vi.fn(),
+  delete: vi.fn(),
 };
 
 // Mock implementation of the Request object
