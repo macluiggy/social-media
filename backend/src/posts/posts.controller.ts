@@ -40,7 +40,7 @@ export class PostsController {
   @Post()
   @ApiOperation({ summary: 'Create a new post' })
   async create(@Body() createPostDto: CreatePostDto) {
-    const created = this.postsService.create(createPostDto);
+    const created = await this.postsService.create(createPostDto);
     return new ApiStandardResponse(created, this.messages.POST.CREATED);
   }
 

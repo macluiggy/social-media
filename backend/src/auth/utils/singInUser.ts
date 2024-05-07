@@ -2,11 +2,17 @@ import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import getApiEndpoint from '../../common/utils/getApiEndpoint';
 
+const EMAIL = 'test-user-for-testing@test.com';
+const PASSWORD = '123456';
+
+type SingInUserResponse = {
+  accessToken: string;
+};
 export async function signInUser(
   app: INestApplication,
-  email: string,
-  password: string,
-): Promise<string> {
+  email: string = EMAIL,
+  password: string = PASSWORD,
+): Promise<SingInUserResponse> {
   const endpoint = getApiEndpoint('auth/signin');
   const response = await request(app.getHttpServer())
     .post(endpoint)
@@ -16,6 +22,6 @@ export async function signInUser(
     throw new Error(`Sign-in failed with status code ${response.statusCode}`);
   }
 
-  const { accessToken } = response.body;
-  return accessToken;
+  const body = response.body;
+  return body;
 }
