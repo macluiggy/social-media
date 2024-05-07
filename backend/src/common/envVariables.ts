@@ -1,9 +1,10 @@
 // a way to save all the environment variables in one place
 // and use them in the app
 import * as dotenv from 'dotenv';
+import { NODE_ENVIRONMENTS } from './constants';
 dotenv.config();
 
-const NODE_ENV = process.env.NODE_ENV || 'development';
+const NODE_ENV = process.env.NODE_ENV || NODE_ENVIRONMENTS.DEVELOPMENT;
 const isProduction = NODE_ENV === 'production';
 // const DB_HOST = isProduction ? process.env.DB_HOST_PROD : process.env.DB_HOST;
 // const DB_USER = isProduction ? process.env.DB_USER_PROD : process.env.DB_USER;
@@ -20,8 +21,6 @@ const DB_PORT = process.env.DB_PORT;
 const databaseUrl =
   process.env.DATABASE_URL ||
   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`;
-
-console.log(databaseUrl, 'fhjahfjhdjhjfdf', process.env.DATABASE_URL);
 
 const envVariables = {
   apiVersion: process.env.API_VERSION || 'v1',

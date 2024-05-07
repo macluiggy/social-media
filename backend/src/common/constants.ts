@@ -1,6 +1,11 @@
-export const API_VERSION = 'v1';
+const API_VERSION = 'v1';
 const OBJECT = {
   a: 1,
+};
+const NODE_ENVIRONMENTS = {
+  PRODUCTION: 'production',
+  DEVELOPMENT: 'development',
+  TEST: 'test',
 };
 
 function sealAndFreezeObj(...objs) {
@@ -11,9 +16,6 @@ function sealAndFreezeObj(...objs) {
   }
 }
 
-sealAndFreezeObj(OBJECT, API_VERSION);
+sealAndFreezeObj(OBJECT, API_VERSION, NODE_ENVIRONMENTS);
 
-export default {
-  API_VERSION,
-  OBJECT,
-};
+export { API_VERSION, OBJECT, NODE_ENVIRONMENTS };

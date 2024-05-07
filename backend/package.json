@@ -20,6 +20,7 @@
     "test:cov": "vitest --config ./vitest.config.ts --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "vitest run --config ./vitest.config.e2e.ts",
+    "test:e2e:watch": "vitest --config ./vitest.config.e2e.ts",
     "test:jest": "jest",
     "test:vitest": "vitest --config ./vitest.config.ts",
     "test:bun": "bun test --watch",
