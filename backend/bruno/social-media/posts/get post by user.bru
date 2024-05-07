@@ -4,16 +4,20 @@ meta {
   seq: 3
 }
 
-post {
-  url: {{base_url}}/posts/user/{{userId}}
+get {
+  url: {{base_url}}/posts/user/{{userId}}?page=2&limit=1
   body: json
   auth: bearer
+}
+
+query {
+  page: 2
+  limit: 1
 }
 
 auth:bearer {
   token: {{TOKEN}}
 }
-
 
 docs {
   # create post
