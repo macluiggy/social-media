@@ -1,6 +1,6 @@
 // test.utils.ts
 import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication, ModuleMetadata } from '@nestjs/common';
+import { ModuleMetadata } from '@nestjs/common';
 import { SuccesResponseInterceptor } from '../src/common/interceptors/succes-request-response.interceptor';
 
 export default async function setupTestingModule({
@@ -13,7 +13,7 @@ export default async function setupTestingModule({
   exports?: ModuleMetadata['exports'];
   controllers?: ModuleMetadata['controllers'];
   providers?: ModuleMetadata['providers'];
-} = {}): Promise<INestApplication> {
+} = {}) {
   const moduleFixture: TestingModule = await Test.createTestingModule({
     imports,
     exports,
@@ -25,5 +25,5 @@ export default async function setupTestingModule({
   app.useGlobalInterceptors(new SuccesResponseInterceptor());
   await app.init();
 
-  return app;
+  return { app, moduleFixture };
 }
