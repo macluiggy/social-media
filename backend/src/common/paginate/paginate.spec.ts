@@ -1,5 +1,10 @@
 // paginate.spec.ts
-import { EntityManager, EntityTarget, Repository } from 'typeorm';
+import {
+  EntityManager,
+  EntityTarget,
+  FindManyOptions,
+  Repository,
+} from 'typeorm';
 import paginate from './paginate';
 import { vi } from 'vitest';
 
@@ -17,9 +22,12 @@ describe('paginate', () => {
 
   it('should paginate results', async () => {
     const options = { page: 1, limit: 10 };
-    const queryOptions = { where: { active: true } };
+    const queryOptions: FindManyOptions = {
+      where: { active: true },
+      order: { id: 'ASC' },
+    };
     const result = [{ id: 1 }, { id: 2 }];
-    const total = 2;
+    const total = 20;
 
     vi.spyOn(repository, 'findAndCount').mockResolvedValueOnce([result, total]);
 
