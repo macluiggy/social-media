@@ -4,8 +4,8 @@ import { DEFAULT_LANG } from '../lang';
 
 @Entity()
 export class Users {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn('increment')
+  id: number;
 
   @Column({ name: 'username', type: 'varchar', length: 50, unique: true })
   username: string;

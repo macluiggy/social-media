@@ -11,11 +11,11 @@ import { Users } from '../../users/users.entity';
 
 @Entity('posts')
 export class Post {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn('increment')
+  id: number;
 
-  @Column({ type: 'uuid', name: 'user_id' })
-  userId: string;
+  @Column({ type: 'bigint', name: 'user_id' })
+  userId: number;
 
   @Column({ type: 'varchar', length: 255, nullable: true })
   title: string;
