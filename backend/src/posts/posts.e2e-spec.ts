@@ -58,6 +58,53 @@ describe('AppController (e2e)', () => {
     return expect(res.status).toBe(201);
   });
 
+  it('/post GET, should get all posts', async () => {
+    const endpoint = getApiEndpoint('posts');
+
+    const res = await request(app.getHttpServer())
+      .get(endpoint)
+      .set({
+        authorization: `Bearer ${accessToken}`,
+      });
+
+    expect(res.status).toBe(200);
+    expect(res.body.data).toBeInstanceOf(Array);
+  });
+
+  it('/post/:id GET, should get a post', async () => {
+    const createdPost = await postsRepository.findOne({
+      where: { title: post.title },
+    });
+
+    const endpoint = getApiEndpoint(`posts/${createdPost.id}`);
+
+    const res = await request(app.getHttpServer())
+      .get(endpoint)
+      .set({
+        authorization: `Bearer ${accessToken}`,
+      });
+
+    expect(res.status).toBe(200);
+    expect(res.body.data.title).toBe(post.title);
+  });
+
+  it('/post/:id PUT, should update a post', async () => {
+    const createdPost = await postsRepository.findOne({
+      where: { title: post.title },
+    });
+
+    const endpoint = getApiEndpoint(`posts/${createdPost.id}`);
+
+    const res = await request(app.getHttpServer())
+      .patch(endpoint)
+      .set({
+        authorization: `Bearer ${accessToken}`,
+      })
+      .send({ title: 'updated title' });
+
+    expect(res.status).toBe(200);
+  });
+
   afterAll(async () => {
     // delete the post
     const createdPost = await postsRepository.findOne({
