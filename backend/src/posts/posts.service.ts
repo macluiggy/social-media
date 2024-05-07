@@ -46,6 +46,15 @@ export class PostsService {
     return await this.postsRepository.delete(id);
   }
 
+  /**
+   * Finds posts belonging to a specific user.
+   *
+   * @param {object} options - The options for pagination and filtering.
+   * @param {number} options.userId - The ID of the user.
+   * @param {number} options.page - The page number for pagination.
+   * @param {number} options.limit - The maximum number of posts per page.
+   * @returns {Promise<object>} - A promise that resolves to the paginated posts.
+   */
   async findUserPosts({ userId }, { page, limit }) {
     return paginate(
       this.postsRepository,
