@@ -4,6 +4,8 @@ import { PostsService } from './posts.service';
 import { Post } from './entities/post.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { vi } from 'vitest';
+import { CreatePostDto } from './dto/create-post.dto';
+import ApiStandardResponse from '../common/interceptors/api-response';
 
 // Mock implementation of the Post repository
 const mockPostRepository = {
@@ -22,8 +24,12 @@ const mockRequest = {
 describe('PostsController', () => {
   let controller: PostsController;
   let service: PostsService;
+  let dto: CreatePostDto;
 
   beforeEach(async () => {
+    dto = new CreatePostDto();
+    dto.title = 'John Doe';
+    dto.content = 'Hello, World!';
     const module: TestingModule = await Test.createTestingModule({
       controllers: [PostsController],
       providers: [
@@ -36,6 +42,17 @@ describe('PostsController', () => {
           provide: 'REQUEST',
           useValue: mockRequest,
         },
+        {
+          provide: PostsService,
+          useValue: {
+            create: vi.fn().mockResolvedValue(dto),
+            findAll: vi.fn(),
+            findOne: vi.fn(),
+            update: vi.fn(),
+            remove: vi.fn(),
+            findUserPosts: vi.fn(),
+          },
+        },
       ],
     }).compile();
 
@@ -46,6 +63,13 @@ describe('PostsController', () => {
   it('should be defined', () => {
     expect(controller).toBeDefined();
     expect(service).toBeDefined();
+  });
+
+  it('should create a post', async () => {
+    expect(await controller.create(dto)).toStrictEqual(
+      new ApiStandardResponse(dto, 'Post created successfully'),
+    );
+    expect(service.create).toHaveBeenCalledWith(dto);
   });
 
   // Add more tests for your controller and service methods
