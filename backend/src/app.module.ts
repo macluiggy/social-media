@@ -11,8 +11,6 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { PostsModule } from './posts/posts.module';
 
-console.log(process.cwd());
-
 @Module({
   imports: [
     AuthModule,
