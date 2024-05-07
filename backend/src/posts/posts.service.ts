@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import getMessages from '../lang/getMessages';
 import Lang from '../lang/lang.type';
+import paginate from '../common/paginate/paginate';
 
 @Injectable({
   scope: Scope.REQUEST,
@@ -46,10 +47,10 @@ export class PostsService {
   }
 
   async findUserPosts({ userId }, { page, limit }) {
-    return await this.postsRepository.findAndCount({
-      where: { userId },
-      skip: (page - 1) * limit,
-      take: limit,
-    });
+    return paginate(
+      this.postsRepository,
+      { page, limit },
+      { where: { userId } },
+    );
   }
 }
