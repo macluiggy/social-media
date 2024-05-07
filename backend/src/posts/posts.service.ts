@@ -28,7 +28,7 @@ export class PostsService {
     return await this.postsRepository.find();
   }
 
-  async findOne(id: string) {
+  async findOne(id: number) {
     const post = await this.postsRepository.findOneBy({ id });
 
     if (!post) {
@@ -37,11 +37,11 @@ export class PostsService {
     return post;
   }
 
-  async update(id: string, updatePostDto: UpdatePostDto) {
+  async update(id: number, updatePostDto: UpdatePostDto) {
     return await this.postsRepository.update(id, updatePostDto);
   }
 
-  async remove(id: string) {
+  async remove(id: number) {
     return await this.postsRepository.delete(id);
   }
 }

@@ -53,13 +53,13 @@ export class UsersController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: number) {
     return await this.userService.findOne(id);
   }
 
   @Put(':id')
   async update(
-    @Param('id') id: string,
+    @Param('id') id: number,
     @Body() userDTO: UserDto,
     @Req() req: any,
   ) {
@@ -72,7 +72,7 @@ export class UsersController {
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string) {
+  async remove(@Param('id') id: number) {
     return await this.userService.remove(id);
   }
 }

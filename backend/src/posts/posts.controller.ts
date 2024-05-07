@@ -52,13 +52,13 @@ export class PostsController {
 
   @Get(':id')
   @ApiOperation({ summary: 'Get a post by id' })
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: number) {
     return await this.postsService.findOne(id);
   }
 
   @Patch(':id')
   @ApiOperation({ summary: 'Update a post by id' })
-  async update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
+  async update(@Param('id') id: number, @Body() updatePostDto: UpdatePostDto) {
     const updated = await this.postsService.update(id, updatePostDto);
     return new ApiStandardResponse(updated, this.messages.POST.UPDATED);
   }
@@ -68,7 +68,7 @@ export class PostsController {
     summary: 'Delete a post by id',
     description: 'Only the owner can delete the post',
   })
-  async remove(@Param('id') id: string) {
+  async remove(@Param('id') id: number) {
     const deleted = await this.postsService.remove(id);
     return new ApiStandardResponse(deleted, this.messages.POST.DELETED);
   }

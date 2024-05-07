@@ -69,7 +69,7 @@ export class UsersService {
     return await this.userRepository.find();
   }
 
-  async findOne(id: string): Promise<Users> {
+  async findOne(id: number): Promise<Users> {
     const user = await this.userRepository.findOne({
       where: { id },
     });
@@ -79,7 +79,7 @@ export class UsersService {
     return user;
   }
 
-  async update(id: string, userDto: UserDto): Promise<Users> {
+  async update(id: number, userDto: UserDto): Promise<Users> {
     delete userDto.password; // Don't update the password here
     const user = await this.findOne(id);
     const updatedUserData = {
@@ -92,7 +92,7 @@ export class UsersService {
     return updatedUser;
   }
 
-  async remove(id: string): Promise<void> {
+  async remove(id: number): Promise<void> {
     await this.findOne(id);
     await this.userRepository.delete(id);
   }
