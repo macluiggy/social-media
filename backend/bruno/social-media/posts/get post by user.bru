@@ -1,0 +1,21 @@
+meta {
+  name: posts by user
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{base_url}}/posts/user/{{userId}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{TOKEN}}
+}
+
+
+docs {
+  # create post
+  This endpoint is used to get all posts of a user.
+}

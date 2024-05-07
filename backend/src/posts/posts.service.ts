@@ -44,4 +44,12 @@ export class PostsService {
   async remove(id: number) {
     return await this.postsRepository.delete(id);
   }
+
+  async findUserPosts({ userId }, { page, limit }) {
+    return await this.postsRepository.findAndCount({
+      where: { userId },
+      skip: (page - 1) * limit,
+      take: limit,
+    });
+  }
 }

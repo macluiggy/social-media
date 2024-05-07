@@ -9,6 +9,7 @@ import {
   UseGuards,
   Scope,
   Inject,
+  Query,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
@@ -71,5 +72,15 @@ export class PostsController {
   async remove(@Param('id') id: number) {
     const deleted = await this.postsService.remove(id);
     return new ApiStandardResponse(deleted, this.messages.POST.DELETED);
+  }
+
+  @Get('user/:userId')
+  @ApiOperation({ summary: 'Get all posts by user id' })
+  async findUserPosts(
+    @Param('userId') userId: number,
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 10,
+  ) {
+    return await this.postsService.findUserPosts({ userId }, { page, limit });
   }
 }

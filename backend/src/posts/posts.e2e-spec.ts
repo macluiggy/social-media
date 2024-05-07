@@ -106,6 +106,20 @@ describe('Post Controller (e2e)', () => {
     expect(res.status).toBe(200);
   });
 
+  // find post by user id
+  it('/post/user/:userId GET, should get all posts by user id', async () => {
+    const endpoint = getApiEndpoint(`posts/user/${user.id}`);
+
+    const res = await request(app.getHttpServer())
+      .get(endpoint)
+      .set({
+        authorization: `Bearer ${accessToken}`,
+      });
+
+    expect(res.status).toBe(200);
+    expect(res.body.data).toBeInstanceOf(Array);
+  });
+
   afterAll(async () => {
     // delete the post
     const createdPost = await postsRepository.findOne({
