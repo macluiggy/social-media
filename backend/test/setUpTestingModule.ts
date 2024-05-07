@@ -2,6 +2,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ModuleMetadata } from '@nestjs/common';
 import { SuccesResponseInterceptor } from '../src/common/interceptors/succes-request-response.interceptor';
+import { AppModule } from '../src/app.module';
 
 export default async function setupTestingModule({
   imports = [],
@@ -15,7 +16,7 @@ export default async function setupTestingModule({
   providers?: ModuleMetadata['providers'];
 } = {}) {
   const moduleFixture: TestingModule = await Test.createTestingModule({
-    imports,
+    imports: [AppModule, ...imports],
     exports,
     controllers,
     providers,
