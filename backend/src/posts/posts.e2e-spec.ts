@@ -31,7 +31,7 @@ describe('Post Controller (e2e)', () => {
       ],
     });
     app = testingModule.app;
-    const module = testingModule.moduleFixture;
+    const module = testingModule.testingModule;
 
     const data = await signInUser(app);
     accessToken = data.accessToken;

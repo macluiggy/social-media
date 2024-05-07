@@ -26,5 +26,5 @@ export default async function setupTestingModule({
   app.useGlobalInterceptors(new SuccesResponseInterceptor());
   await app.init();
 
-  return { app, moduleFixture };
+  return { app, testingModule: moduleFixture };
 }
