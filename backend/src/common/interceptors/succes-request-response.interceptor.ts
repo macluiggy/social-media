@@ -19,7 +19,7 @@ export class SuccesResponseInterceptor<T>
     return next.handle().pipe(
       map((data) => {
         return {
-          statusCode: context.switchToHttp().getResponse().statusCode,
+          statusCode: context.switchToHttp().getResponse().statusCode || 200,
           message: data?.message || 'OK',
           data: data?.data || data,
         };

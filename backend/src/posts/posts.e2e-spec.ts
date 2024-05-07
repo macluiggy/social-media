@@ -1,4 +1,3 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 // import { AppModule } from './../src/app.module';
@@ -15,6 +14,7 @@ import { Post } from './entities/post.entity';
 import generatePost from './generate.post';
 import { signInUser } from '../auth/utils/singInUser';
 import { AuthModule } from '../auth/auth.module';
+import setupTestingModule from '../../test/setUpTestingModule';
 describe('AppController (e2e)', () => {
   let app: INestApplication;
   let user: Users;
@@ -22,17 +22,14 @@ describe('AppController (e2e)', () => {
   let accessToken: string;
 
   beforeAll(async () => {
-    const moduleFixture: TestingModule = await Test.createTestingModule({
+    app = await setupTestingModule({
       imports: [
         PostsModule,
         TypeOrmModule.forRoot(typeOrmConfig),
         UsersModule,
         AuthModule,
       ],
-    }).compile();
-
-    app = moduleFixture.createNestApplication();
-    await app.init();
+    });
 
     const data = await signInUser(app);
     accessToken = data.accessToken;
