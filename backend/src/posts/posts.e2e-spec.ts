@@ -109,12 +109,14 @@ describe('Post Controller (e2e)', () => {
 
     const res = await request(app.getHttpServer())
       .get(endpoint)
+      .query({ page: 1, limit: 10 })
       .set({
         authorization: `Bearer ${accessToken}`,
       });
 
     expect(res.status).toBe(200);
-    expect(res.body.data).toBeInstanceOf(Array);
+    expect(res.body.data.items).toBeInstanceOf(Array);
+    expect(res.body.data.total).toBeGreaterThan(0);
   });
 
   afterAll(async () => {
