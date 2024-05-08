@@ -11,8 +11,6 @@ const { db } = envVariables;
 
 const migrationsPath = path.join(process.cwd(), 'src/db/migrations/*{.ts}');
 
-console.log(process.env.NODE_ENV);
-
 const typeOrmConfig: TypeOrmModuleOptions & SeederOptions = {
   type: 'postgres',
   // host: db.host || 'db', // docker-compose service name, in this case, the name of the service is db, use db only if both services are in the same network, i mean if you are using docker-compose with app service and daba service in the same docker-compose file
