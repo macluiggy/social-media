@@ -16,6 +16,7 @@
     "start:prod:bun": "bun dist/src/main.js",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "vitest run --config ./vitest.config.ts",
+    "test:all": "vitest run --config ./vitest.config.ts && vitest run --config ./vitest.config.e2e.ts",
     "test:watch": "vitest --config ./vitest.config.ts --watch",
     "test:cov": "vitest --config ./vitest.config.ts --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
