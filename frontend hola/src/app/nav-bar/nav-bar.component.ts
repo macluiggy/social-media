@@ -66,7 +66,7 @@ export class NavBarComponent {
       {
         label: 'Logout',
         command: () => this.logout(),
-        visible: true,
+        visible: this.isLoggedIn,
       },
       // Add more menu items as needed...
     ];

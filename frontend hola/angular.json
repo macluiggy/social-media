@@ -3,7 +3,16 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "frontend-no-srr": {
+    "frontend": {
+      "i18n": {
+        "sourceLocale": "en-US",
+        "locales": {
+          "es": {
+            "translation": "src/locale/messages.es.xlf",
+            "baseHref": "/es/"
+          }
+        }
+      },
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +26,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/frontend-no-srr",
+            "outputPath": "dist/frontend",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -39,16 +48,14 @@
               },
               {
                 "input": "src/light.scss",
-                "bundleName": "light",
-                "inject": false
-              },
-              {
-                "input": "src/dark.scss",
-                "bundleName": "dark",
+                "bundleName": "lara-light-blue",
                 "inject": false
               }
             ],
-            "scripts": []
+            "scripts": [],
+            "server": "src/main.server.ts",
+            "prerender": true,
+            "ssr": false
           },
           "configurations": {
             "production": {
@@ -101,10 +108,13 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "frontend-no-srr:build:production"
+              "buildTarget": "frontend:build:production"
             },
             "development": {
-              "buildTarget": "frontend-no-srr:build:development"
+              "buildTarget": "frontend:build:development"
+            },
+            "es": {
+              "buildTarget": "i18n-angular-lokalise:build:development,es"
             }
           },
           "defaultConfiguration": "development"
@@ -112,7 +122,9 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "frontend-no-srr:build"
+            "buildTarget": "frontend:build",
+            "outputPath": "src/locale",
+            "format": "json"
           }
         },
         "test": {
