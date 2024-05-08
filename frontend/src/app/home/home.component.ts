@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user/user.service';
 import { environment } from '../../environments/environment';
+// impot button module primeng
+import {ButtonModule} from 'primeng/button';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [ ButtonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })

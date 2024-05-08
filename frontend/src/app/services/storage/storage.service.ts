@@ -89,4 +89,18 @@ export class StorageService {
 
     return '';
   }
+
+  public getTheme(): string {
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('theme') || '';
+    }
+
+    return '';
+  }
+
+  public setTheme(theme: string): void {
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('theme', theme);
+    }
+  }
 }
