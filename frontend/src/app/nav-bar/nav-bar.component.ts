@@ -53,7 +53,7 @@ export class NavBarComponent {
       {
         label: 'Profile',
         routerLink: 'profile',
-        visible: this.isLoggedIn,
+        visible: false,
       },
       {
         label: 'Login',
@@ -89,10 +89,12 @@ export class NavBarComponent {
       {
         label: 'User Board',
         routerLink: 'user',
+        visible: this.isLoggedIn,
       },
       {
         label: 'Profile',
         routerLink: 'profile',
+        visible: this.isLoggedIn,
       },
       {
         label: 'Login',
