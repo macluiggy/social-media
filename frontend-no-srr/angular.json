@@ -39,7 +39,12 @@
               },
               {
                 "input": "src/light.scss",
-                "bundleName": "lara-light-blue",
+                "bundleName": "light",
+                "inject": false
+              },
+              {
+                "input": "src/dark.scss",
+                "bundleName": "dark",
                 "inject": false
               }
             ],

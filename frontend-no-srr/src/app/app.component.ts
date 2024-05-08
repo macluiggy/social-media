@@ -4,7 +4,6 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { StorageService } from './services/storage/storage.service';
-
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -59,11 +58,13 @@ export class AppComponent {
     this.storageService.setTheme('light');
 
     let themeLink = this.document.getElementById('app-theme') as HTMLLinkElement;
+    console.log('themeLink', themeLink);
+    
     
     // this.renderer.setAttribute(themeLink, 'href', `lara-${theme}-blue.css`);
 
     // this.themeSelection = state === 'dark' ? true : false;
-    themeLink.href = 'light.css';
+    themeLink.href = './dark.css';
      
   }
 }
