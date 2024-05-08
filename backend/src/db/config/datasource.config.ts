@@ -1,6 +1,6 @@
 // import * as path from 'path';
 
-import { DataSource } from 'typeorm';
+import { DataSource, DataSourceOptions } from 'typeorm';
 // import { SeederOptions } from 'typeorm-extension';
 // import UserSeeder from '../seeders/user.seeder';
 // import userFactory from '../factories/user.factory';
@@ -22,4 +22,4 @@ import typeOrmConfig from '../../../typeorm.config';
 
 export const config: any = typeOrmConfig;
 
-export default new DataSource(config);
+export default new DataSource(typeOrmConfig as DataSourceOptions);
