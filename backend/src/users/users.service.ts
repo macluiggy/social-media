@@ -14,6 +14,7 @@ import getMessages from '../lang/getMessages';
 import { Request } from 'express';
 import { REQUEST } from '@nestjs/core';
 import Lang from '../lang/lang.type';
+import { DEFAULT_LANG } from '../lang';
 
 @Injectable({
   scope: Scope.REQUEST,
@@ -26,9 +27,7 @@ export class UsersService {
     @Inject(REQUEST) private readonly request: Request,
     private dataSource: DataSource,
   ) {
-    const lang =
-      this.request.headers['accept-language'] ||
-      this.request['preferredLanguage'];
+    const lang = this.request?.['preferredLanguage'] || DEFAULT_LANG;
     this.messages = getMessages(lang);
   }
 
@@ -114,5 +113,19 @@ export class UsersService {
       where: { email },
     });
     await this.userRepository.delete(user.id);
+  }
+
+  async createUserIfNotExists(user: UserDto): Promise<Users> {
+    // if (await this.userAlreadyExists(user)) {
+    //   return null;
+    // }
+    let userEntity = await this.userRepository.findOne({
+      where: [{ email: user.email }, { username: user.username }],
+    });
+    if (!userEntity) {
+      userEntity = await this.create(user);
+    }
+
+    return userEntity;
   }
 }

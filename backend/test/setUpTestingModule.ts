@@ -3,6 +3,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ModuleMetadata } from '@nestjs/common';
 import { SuccesResponseInterceptor } from '../src/common/interceptors/succes-request-response.interceptor';
 import { AppModule } from '../src/app.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import entities from '../src/db/entities';
 
 export default async function setupTestingModule({
   imports = [],
@@ -16,7 +18,7 @@ export default async function setupTestingModule({
   providers?: ModuleMetadata['providers'];
 } = {}) {
   const moduleFixture: TestingModule = await Test.createTestingModule({
-    imports: [AppModule, ...imports],
+    imports: [AppModule, TypeOrmModule.forFeature(entities), ...imports],
     exports,
     controllers,
     providers,

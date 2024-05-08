@@ -7,7 +7,7 @@ import getApiEndpoint from '../common/utils/getApiEndpoint';
 import { it } from 'vitest';
 import { Users } from '../users/users.entity';
 import { UsersModule } from '../users/users.module';
-import { signInUser } from '../auth/utils/singInUser';
+import { USERNAME_FOR_TESTING, signInUser } from '../auth/utils/singInUser';
 import { AuthModule } from '../auth/auth.module';
 import setupTestingModule from '../../test/setUpTestingModule';
 
@@ -62,7 +62,7 @@ describe('UsersController (e2e)', () => {
       .set({
         authorization: `Bearer ${accessToken}`,
       })
-      .send({ username: 'updated_username' });
+      .send({ username: USERNAME_FOR_TESTING });
 
     expect(res.status).toBe(200);
   });
