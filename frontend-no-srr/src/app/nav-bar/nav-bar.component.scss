@@ -1,0 +1,50 @@
+@media (max-width: 767.98px) {
+  .bottom-nav {
+    display: flex;
+    justify-content: space-around;
+  }
+  .bottom-nav a {
+    text-align: center;
+  }
+}
+
+nav {
+  background-color: red($color: #000000);
+}
+
+.container-fluid {
+  display: flex;
+}
+.left-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  background-color: #000000;
+  height: 100vh !important;
+  border: 1px solid #000000;
+  flex: 0 0 auto;
+}
+
+.hola {
+  color: red;
+  height: 100px;
+  width: 100px;
+  background-color: #000000;
+}
+.p-menubar {
+  color: #000000;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+  padding: 0;
+  background-color: red($color: #000000);
+}
+
+.p-menubar .p-menuitem-link {
+  color: #fff;
+}
+
+.p-menubar .p-menuitem-link:hover {
+  background-color: #555;
+}
