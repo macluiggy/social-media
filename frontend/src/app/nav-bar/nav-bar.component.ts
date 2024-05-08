@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { StorageService } from '../services/storage/storage.service';
 import { AuthService } from '../services/auth/auth.service';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { MenubarModule } from 'primeng/menubar';
 import { CommonModule } from '@angular/common';
@@ -33,8 +33,49 @@ export class NavBarComponent {
 
   constructor(
     private storageService: StorageService,
-    private authService: AuthService
+    private authService: AuthService,
+    private  router: Router
   ) {
+    this.items = [
+      {
+        label: 'Home',
+        routerLink: 'home',
+      },
+      {
+        label: 'Admin Board',
+        routerLink: 'admin',
+        visible: this.showAdminBoard,
+      },
+      {
+        label: 'User Board',
+        routerLink: 'user',
+      },
+      {
+        label: 'Profile',
+        routerLink: 'profile',
+        visible: this.isLoggedIn,
+      },
+      {
+        label: 'Login',
+        routerLink: 'login',
+        visible: !this.isLoggedIn,
+        command: () => this.logout(),
+      },
+      {
+        label: 'Register',
+        routerLink: 'register',
+        visible: !this.isLoggedIn,
+      },
+      {
+        label: 'Logout',
+        command: () => this.logout(),
+        visible: this.isLoggedIn,
+      },
+      // Add more menu items as needed...
+    ];
+  }
+
+  updateMenuItems(): void {
     this.items = [
       {
         label: 'Home',
@@ -66,7 +107,7 @@ export class NavBarComponent {
       {
         label: 'Logout',
         command: () => this.logout(),
-        visible: true,
+        visible: this.isLoggedIn,
       },
       // Add more menu items as needed...
     ];
@@ -76,6 +117,7 @@ export class NavBarComponent {
     this.authService.getIsLoggedIn().subscribe((loggedIn) => {
       this.isLoggedIn = loggedIn;
       this.username = this.storageService.getUser().username;
+      this.updateMenuItems();
     });
     this.isLoggedIn = this.storageService.isLoggedIn();
 
@@ -84,6 +126,7 @@ export class NavBarComponent {
 
       this.username = user.username;
     }
+    this.updateMenuItems();
   }
 
   logout(): void {
@@ -91,6 +134,7 @@ export class NavBarComponent {
       next: (res) => {
         this.storageService.clean();
         this.authService.setIsLoggedIn(false);
+        this.router.navigate(['/login']);
       },
       error: (err) => {
         console.log(err);
