@@ -1,14 +1,11 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 // import { AppModule } from './../src/app.module';
-import { AuthModule } from './auth.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import typeOrmConfig from '../../typeorm.config';
 import getApiEndpoint from '../common/utils/getApiEndpoint';
 import { it } from 'vitest';
 import { Users } from '../users/users.entity';
 import { Repository } from 'typeorm';
+import setupTestingModule from '../../test/setUpTestingModule';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -22,11 +19,10 @@ describe('AppController (e2e)', () => {
   user.fullName = 'example';
 
   beforeAll(async () => {
-    const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AuthModule, TypeOrmModule.forRoot(typeOrmConfig)],
-    }).compile();
+    const testingModule = await setupTestingModule();
 
-    app = moduleFixture.createNestApplication();
+    app = testingModule.app;
+    const moduleFixture = testingModule.testingModule;
     userRepository = moduleFixture.get('UsersRepository');
     await app.init();
   });
