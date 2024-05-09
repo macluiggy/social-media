@@ -191,4 +191,8 @@ export class NavBarComponent {
   toggleProfileMenu(): void {
     this.showProfileMenu = !!this.showProfileMenu;
   }
+
+  closeCallback(): void {
+    this.sidebarVisible = !this.sidebarVisible;
+  }
 }
