@@ -100,12 +100,18 @@ export class NavBarComponent {
       {
         label: 'Profile',
         icon: 'pi pi-fw pi-user',
+        routerLink: 'profile',
       },
       {
         label: 'Logout',
         icon: 'pi pi-fw pi-sign-out',
         command: () => this.logout(),
       },
+      {
+        label: 'Settings',
+        icon: 'pi pi-fw pi-cog',
+        routerLink: 'user',
+      }
     ];
   }
 
