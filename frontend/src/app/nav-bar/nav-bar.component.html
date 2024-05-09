@@ -104,7 +104,9 @@
                 ></p-button>
               </span>
             </div>
-            <div class="overflow-y-auto">
+
+            <!-- side bar items -->
+            <div class="">
               <!-- <ul class="list-none p-3 m-0">
                 <li>
                   <div
@@ -249,17 +251,26 @@
               </ul> -->
               <ul class="list-none p-3 m-0">
                 <li>
-                  <div
-                    pRipple
-                    pStyleClass="@next"
-                    enterClass="hidden"
-                    enterActiveClass="slidedown"
-                    leaveToClass="hidden"
-                    leaveActiveClass="slideup"
-                    class="p-3 flex align-items-center justify-content-between text-600 cursor-pointer p-ripple"
-                  >
+                  <div>
                     <span class="font-medium" routerLink="APPLICATION">
+                      <i
+                        class="pi pi-th-large icon-margin-right"
+                        style="font-size: 1.2rem"
+                      ></i>
                       <a routerLink="APPLICATION">APPLICATION</a>
+                    </span>
+                  </div>
+                </li>
+              </ul>
+              <ul class="list-none p-3 m-0">
+                <li>
+                  <div>
+                    <span class="font-medium" routerLink="Home">
+                      <i
+                        class="pi pi-home icon-margin-right"
+                        style="font-size: 1.2rem"
+                      ></i>
+                      <a routerLink="Home">Home</a>
                     </span>
                   </div>
                 </li>

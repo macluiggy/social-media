@@ -1,50 +1,3 @@
-// @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500&display=swap");
-
-// *,
-// *::before,
-// *::after {
-//   margin: 0;
-//   padding: 0;
-//   box-sizing: border-box;
-// }
-
-// body {
-//   font-family: "Roboto", sans-serif;
-//   background-color: #0f0f0f;
-//   height: 100vh;
-//   color: white;
-//   display: flex;
-//   overflow: hidden;
-// }
-
-.sidebar {
-  width: 80px;
-  height: 100%;
-  padding: 16px 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-}
-
-.menu-btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 8px;
-  cursor: pointer;
-  border-radius: 50%;
-}
-.menu-btn:hover {
-  background-color: #272727;
-}
-
-.sidebar-items {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-}
-
 .item {
   display: flex;
   flex-direction: column;
@@ -65,20 +18,20 @@
   font-size: 11px;
 }
 
-#menu {
-  width: 240px;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: black;
-  padding: 16px 12px;
-  display: flex;
-  flex-direction: column;
-  transform: translateX(-100%);
-  transition: transform 0.5s ease;
-  z-index: 10;
-}
+// #menu {
+//   width: 240px;
+//   height: 100%;
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   background-color: black;
+//   padding: 16px 12px;
+//   display: flex;
+//   flex-direction: column;
+//   transform: translateX(-100%);
+//   transition: transform 0.5s ease;
+//   z-index: 10;
+// }
 #menu.visible {
   transform: translateX(0);
 }
@@ -154,4 +107,8 @@ p-avatar {
 ng-template {
   border: 1px solid red;
   display: none;
+}
+
+.icon-margin-right {
+  margin-right: 10px;
 }
