@@ -1,14 +1,22 @@
 <!-- Hero Section -->
+@if(!isLoggedIn){
 <header class="jumbotron text-center">
-  <h1>Angular Template, {{test}}</h1>
+  <h1>Angular Template, {{ test }}</h1>
   <p>
     This is a simple hero unit, a simple jumbotron-style component for calling
   </p>
   <!-- <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p> -->
-  <p><a class="btn btn-primary btn-lg" href="#" routerLink="#" role="button">Learn more</a></p>
+  <p>
+    <a class="btn btn-primary btn-lg" href="#" routerLink="#" role="button"
+      >Learn more</a
+    >
+  </p>
   <p-button label="Click"></p-button>
 </header>
 
+} @else {
+  show posts
+}
 <!-- Footer -->
 <footer class="footer mt-auto py-3 bg-light">
   <div class="container text-center">
