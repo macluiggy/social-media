@@ -1,3 +1,39 @@
+// button {
+//   border-radius: 1rem;
+// }
+
+$button-signin-color: #e67b7b;
+$button-signup-color: #d85353;
+
 button {
   border-radius: 1rem;
 }
+
+.test {
+  border-radius: 2rem;
+}
+
+.navbar-singin {
+  background-color: $button-signin-color;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 3px;
+}
+.navbar-singin:hover {
+  background-color: lighten($button-signin-color, 10%);
+}
+
+.navbar-signup {
+  background-color: $button-signup-color;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 3px;
+}
+.navbar-signup:hover {
+  background-color: lighten($button-signup-color, 10%);
+}
+
