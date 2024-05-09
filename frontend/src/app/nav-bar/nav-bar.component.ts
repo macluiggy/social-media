@@ -7,7 +7,12 @@ import { MenubarModule } from 'primeng/menubar';
 import { CommonModule } from '@angular/common';
 import { AvatarModule } from 'primeng/avatar';
 import { BadgeModule } from 'primeng/badge';
-import { MenuItem } from 'primeng/api';
+import { MegaMenuItem, MenuItem } from 'primeng/api';
+import { MegaMenuModule } from 'primeng/megamenu';
+import { SidebarModule } from 'primeng/sidebar';
+import { ButtonModule } from 'primeng/button';
+import { MenuModule } from 'primeng/menu';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-nav-bar',
@@ -19,6 +24,11 @@ import { MenuItem } from 'primeng/api';
     CommonModule,
     AvatarModule,
     BadgeModule,
+    MegaMenuModule,
+    SidebarModule,
+    ButtonModule,
+    MenuModule,
+    ToastModule,
   ],
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.scss',
@@ -30,11 +40,15 @@ export class NavBarComponent {
   showModeratorBoard = false;
   username?: string;
   items: MenuItem[];
+  showProfileMenu = false;
+  megaMenuItems: MegaMenuItem[] = [];
+  sidebarVisible = false;
+  pMenuItems: MenuItem[];
 
   constructor(
     private storageService: StorageService,
     private authService: AuthService,
-    private  router: Router
+    private router: Router
   ) {
     this.items = [
       {
@@ -73,6 +87,26 @@ export class NavBarComponent {
       },
       // Add more menu items as needed...
     ];
+
+    this.megaMenuItems = [
+      {
+        label: 'Logot',
+        icon: 'pi pi-fw pi-home',
+        command: () => this.logout(),
+      },
+    ];
+
+    this.pMenuItems = [
+      {
+        label: 'Profile',
+        icon: 'pi pi-fw pi-user',
+      },
+      {
+        label: 'Logout',
+        icon: 'pi pi-fw pi-sign-out',
+        command: () => this.logout(),
+      },
+    ];
   }
 
   updateMenuItems(): void {
@@ -94,7 +128,17 @@ export class NavBarComponent {
       {
         label: 'Profile',
         routerLink: 'profile',
-        visible: this.isLoggedIn,
+        // visible: this.isLoggedIn,
+        items: [
+          {
+            label: 'Profile',
+            routerLink: 'profile',
+          },
+          {
+            label: 'Logout',
+            command: () => this.logout(),
+          },
+        ],
       },
       {
         label: 'Login',
@@ -142,5 +186,9 @@ export class NavBarComponent {
         console.log(err);
       },
     });
+  }
+
+  toggleProfileMenu(): void {
+    this.showProfileMenu = !!this.showProfileMenu;
   }
 }

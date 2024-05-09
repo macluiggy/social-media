@@ -28,7 +28,7 @@ export class AppComponent {
     private themeService: ThemeService
   ) {
     translate.setDefaultLang('es');
-    themeService.switchTheme('dark');
+    themeService.switchTheme('light');
   }
 
   switchLanguage(language: string) {
