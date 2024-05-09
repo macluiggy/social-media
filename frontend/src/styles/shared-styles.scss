@@ -1,3 +1,6 @@
+// import this file in the scss components that need it
+// if you want to share styles globally use global-shared-styles.scss
+
 .form-container {
   width: 50%;
   max-width: 600px;
@@ -16,4 +19,8 @@
   max-width: 200px;
   margin: 0 auto;
   display: block;
+}
+
+button {
+  border-radius: 1rem;
 }
