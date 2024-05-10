@@ -10,3 +10,10 @@
   background-color: #f5f5f5; /* Change the background color */
   cursor: pointer; /* Change the cursor to a hand pointer */
 }
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px; /* Adjust as needed */
+}

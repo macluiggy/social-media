@@ -1,12 +1,10 @@
 <div
   infiniteScroll
-  [infiniteScrollDistance]="2"
-  [infiniteScrollThrottle]="50"
+  [infiniteScrollDistance]="1"
+  [infiniteScrollThrottle]="5"
   (scrolled)="onScroll()"
 >
-  @if (loading) {
-  <app-custom-progress-loading></app-custom-progress-loading>
-  } @if (!loading) { @for (post of randomPosts; track $index) {
+  @for (post of randomPosts; track $index) {
   <div>
     <p-card styleClass="postsCard" [style]="{}">
       <p-header>
@@ -19,5 +17,9 @@
           <p>Likes: {{ post.likes }}</p> -->
     </p-card>
   </div>
-  } }
+  } @if (loading) {
+    <div class="spinner-container">
+      <p-progressSpinner></p-progressSpinner>
+    </div>
+  }
 </div>
