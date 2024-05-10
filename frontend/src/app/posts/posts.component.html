@@ -4,7 +4,9 @@
   [infiniteScrollThrottle]="50"
   (scrolled)="onScroll()"
 >
-  @for (post of randomPosts; track $index) {
+  @if (!loading) {
+  <app-custom-progress-loading></app-custom-progress-loading>
+  } @if (!loading) { @for (post of randomPosts; track $index) {
   <div>
     <p-card styleClass="postsCard" [style]="{}">
       <p-header>
@@ -14,8 +16,8 @@
       <p>{{ post.content }}</p>
       <!-- Future features -->
       <!-- <p>Comments: {{ post.comments.length }}</p>
-        <p>Likes: {{ post.likes }}</p> -->
+          <p>Likes: {{ post.likes }}</p> -->
     </p-card>
   </div>
-  }
+  } }
 </div>
