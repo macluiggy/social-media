@@ -5,6 +5,15 @@
 @import "ngx-toastr/toastr";
 
 @import "styles/globat-shared-styles.scss";
+/* Set the font for the entire application */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Set the primary color for the entire application */
+.primary-color {
+  color: #007bff;
+}
 
 .container {
   display: flex;
