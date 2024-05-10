@@ -4,11 +4,12 @@ import { environment } from '../../environments/environment';
 // impot button module primeng
 import { ButtonModule } from 'primeng/button';
 import { StorageService } from '../services/storage/storage.service';
+import { PostsComponent } from '../posts/posts.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ButtonModule],
+  imports: [ButtonModule, PostsComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
