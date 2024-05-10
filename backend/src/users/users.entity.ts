@@ -2,7 +2,9 @@ import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { DEFAULT_LANG } from '../lang';
 
-@Entity()
+@Entity({
+  name: 'users',
+})
 export class Users {
   @PrimaryGeneratedColumn('increment')
   id: number;

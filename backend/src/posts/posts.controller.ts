@@ -38,6 +38,17 @@ export class PostsController {
     this.messages = getMessages(lang);
   }
 
+  @Get('random')
+  @ApiOperation({
+    summary: 'Get random posts along with the user who created each post',
+  })
+  async findRandomPosts(
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 10,
+  ) {
+    return await this.postsService.findRandomPosts({ page, limit });
+  }
+
   @Post()
   @ApiOperation({ summary: 'Create a new post' })
   async create(@Body() createPostDto: CreatePostDto) {

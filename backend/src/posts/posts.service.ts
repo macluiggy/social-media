@@ -62,4 +62,51 @@ export class PostsService {
       { where: { userId } },
     );
   }
+
+  /**
+   * Finds random posts along with the user who created each post.
+   *
+   * @param options - The options for pagination.
+   * @param options.page - The page number for pagination.
+   * @param options.limit - The maximum number of posts per page.
+   * @returns - A promise that resolves to the paginated posts.
+   */
+  async findRandomPosts({ page, limit }) {
+    const skip = (page - 1) * limit;
+    const posts = await this.postsRepository
+      .createQueryBuilder('post')
+      .leftJoin('post.user', 'user')
+      .addSelect('user.username')
+      .addSelect('user.fullName')
+      .skip(skip)
+      .take(limit)
+      .getMany();
+
+    const total = await this.postsRepository.count();
+
+    // TODO: create a class so this way of result is standardized
+    return {
+      items: posts,
+      total,
+      page,
+      limit,
+    };
+    // const result = await this.postsRepository.findAndCount({
+    //   relations: {
+    //     user: true,
+    //   },
+    //   order: { id: 'DESC' },
+    //   skip,
+    //   take: 2,
+    // });
+    // const result = await this.postsRepository.find({
+    //   relations: {
+    //     user: true,
+    //   },
+    //   order: { id: 'DESC' },
+    //   skip,
+    //   take: 2,
+    // });
+    // return result;
+  }
 }

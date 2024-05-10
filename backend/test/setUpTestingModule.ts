@@ -5,6 +5,7 @@ import { SuccesResponseInterceptor } from '../src/common/interceptors/succes-req
 import { AppModule } from '../src/app.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import entities from '../src/db/entities';
+import { HttpExceptionFilter } from '../src/common/filters/http-exception.filter';
 
 export default async function setupTestingModule({
   imports = [],
@@ -25,6 +26,7 @@ export default async function setupTestingModule({
   }).compile();
 
   const app = moduleFixture.createNestApplication();
+  app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalInterceptors(new SuccesResponseInterceptor());
   await app.init();
 

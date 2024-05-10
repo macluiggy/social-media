@@ -119,6 +119,22 @@ describe('Post Controller (e2e)', () => {
     expect(res.body.data.total).toBeGreaterThan(0);
   });
 
+  it('/post/random GET, should get random posts', async () => {
+    const endpoint = getApiEndpoint('posts/random');
+
+    const res = await request(app.getHttpServer())
+      .get(endpoint)
+      .query({ page: 1, limit: 10 })
+      .set({
+        authorization: `Bearer ${accessToken}`,
+      });
+    console.log(JSON.stringify(res.body, null, 2));
+
+    // expect(res.status).toBe(200);
+    // expect(res.body.data.items).toBeInstanceOf(Array);
+    // expect(res.body.data.total).toBeGreaterThan(0);
+  });
+
   afterAll(async () => {
     // delete the post
     const createdPost = await postsRepository.findOne({
