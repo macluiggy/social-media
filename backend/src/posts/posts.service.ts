@@ -73,16 +73,17 @@ export class PostsService {
    */
   async findRandomPosts({ page, limit }) {
     const skip = (page - 1) * limit;
-    const posts = await this.postsRepository
+    const query = this.postsRepository
       .createQueryBuilder('post')
       .leftJoin('post.user', 'user')
       .addSelect('user.username')
       .addSelect('user.fullName')
       .skip(skip)
-      .take(limit)
-      .getMany();
+      .take(limit);
 
-    const total = await this.postsRepository.count();
+    const posts = await query.getMany();
+
+    const total = await query.getCount();
 
     // TODO: create a class so this way of result is standardized
     return {
