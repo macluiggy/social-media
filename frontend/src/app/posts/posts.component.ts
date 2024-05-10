@@ -1,17 +1,21 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PostsService } from '../services/posts/posts.service';
 import { CardModule } from 'primeng/card';
-import { SuccessResponse } from '../common/types';
 import { RandomPosts } from './posts.type';
 import { CommonModule, NgFor } from '@angular/common';
-import { throttleTime, filter, map, tap } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
-import { fromEvent } from 'rxjs';
+import { VirtualScrollerModule } from 'primeng/virtualscroller';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @Component({
   selector: 'app-posts',
   standalone: true,
-  imports: [CardModule, CommonModule, NgFor],
+  imports: [
+    CardModule,
+    CommonModule,
+    NgFor,
+    VirtualScrollerModule,
+    InfiniteScrollModule,
+  ],
   templateUrl: './posts.component.html',
   styleUrl: './posts.component.scss',
 })
@@ -28,20 +32,9 @@ export class PostsComponent implements OnInit, OnDestroy {
   ] as RandomPosts[];
   private page = 1;
   private limit = 5;
-  private scrollSubscription: Subscription;
 
   constructor(private postsService: PostsService) {
     this.fetchPosts();
-    this.scrollSubscription = fromEvent(window, 'scroll')
-      .pipe(
-        throttleTime(1000),
-        filter(
-          () =>
-            window.innerHeight + window.scrollY >= document.body.offsetHeight
-        ),
-        tap(() => this.fetchPosts())
-      )
-      .subscribe();
   }
   ngOnDestroy(): void {
     throw new Error('Method not implemented.');
@@ -50,19 +43,18 @@ export class PostsComponent implements OnInit, OnDestroy {
   ngOnInit() {}
 
   private fetchPosts() {
-    console.log('fetching posts');
-    
     this.postsService.getRandomPosts({ limit: 5, page: this.page }).subscribe({
       next: (response: any) => {
-        this.randomPosts = [
-          ...this.randomPosts,
-          ...(response.data.items as RandomPosts[]),
-        ];
+        this.randomPosts = [...this.randomPosts, ...response.data.items];
         this.page++;
       },
       error: (error) => {
         console.error(error);
       },
     });
+  }
+
+  onScroll() {
+    this.fetchPosts();
   }
 }
