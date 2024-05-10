@@ -17,4 +17,12 @@ export class PostsService {
       },
     });
   }
+
+  createPost({ title, content }: { title: string; content: string }) {
+    const post = {
+      title,
+      content,
+    };
+    return this.http.post(`${this.apiUrl}/posts`, post);
+  }
 }
