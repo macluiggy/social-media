@@ -77,6 +77,9 @@ export class PostsService {
       .createQueryBuilder('post')
       .leftJoin('post.user', 'user')
       .addSelect(['user.username', 'user.fullName'])
+      .addSelect('RANDOM()', 'random_value') // Alias the RANDOM() function
+      .orderBy('random_value', 'ASC') // Use the alias in the orderBy clause
+      .addOrderBy('post.id', 'ASC')
       .skip(skip)
       .take(limit);
 
@@ -91,22 +94,5 @@ export class PostsService {
       page,
       limit,
     };
-    // const result = await this.postsRepository.findAndCount({
-    //   relations: {
-    //     user: true,
-    //   },
-    //   order: { id: 'DESC' },
-    //   skip,
-    //   take: 2,
-    // });
-    // const result = await this.postsRepository.find({
-    //   relations: {
-    //     user: true,
-    //   },
-    //   order: { id: 'DESC' },
-    //   skip,
-    //   take: 2,
-    // });
-    // return result;
   }
 }
