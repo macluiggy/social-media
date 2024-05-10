@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { StorageService } from '../storage/storage.service';
 
@@ -25,7 +25,15 @@ export class AuthService {
   }
 
   logout() {
-    return this.http.post(`${this.apiUrl}/auth/logout`, {});
+    return this.http.post(`${this.apiUrl}/auth/logout`, {}).pipe(
+      tap(() => {
+        this.setIsLoggedIn(false);
+        this.storageService.clean();
+      }),
+      catchError((error) => {
+        throw error;
+      })
+    );
   }
 
   setToken(token: string) {

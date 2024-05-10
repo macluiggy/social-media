@@ -183,9 +183,7 @@ export class NavBarComponent {
 
   logout(): void {
     this.authService.logout().subscribe({
-      next: (res) => {
-        this.storageService.clean();
-        this.authService.setIsLoggedIn(false);
+      next: () => {
         this.router.navigate(['/login']);
       },
       error: (err) => {
