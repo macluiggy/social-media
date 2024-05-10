@@ -75,7 +75,7 @@ export class PostsService {
     const skip = (page - 1) * limit;
     const query = this.postsRepository
       .createQueryBuilder('post')
-      .leftJoinAndSelect('post.user', 'user')
+      .leftJoin('post.user', 'user')
       .addSelect(['user.username', 'user.fullName'])
       .skip(skip)
       .take(limit);

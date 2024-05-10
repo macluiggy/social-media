@@ -1,1 +1,16 @@
-<p>posts works!</p>
+<div>
+  @for (post of randomPosts; track $index) {
+  <div>
+    <p-card>
+      <p-header>
+        <div class="user-info">Posted by {{ post.user.username }}</div>
+        <h2>{{ post.title }}</h2>
+      </p-header>
+      <p>{{ post.content }}</p>
+      <!-- Future features -->
+      <!-- <p>Comments: {{ post.comments.length }}</p>
+        <p>Likes: {{ post.likes }}</p> -->
+    </p-card>
+  </div>
+  }
+</div>
