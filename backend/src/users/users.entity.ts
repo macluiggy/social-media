@@ -18,7 +18,13 @@ export class Users {
   @Column({ name: 'email', type: 'varchar', length: 100, unique: true })
   email: string;
 
-  @Column({ name: 'password', type: 'varchar', length: 150, nullable: true })
+  @Column({
+    name: 'password',
+    type: 'varchar',
+    length: 150,
+    nullable: true,
+    select: false,
+  })
   password: string;
 
   @Column({ name: 'is_password_reset', type: 'boolean', default: false })
