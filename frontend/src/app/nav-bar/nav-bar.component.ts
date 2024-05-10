@@ -13,6 +13,8 @@ import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
 import { ToastModule } from 'primeng/toast';
+import {DialogModule} from 'primeng/dialog';
+import { CreatePostComponent } from '../posts/create-post/create-post.component';
 
 @Component({
   selector: 'app-nav-bar',
@@ -29,6 +31,8 @@ import { ToastModule } from 'primeng/toast';
     ButtonModule,
     MenuModule,
     ToastModule,
+    DialogModule,
+    CreatePostComponent
   ],
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.scss',
@@ -44,6 +48,7 @@ export class NavBarComponent {
   megaMenuItems: MegaMenuItem[] = [];
   sidebarVisible = false;
   pMenuItems: MenuItem[];
+  displayCreatePostDialog = false;
 
   constructor(
     private storageService: StorageService,

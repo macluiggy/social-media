@@ -24,8 +24,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
   styleUrl: './posts.component.scss',
 })
 export class PostsComponent implements OnInit, OnDestroy {
-  randomPosts: RandomPosts[] = [
-  ] as RandomPosts[];
+  randomPosts: RandomPosts[] = [] as RandomPosts[];
   private page = 1;
   private limit = 5;
   firstLoad = true;
@@ -35,28 +34,29 @@ export class PostsComponent implements OnInit, OnDestroy {
     this.fetchPosts();
   }
   ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
+    console.log(`
+  ngOnDestroy is for cleaning up any subscriptions or other resources before the component is destroyed.
+  a component is destroyed when it is removed from the DOM. that can happen when the user navigates to a different route or when the user closes the browser tab.
+    `);
   }
 
   ngOnInit() {}
 
   private fetchPosts() {
     this.loading = true;
-    this.postsService
-        .getRandomPosts({ limit: 5, page: this.page })
-        .subscribe({
-          next: (response: any) => {
-            this.randomPosts = [...this.randomPosts, ...response.data.items];
-            this.page++;
-          },
-          error: (error) => {
-            console.error(error);
-          },
-          complete: () => {
-            this.loading = false;
-            this.firstLoad = false;
-          },
-        });
+    this.postsService.getRandomPosts({ limit: 5, page: this.page }).subscribe({
+      next: (response: any) => {
+        this.randomPosts = [...this.randomPosts, ...response.data.items];
+        this.page++;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {
+        this.loading = false;
+        this.firstLoad = false;
+      },
+    });
   }
 
   onScroll() {

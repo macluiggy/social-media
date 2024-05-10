@@ -334,10 +334,21 @@
       [rounded]="true"
     />
     } @if (isLoggedIn) {
+
+    <p-button
+      styleClass="navbar-create-post"
+      label=""
+      routerLink="create-post"
+      [rounded]="true"
+    >
+      <i class="pi pi-plus"></i>
+      Create Post
+    </p-button>
+
     <p-avatar
       image="https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png"
       shape="circle"
-      (click)="menu.toggle($event)" 
+      (click)="menu.toggle($event)"
     ></p-avatar>
     <p-menu
       #menu
