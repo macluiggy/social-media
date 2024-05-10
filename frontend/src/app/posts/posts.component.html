@@ -4,7 +4,7 @@
   [infiniteScrollThrottle]="50"
   (scrolled)="onScroll()"
 >
-  @if (!loading) {
+  @if (loading) {
   <app-custom-progress-loading></app-custom-progress-loading>
   } @if (!loading) { @for (post of randomPosts; track $index) {
   <div>
