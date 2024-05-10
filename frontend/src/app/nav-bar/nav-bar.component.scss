@@ -24,3 +24,13 @@ $button-signup-color: #d85353;
 .navbar-signup:hover {
   background-color: lighten($button-signup-color, 10%);
 }
+
+.sidebar-button {
+  background-color: transparent;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  margin: 3px;
+  font-size: large;
+}
