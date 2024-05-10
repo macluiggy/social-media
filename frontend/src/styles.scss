@@ -5,6 +5,9 @@
 @import "ngx-toastr/toastr";
 
 @import "styles/globat-shared-styles.scss";
+
+// color variables
+$primary-color: #007bff;
 /* Set the font for the entire application */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -12,7 +15,7 @@ body {
 
 /* Set the primary color for the entire application */
 .primary-color {
-  color: #007bff;
+  color: $primary-color;
 }
 
 .container {

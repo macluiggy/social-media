@@ -40,6 +40,7 @@ export class AppComponent {
     });
     translate.setDefaultLang('es');
     themeService.switchTheme('light');
+    // themeService.switchTheme('dark');
   }
 
   switchLanguage(language: string) {
