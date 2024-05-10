@@ -1,9 +1,13 @@
 <div>
   @for (post of randomPosts; track $index) {
   <div>
-    <p-card>
+    <p-card
+      styleClass="postsCard"
+      [style]="{
+    }"
+    >
       <p-header>
-        <div class="user-info">Posted by {{ post.user.username }}</div>
+        <div class="user-info">&#64;{{ post.user.username }}</div>
         <h2>{{ post.title }}</h2>
       </p-header>
       <p>{{ post.content }}</p>
