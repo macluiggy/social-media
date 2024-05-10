@@ -4,11 +4,15 @@
 @import "primeng/resources/primeng.css";
 @import "ngx-toastr/toastr";
 
-@import "styles/globat-shared-styles.scss";
+// component styles
+@import "./app/nav-bar/nav-bar.component.scss";
+@import "./app/posts/posts.component.scss";
+
+// variables
 @import "./variables.scss";
 /* Set the font for the entire application */
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Set the primary color for the entire application */
@@ -48,4 +52,21 @@ body {
   .container .section-right {
     display: none;
   }
+}
+
+button {
+  border-radius: 1rem;
+}
+
+.test {
+  border-radius: 2rem;
+}
+
+a {
+  color: inherit;
+  text-decoration: none; // Optional: This will remove the underline from the links
+}
+
+p-button {
+  border-radius: 12rem;
 }
