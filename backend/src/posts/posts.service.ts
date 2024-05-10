@@ -76,8 +76,7 @@ export class PostsService {
     const query = this.postsRepository
       .createQueryBuilder('post')
       .leftJoin('post.user', 'user')
-      .addSelect('user.username')
-      .addSelect('user.fullName')
+      .addSelect(['user.username', 'user.fullName'])
       .skip(skip)
       .take(limit);
 
