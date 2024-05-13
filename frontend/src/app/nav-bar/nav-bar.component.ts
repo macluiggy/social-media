@@ -49,12 +49,15 @@ export class NavBarComponent {
   sidebarVisible = false;
   pMenuItems: MenuItem[];
   displayCreatePostDialog = false;
+  userId: number
 
   constructor(
     private storageService: StorageService,
     private authService: AuthService,
     private router: Router
   ) {
+    this.userId = this.storageService.getUser().id;
+    
     this.items = [
       {
         label: 'Home',
@@ -105,7 +108,8 @@ export class NavBarComponent {
       {
         label: 'Profile',
         icon: 'pi pi-fw pi-user',
-        routerLink: 'profile',
+        // routerLink: 'profile',
+        routerLink: `profile/user/${this.userId}`
       },
       {
         label: 'Logout',
