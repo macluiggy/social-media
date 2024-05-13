@@ -47,6 +47,7 @@ export class PostsComponent implements OnInit, OnDestroy {
     this.postsService.getRandomPosts({ limit: 5, page: this.page }).subscribe({
       next: (response: any) => {
         this.randomPosts = [...this.randomPosts, ...response.data.items];
+        
         this.page++;
       },
       error: (error) => {

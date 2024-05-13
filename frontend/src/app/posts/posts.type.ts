@@ -6,7 +6,7 @@ type RandomPosts = {
   createdAt: string;
   updatedAt: string;
   user: {
-    username: string;
+    username?: string | null;
     fullName: string;
   };
 };

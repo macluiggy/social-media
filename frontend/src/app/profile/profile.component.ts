@@ -4,11 +4,16 @@ import { ActivatedRoute } from '@angular/router';
 import { CardModule } from 'primeng/card';
 import { PostsService } from '../services/posts/posts.service';
 import { TPost } from '../posts/posts.type';
+// import module for p-tabPanel
+import { TabView, TabViewModule } from 'primeng/tabview';
+// also for p-tabMenu
+import { TabMenuModule } from 'primeng/tabmenu';
 
 @Component({
   selector: 'app-profile',
+  providers: [TabView],
   standalone: true,
-  imports: [CardModule],
+  imports: [CardModule, TabViewModule, TabMenuModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
 })
@@ -37,7 +42,7 @@ export class ProfileComponent {
     this.postsService.getUserPosts({ userId: this.userId }).subscribe({
       next: (res: any) => {
         console.log(res);
-        this.userPosts = res.data;
+        this.userPosts = res.data.items;
       },
       error: (err) => {
         console.error(err);
