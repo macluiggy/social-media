@@ -1,5 +1,5 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import * as path from 'path';
+// import * as path from 'path';
 import entities from './db/entities';
 import * as dotenv from 'dotenv';
 dotenv.config();
@@ -8,10 +8,11 @@ import subscribers from './db/subscribers';
 import envVariables from './common/envVariables';
 import userFactory from './db/factories/user.factory';
 import UserSeeder from './db/seeders/user.seeder';
+import DB_MIGRATIONS from './db/migrations';
 
 const { db } = envVariables;
 
-const migrationsPath = path.join(process.cwd(), 'src/db/migrations/*{.ts}');
+// const migrationsPath = path.join(__dirname, 'db/migrations/*{.ts}');
 
 const typeOrmConfig: TypeOrmModuleOptions & SeederOptions = {
   type: 'postgres',
@@ -21,9 +22,9 @@ const typeOrmConfig: TypeOrmModuleOptions & SeederOptions = {
   // database: db.databaseName || 'postgres',
   // username: db.username || 'postgres',
   url: db.databaseUrl,
-  migrations: [migrationsPath],
+  migrations: DB_MIGRATIONS,
   entities,
-  // synchronize: true,
+  synchronize: false,
   // seeds: ['serc/db/seeds/**/*{.ts}'],
   // factories: ['src/db/factories/**/*{.ts}'],
   seeds: [UserSeeder],

@@ -16,7 +16,7 @@ describe('AppController (e2e)', () => {
   user.email = 'example@mail.com';
   user.password = 'password';
   user.username = 'example';
-  user.fullName = 'example';
+  user.firstName = 'example';
 
   beforeAll(async () => {
     const testingModule = await setupTestingModule();
