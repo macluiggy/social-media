@@ -5,5 +5,10 @@
     "contact": "Contact",
     "angular-template": "Angular Template"
   },
+  "title": "Title",
+  "enterTitle": "Enter title",
+  "optional": "Optional",
+  "content": "Content",
+  "enterContent": "Enter content",
   "submit": "Submit"
 }

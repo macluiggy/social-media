@@ -5,5 +5,10 @@
     "contact": "Contacto",
     "angular-template": "Plantilla Angular"
   },
+  "title": "Título",
+  "enterTitle": "Introduzca el título",
+  "optional": "Opcional",
+  "content": "Contenido",
+  "enterContent": "Introduzca el contenido",
   "submit": "Enviar"
 }

@@ -1,27 +1,26 @@
 <form [formGroup]="postForm">
   <div class="form-group">
-    <label for="title">Title</label>
+    <label for="title">{{ 'title' | translate }}</label>
     <input
       type="text"
       pInputText
-      placeholder="Enter title"
+      placeholder="{{ 'enterTitle' | translate }}"
       formControlName="title"
       class="form-control"
     />
     <small id="emailHelp" class="form-text text-muted"
-      >Optional</small
+      >{{ 'optional' | translate }}</small
     >
   </div>
   <div class="form-group">
-    <label for="content">Content</label>
+    <label for="content">{{ 'content' | translate }}</label>
     <textarea
       class="form-control"
       id="content"
       formControlName="content"
-      placeholder="Enter content"
+      placeholder="{{ 'enterContent' | translate }}"
       rows="3">
     </textarea>
   </div>
-  <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
   <p-button [label]="'submit' | translate"></p-button>
 </form>
