@@ -1,13 +1,13 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import * as path from 'path';
-import entities from './src/db/entities';
+import entities from './db/entities';
 import * as dotenv from 'dotenv';
 dotenv.config();
 import { SeederOptions } from 'typeorm-extension';
-import subscribers from './src/db/subscribers';
-import envVariables from './src/common/envVariables';
-import userFactory from './src/db/factories/user.factory';
-import UserSeeder from './src/db/seeders/user.seeder';
+import subscribers from './db/subscribers';
+import envVariables from './common/envVariables';
+import userFactory from './db/factories/user.factory';
+import UserSeeder from './db/seeders/user.seeder';
 
 const { db } = envVariables;
 

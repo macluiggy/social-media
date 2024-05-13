@@ -2,7 +2,7 @@ import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 
 import { TypeOrmModule } from '@nestjs/typeorm';
-import typeOrmConfig from '../../typeorm.config';
+import typeOrmConfig from '../typeorm.config';
 import getApiEndpoint from '../common/utils/getApiEndpoint';
 import { it } from 'vitest';
 import { Users } from '../users/users.entity';

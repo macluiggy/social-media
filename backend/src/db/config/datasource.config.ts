@@ -9,7 +9,7 @@ import { DataSource, DataSourceOptions } from 'typeorm';
 // import envVariablesConfig from '../../common/envVariables';
 // import * as dotenv from 'dotenv';
 // import subscribers from '../subscribers';
-import typeOrmConfig from '../../../typeorm.config';
+import typeOrmConfig from '../../typeorm.config';
 // dotenv.config();
 
 // const { db } = envVariablesConfig;
