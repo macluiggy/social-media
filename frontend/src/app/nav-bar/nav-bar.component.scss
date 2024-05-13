@@ -1,6 +1,10 @@
 $button-signin-color: #e67b7b;
 $button-signup-color: #d85353;
 
+.navbar-component {
+  margin-bottom: 3rem;
+}
+
 .navbar-singin {
   background-color: $button-signin-color;
   color: white;

@@ -39,8 +39,8 @@ export class AppComponent {
       this.currentRoute = this.router.url.split('/')[1];
     });
     translate.setDefaultLang('es');
-    themeService.switchTheme('light');
-    // themeService.switchTheme('dark');
+    // themeService.switchTheme('light');
+    themeService.switchTheme('dark');
   }
 
   switchLanguage(language: string) {
