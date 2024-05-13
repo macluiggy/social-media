@@ -4,11 +4,13 @@ import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { CardModule } from 'primeng/card';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-create-post', 
   standalone: true,
-  imports: [DialogModule, ButtonModule, ReactiveFormsModule, FormsModule],
+  imports: [DialogModule, ButtonModule, ReactiveFormsModule, FormsModule, CardModule, TranslateModule],
   templateUrl: './create-post.component.html',
   styleUrl: './create-post.component.scss',
 })
