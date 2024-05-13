@@ -23,6 +23,7 @@ export class PostsService {
       title,
       content,
     };
+    
     return this.http.post(`${this.apiUrl}/posts`, post);
   }
 }

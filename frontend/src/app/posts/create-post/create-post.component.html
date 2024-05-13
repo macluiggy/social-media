@@ -1,6 +1,6 @@
-<form [formGroup]="postForm">
+<form [formGroup]="postForm" (ngSubmit)="onSubmit()">
   <div class="form-group">
-    <label for="title">{{ 'title' | translate }}</label>
+    <label for="title">{{ "title" | translate }}</label>
     <input
       type="text"
       pInputText
@@ -8,19 +8,27 @@
       formControlName="title"
       class="form-control"
     />
-    <small id="emailHelp" class="form-text text-muted"
-      >{{ 'optional' | translate }}</small
-    >
+    <small id="emailHelp" class="form-text text-muted">{{
+      "optional" | translate
+    }}</small>
   </div>
   <div class="form-group">
-    <label for="content">{{ 'content' | translate }}</label>
+    <label for="content">{{ "content" | translate }}</label>
     <textarea
       class="form-control"
       id="content"
       formControlName="content"
       placeholder="{{ 'enterContent' | translate }}"
-      rows="3">
+      rows="3"
+      (focus)="submitting = false"
+    >
     </textarea>
+    @if (postForm.get('content')?.invalid && submitting) {
+    <div class="error">
+      {{ "form.error.required" | translate }}
+      <!-- {{ postForm.get('content')?.errors | json }} -->
+    </div>
+    }
   </div>
-  <p-button [label]="'submit' | translate"></p-button>
+  <p-button [label]="'submit' | translate" type="submit"></p-button>
 </form>

@@ -10,5 +10,12 @@
   "optional": "Opcional",
   "content": "Contenido",
   "enterContent": "Introduzca el contenido",
-  "submit": "Enviar"
+  "submit": "Enviar",
+  "form": {
+    "error": {
+      "required": "This field is required",
+      "minlength": "This field must be at least 3 characters long",
+      "maxlength": "This field cannot be more than 10 characters long"
+    }
+  }
 }
