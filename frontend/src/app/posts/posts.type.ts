@@ -11,4 +11,13 @@ type RandomPosts = {
   };
 };
 
-export { RandomPosts };
+type TPost = {
+  id: number;
+  userId: number;
+  title: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export { RandomPosts, TPost };

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { StorageService } from '../services/storage/storage.service';
 import { ActivatedRoute } from '@angular/router';
 import { CardModule } from 'primeng/card';
+import { PostsService } from '../services/posts/posts.service';
+import { TPost } from '../posts/posts.type';
 
 @Component({
   selector: 'app-profile',
@@ -12,11 +14,13 @@ import { CardModule } from 'primeng/card';
 })
 export class ProfileComponent {
   currentUser: any;
-  userId: string;
+  userId: number;
+  userPosts: TPost[] = [];
 
   constructor(
     private storageService: StorageService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private postsService: PostsService
   ) {
     this.userId = this.activatedRoute.snapshot.params['userId'];
     this.currentUser = this.storageService.getUser();
@@ -25,5 +29,19 @@ export class ProfileComponent {
       this.currentUser.profilePhoto =
         'https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png';
     }
+
+    this.getUserPosts();
+  }
+
+  getUserPosts() {
+    this.postsService.getUserPosts({ userId: this.userId }).subscribe({
+      next: (res: any) => {
+        console.log(res);
+        this.userPosts = res.data;
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
   }
 }

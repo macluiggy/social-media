@@ -23,7 +23,24 @@ export class PostsService {
       title,
       content,
     };
-    
+
     return this.http.post(`${this.apiUrl}/posts`, post);
+  }
+
+  getUserPosts({
+    userId,
+    limit = 10,
+    page = 1,
+  }: {
+    userId: number;
+    limit?: number;
+    page?: number;
+  }) {
+    return this.http.get(`${this.apiUrl}/posts/user/${userId}`, {
+      params: {
+        limit,
+        page,
+      },
+    });
   }
 }

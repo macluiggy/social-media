@@ -42,13 +42,6 @@ export class CreatePostComponent {
       }),
     });
   }
-  // ngOnInit(): void {
-  //     this.postForm = this.fb.group({
-  //       title: '',
-  //       content: '',
-  //     });
-  // }
-
   onSubmit() {
     this.submitting = true;
     console.log(this.postForm.value);

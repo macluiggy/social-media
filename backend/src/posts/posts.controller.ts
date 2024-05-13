@@ -10,6 +10,7 @@ import {
   Scope,
   Inject,
   Query,
+  Req,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
@@ -51,7 +52,9 @@ export class PostsController {
 
   @Post()
   @ApiOperation({ summary: 'Create a new post' })
-  async create(@Body() createPostDto: CreatePostDto) {
+  async create(@Body() createPostDto: CreatePostDto, @Req() req: Request) {
+    const user = req['user'];
+    createPostDto.userId = user.id;
     const created = await this.postsService.create(createPostDto);
     return new ApiStandardResponse(created, this.messages.POST.CREATED);
   }
