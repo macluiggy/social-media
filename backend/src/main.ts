@@ -4,11 +4,18 @@ import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { SuccesResponseInterceptor } from './common/interceptors/succes-request-response.interceptor';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import envVariables from './common/envVariables';
+import {
+  FastifyAdapter,
+  NestFastifyApplication,
+} from '@nestjs/platform-fastify';
 
 const port = envVariables.port;
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestFastifyApplication>(
+    AppModule,
+    new FastifyAdapter(),
+  );
   app.useGlobalFilters(new HttpExceptionFilter());
   app.enableCors({
     origin: [
