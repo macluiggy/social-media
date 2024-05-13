@@ -41,5 +41,10 @@ $button-signup-color: #d85353;
 
 .navbar-create-post {
   background-color: transparent;
-  color: var(--text-color)
+  color: var(--text-color);
+  margin-right: 10px;
+}
+
+.navbar-avatar {
+  cursor: pointer;
 }
