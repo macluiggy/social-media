@@ -3,24 +3,25 @@ import { StorageService } from '../services/storage/storage.service';
 import { ActivatedRoute } from '@angular/router';
 import { CardModule } from 'primeng/card';
 import { PostsService } from '../services/posts/posts.service';
-import { TPost } from '../posts/posts.type';
+import { TPost, TPostWithUser } from '../posts/posts.type';
 // import module for p-tabPanel
 import { TabView, TabViewModule } from 'primeng/tabview';
 // also for p-tabMenu
 import { TabMenuModule } from 'primeng/tabmenu';
+import { PostsComponent } from '../posts/posts.component';
 
 @Component({
   selector: 'app-profile',
-  providers: [TabView],
+  providers: [TabView, PostsComponent],
   standalone: true,
-  imports: [CardModule, TabViewModule, TabMenuModule],
+  imports: [CardModule, TabViewModule, TabMenuModule, PostsComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
 })
 export class ProfileComponent {
   currentUser: any;
   userId: number;
-  userPosts: TPost[] = [];
+  userPosts: TPostWithUser[] = [];
 
   constructor(
     private storageService: StorageService,
