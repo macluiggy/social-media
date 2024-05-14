@@ -13,8 +13,9 @@ import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
 import { ToastModule } from 'primeng/toast';
-import {DialogModule} from 'primeng/dialog';
+import { DialogModule } from 'primeng/dialog';
 import { CreatePostComponent } from '../posts/create-post/create-post.component';
+import { UserService } from '../services/user/user.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -32,7 +33,7 @@ import { CreatePostComponent } from '../posts/create-post/create-post.component'
     MenuModule,
     ToastModule,
     DialogModule,
-    CreatePostComponent
+    CreatePostComponent,
   ],
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.scss',
@@ -49,15 +50,16 @@ export class NavBarComponent {
   sidebarVisible = false;
   pMenuItems: MenuItem[];
   displayCreatePostDialog = false;
-  userId: number
+  userId: number;
 
   constructor(
     private storageService: StorageService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private userService: UserService
   ) {
     this.userId = this.storageService.getUser().id;
-    
+
     this.items = [
       {
         label: 'Home',
@@ -96,13 +98,12 @@ export class NavBarComponent {
       // Add more menu items as needed...
     ];
 
-
     this.pMenuItems = [
       {
         label: 'Profile',
         icon: 'pi pi-fw pi-user',
         // routerLink: 'profile',
-        routerLink: `profile/user/${this.userId}`
+        routerLink: `profile/user/${this.userId}`,
       },
       {
         label: 'Logout',
@@ -113,7 +114,33 @@ export class NavBarComponent {
         label: 'Settings',
         icon: 'pi pi-fw pi-cog',
         routerLink: 'user',
-      }
+      },
+    ];
+
+    this.userService.user$.subscribe((user) => {
+      this.userId = user.id;
+      this.updatePMenusItems();
+    });
+  }
+
+  updatePMenusItems(): void {
+    this.pMenuItems = [
+      {
+        label: 'Profile',
+        icon: 'pi pi-fw pi-user',
+        // routerLink: 'profile',
+        routerLink: `profile/user/${this.userId}`,
+      },
+      {
+        label: 'Logout',
+        icon: 'pi pi-fw pi-sign-out',
+        command: () => this.logout(),
+      },
+      {
+        label: 'Settings',
+        icon: 'pi pi-fw pi-cog',
+        routerLink: 'user',
+      },
     ];
   }
 

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { StorageService } from '../storage/storage.service';
+import { UserService } from '../user/user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,8 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private userService: UserService
   ) {}
 
   signUp(credentials: any) {
@@ -21,7 +23,19 @@ export class AuthService {
   }
 
   signIn(credentials: any) {
-    return this.http.post(`${this.apiUrl}/auth/signin`, credentials);
+    return this.http.post(`${this.apiUrl}/auth/signin`, credentials).pipe(
+      tap((response: any) => {
+        const data = response.data;
+        this.storageService.saveUser(data.user);
+        this.userService.setUser(data.user);
+        this.storageService.setToken(data.accessToken);
+        this.setIsLoggedIn(true);
+      }),
+      catchError((error) => {
+        throw error;
+      })
+    
+    );
   }
 
   logout() {
