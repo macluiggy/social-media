@@ -26,9 +26,11 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 export class PostsComponent implements OnInit, OnDestroy {
   @Input() posts: TPostWithUser[] = [] as TPostWithUser[];
   firstLoad = true;
-  loading = false;
+  @Input() loading: boolean;
 
-  constructor(private postsService: PostsService) {}
+  constructor(private postsService: PostsService) {
+    this.loading = true;
+  }
   ngOnDestroy(): void {
     console.log(`
   ngOnDestroy is for cleaning up any subscriptions or other resources before the component is destroyed.

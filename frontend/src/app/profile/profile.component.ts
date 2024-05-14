@@ -22,6 +22,7 @@ export class ProfileComponent {
   currentUser: any;
   userId: number;
   userPosts: TPostWithUser[] = [];
+  loading = false
 
   constructor(
     private storageService: StorageService,
@@ -40,6 +41,7 @@ export class ProfileComponent {
   }
 
   getUserPosts() {
+    this.loading = true;
     this.postsService.getUserPosts({ userId: this.userId }).subscribe({
       next: (res: any) => {
         console.log(res);
@@ -47,6 +49,9 @@ export class ProfileComponent {
       },
       error: (err) => {
         console.error(err);
+      },
+      complete: () => {
+        this.loading = false;
       },
     });
   }

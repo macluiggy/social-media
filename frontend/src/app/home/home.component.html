@@ -21,13 +21,9 @@
   [infiniteScrollThrottle]="5"
   (scrolled)="onScroll()"
   [posts]="randomPosts"
-></app-posts>
-@if (loading) {
-  <div class="spinner-container">
-    <p-progressSpinner></p-progressSpinner>
-  </div>
-}
-}
+  [loading]="loading"
+></app-posts
+>}
 <!-- Footer -->
 <!-- <footer class="footer mt-auto py-3 bg-light">
   <div class="container text-center">
