@@ -59,7 +59,6 @@ export class ProfileComponent {
     this.loading = true;
     this.postsService.getUserPosts({ userId: this.userId }).subscribe({
       next: (res: any) => {
-        console.log(res);
         this.userPosts = res.data.items;
       },
       error: (err) => {

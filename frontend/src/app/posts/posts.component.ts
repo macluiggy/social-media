@@ -39,6 +39,7 @@ export class PostsComponent implements OnInit, OnDestroy {
   @Input() loading: boolean;
   loggedInUser = this.storageService.getUser();
   postMenuItems: MenuItem[] = [];
+  currentPost: TPostWithUser | null = null;
 
   constructor(
     private postsService: PostsService,
@@ -50,6 +51,11 @@ export class PostsComponent implements OnInit, OnDestroy {
         id: POST_MENU_ITEMS.DELETE,
         label: 'Delete',
         icon: 'pi pi-trash',
+        command: (event) => {
+          // log the post id
+          // console.log(event.item);
+          console.log('delete post', this.currentPost);
+        },
       },
       {
         id: POST_MENU_ITEMS.SAVE,
@@ -67,11 +73,18 @@ export class PostsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {}
 
-  isLoggedInUserPost(post: TPostWithUser) {
+  isLoggedInUserPost(post: TPostWithUser, event: MouseEvent) {
     const isUserPost = post.userId === this.loggedInUser.id;
     this.postMenuItems.find(
       (item) => item.id === POST_MENU_ITEMS.DELETE
     )!.visible = isUserPost;
+
+    console.log('event', event);
+
     return isUserPost;
+  }
+
+  setCurrentPost(post: TPostWithUser) {
+    this.currentPost = post;
   }
 }

@@ -7,7 +7,11 @@
           pButton
           type="button"
           class="pi pi-ellipsis-v"
-          (click)="menu.toggle($event); isLoggedInUserPost(post)"
+          (click)="
+            menu.toggle($event);
+            isLoggedInUserPost(post, $event);
+            setCurrentPost(post)
+          "
         ></button>
         <p-menu
           #menu
