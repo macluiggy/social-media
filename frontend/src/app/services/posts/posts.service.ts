@@ -43,4 +43,8 @@ export class PostsService {
       },
     });
   }
+
+  deletePost(postId: number) {
+    return this.http.delete(`${this.apiUrl}/posts/${postId}`);
+  }
 }

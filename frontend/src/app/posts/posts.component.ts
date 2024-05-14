@@ -11,6 +11,9 @@ import { RouterModule } from '@angular/router';
 import { StorageService } from '../services/storage/storage.service';
 import { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
+// p confirm dialog
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 const POST_MENU_ITEMS = {
   DELETE: 'delete',
@@ -19,6 +22,7 @@ const POST_MENU_ITEMS = {
 @Component({
   selector: 'app-posts',
   standalone: true,
+  providers: [ConfirmationService],
   imports: [
     CardModule,
     CommonModule,
@@ -29,6 +33,7 @@ const POST_MENU_ITEMS = {
     ProgressSpinnerModule,
     RouterModule,
     MenuModule,
+    ConfirmDialogModule,
   ],
   templateUrl: './posts.component.html',
   styleUrl: './posts.component.scss',
@@ -43,7 +48,8 @@ export class PostsComponent implements OnInit, OnDestroy {
 
   constructor(
     private postsService: PostsService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private confirmationService: ConfirmationService
   ) {
     this.loading = true;
     this.postMenuItems = [
@@ -51,10 +57,10 @@ export class PostsComponent implements OnInit, OnDestroy {
         id: POST_MENU_ITEMS.DELETE,
         label: 'Delete',
         icon: 'pi pi-trash',
-        command: (event) => {
-          // log the post id
-          // console.log(event.item);
-          console.log('delete post', this.currentPost);
+        command: (_event) => {
+          if (this.currentPost) {
+            this.deletePost(this.currentPost);
+          }
         },
       },
       {
@@ -73,18 +79,32 @@ export class PostsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {}
 
-  isLoggedInUserPost(post: TPostWithUser, event: MouseEvent) {
+  /**
+   * Check if the post is created by the logged in user, if so, show the options that are available to the logged in user
+   * @param post
+   * @returns
+   */
+  isLoggedInUserPost(post: TPostWithUser) {
     const isUserPost = post.userId === this.loggedInUser.id;
     this.postMenuItems.find(
       (item) => item.id === POST_MENU_ITEMS.DELETE
     )!.visible = isUserPost;
-
-    console.log('event', event);
 
     return isUserPost;
   }
 
   setCurrentPost(post: TPostWithUser) {
     this.currentPost = post;
+  }
+
+  deletePost(post: TPostWithUser) {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to delete this post?',
+      accept: () => {
+        this.postsService.deletePost(post.id).subscribe(() => {
+          this.posts = this.posts.filter((p) => p.id !== post.id);
+        });
+      },
+    });
   }
 }

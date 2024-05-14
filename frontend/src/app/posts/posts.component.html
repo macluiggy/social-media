@@ -8,9 +8,7 @@
           type="button"
           class="pi pi-ellipsis-v"
           (click)="
-            menu.toggle($event);
-            isLoggedInUserPost(post, $event);
-            setCurrentPost(post)
+            menu.toggle($event); isLoggedInUserPost(post); setCurrentPost(post)
           "
         ></button>
         <p-menu
@@ -44,3 +42,5 @@
   <p-progressSpinner></p-progressSpinner>
 </div>
 }
+
+<p-confirmDialog></p-confirmDialog>
