@@ -2,7 +2,9 @@
 <div>
   <p-card styleClass="postsCard" [style]="{}">
     <p-header>
-      <!-- <div class="user-info">&#64;{{ post.user?.username }}</div> -->
+      @if (post.user?.username) {
+      <div class="user-info">&#64;{{ post.user?.username }}</div>
+      }
       <h2>{{ post.title }}</h2>
     </p-header>
     <p>{{ post.content }}</p>

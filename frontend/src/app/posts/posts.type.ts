@@ -5,8 +5,8 @@ type TPostWithUser = {
   content: string;
   createdAt: string;
   updatedAt: string;
-  user: {
-    username?: string | null;
+  user?: {
+    username: string;
     fullName: string;
   };
 };
