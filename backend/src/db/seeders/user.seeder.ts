@@ -27,7 +27,8 @@ export default class UserSeeder implements Seeder {
     const repository = dataSource.getRepository(Users);
     await repository.insert([
       {
-        fullName: 'luiggy macias',
+        firstName: 'luiggy',
+        lastName: 'ferrin',
         email: 'ferrinluiggy@gmail.com',
         password: await bcrypt.hash('123456', 10),
         phone: '123456789',

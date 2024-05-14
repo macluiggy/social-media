@@ -13,7 +13,6 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UserDto } from './dto/users.dto';
-import { API_VERSION } from '../common/constants';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import ApiStandardResponse from '../common/interceptors/api-response';
@@ -21,12 +20,13 @@ import getMessages from '../lang/getMessages';
 import Lang from '../lang/lang.type';
 import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
+import getApiEndpoint from '../common/utils/getApiEndpoint';
 
 @ApiTags('users')
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 @Controller({
-  path: `api/${API_VERSION}/users`,
+  path: getApiEndpoint('users'),
   scope: Scope.REQUEST,
 })
 export class UsersController {
@@ -53,13 +53,13 @@ export class UsersController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: number) {
     return await this.userService.findOne(id);
   }
 
   @Put(':id')
   async update(
-    @Param('id') id: string,
+    @Param('id') id: number,
     @Body() userDTO: UserDto,
     @Req() req: any,
   ) {
@@ -72,7 +72,7 @@ export class UsersController {
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string) {
+  async remove(@Param('id') id: number) {
     return await this.userService.remove(id);
   }
 }

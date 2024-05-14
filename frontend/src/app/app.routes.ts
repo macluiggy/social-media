@@ -7,14 +7,17 @@ import { BoardAdminComponent } from './board-admin/board-admin.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { BoardUserComponent } from './board-user/board-user.component';
 import { authGuard } from './guards/auth.guard';
+import { CreatePostComponent } from './posts/create-post/create-post.component';
 
 export const routes: Routes = [
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'profile', component: ProfileComponent, canActivate: [authGuard]},
+  { path: 'profile/user/:userId', component: ProfileComponent, canActivate: [authGuard] },
   { path: 'register', component: RegisterComponent },
   { path: 'admin', component: BoardAdminComponent },
-  { path: 'user', component: BoardUserComponent },
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'user', component: BoardUserComponent, canActivate: [authGuard]},
+  { path: 'create-post', component: CreatePostComponent },
   { path: '**', component: NotFoundComponent },
+  // dont put any routes after this one, it will always redirect to the not found component
 ];

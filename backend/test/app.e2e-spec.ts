@@ -1,24 +1,50 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import * as request from 'supertest';
-import { AppModule } from './../src/app.module';
+import request from 'supertest';
+import setupTestingModule from './setUpTestingModule';
+import { UsersService } from '../src/users/users.service';
+import {
+  EMAIL_FOR_TESTING,
+  FULL_NAME_FOR_TESTING,
+  PASSWORD_FOR_TESTING,
+  USERNAME_FOR_TESTING,
+} from '../src/auth/utils/singInUser';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
 
-  beforeEach(async () => {
-    const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
-    }).compile();
+  beforeAll(async () => {
+    const result = await setupTestingModule({
+      providers: [UsersService],
+    });
+    app = result.app;
+    const testingModule = result.testingModule;
 
-    app = moduleFixture.createNestApplication();
+    const usersService =
+      await testingModule.resolve<UsersService>(UsersService);
+
+    /**
+     * Create a user for testing, this user is mean to use in these e2e tests for endpoints that require a user to be authenticated.
+     */
+    await usersService.createUserIfNotExists({
+      email: EMAIL_FOR_TESTING,
+      username: USERNAME_FOR_TESTING,
+      password: PASSWORD_FOR_TESTING,
+      fullName: FULL_NAME_FOR_TESTING,
+    } as any);
+  });
+
+  beforeEach(async () => {
+    const testingModule = await setupTestingModule();
+    app = testingModule.app;
+
     await app.init();
   });
 
   it('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
+    return request(app.getHttpServer()).get('/').expect(200).expect({
+      statusCode: 200,
+      data: 'Hello World!',
+      message: 'OK',
+    });
   });
 });

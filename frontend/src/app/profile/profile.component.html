@@ -1,21 +1,36 @@
 @if (currentUser) {
-<div class="container">
-  <header class="jumbotron">
-    <h3>
-      <strong>{{ currentUser.username }}</strong> Profile
-    </h3>
-  </header>
-  <p>
-    <strong>Email:</strong>
-    {{ currentUser.email }}
-  </p>
-  <strong>Roles:</strong>
-  <ul>
-    @for (role of currentUser.roles; track role) {
-    <li>{{ role }}</li>
-    }
-  </ul>
-</div>
-} @else {
-<p>Please login.</p>
+<p-card [header]="currentUser.username">
+  <p-header>
+    <img
+      [src]="currentUser.profilePhoto"
+      alt="Profile Photo"
+      class="profile-photo"
+    />
+  </p-header>
+  <div class="container">
+    <p><strong>Name:</strong> {{ currentUser.firstName }}</p>
+  </div>
+</p-card>
+
+} @if( currentUser) {
+
+<p-tabView>
+  <p-tabPanel header="My Posts">
+    <app-posts
+      [posts]="userPosts"
+      [loading]="loading"
+      infiniteScroll
+      [infiniteScrollDistance]="1"
+      [infiniteScrollThrottle]="5"
+      (scrolled)="onScroll()"
+      [loading]="loading"
+    ></app-posts>
+  </p-tabPanel>
+  <!-- <p-tabPanel header="Shared Posts"> -->
+  <!-- <p-card *ngFor="let post of currentUser.sharedPosts">
+      <p-header>{{ post.title }}</p-header>
+      <p>{{ post.content }}</p>
+    </p-card> -->
+  <!-- </p-tabPanel> -->
+</p-tabView>
 }

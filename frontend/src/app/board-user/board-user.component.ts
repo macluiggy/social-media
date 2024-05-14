@@ -17,9 +17,10 @@ export class BoardUserComponent implements OnInit {
     email: '',
     password: '',
     username: '',
-    fullName: '',
+    // fullName: '',
+    firstName: '',
   };
-  userId = '';
+  userId: number = 0;
   isSuccessful = false;
   isSignUpFailed = false;
   errorMessage = '';
@@ -35,7 +36,7 @@ export class BoardUserComponent implements OnInit {
     let user = this.storageService.getUser();
 
     this.userId = user.id;
-    const userDB = this.userService.getUserByUserId(this.userId)
+    const userDB = this.userService.getUserByUserId(this.userId);
     this.storageService.updateUser(userDB);
     user = this.storageService.getUser();
 
@@ -44,7 +45,7 @@ export class BoardUserComponent implements OnInit {
       email: user.email,
       password: user.password,
       username: user.username,
-      fullName: user.fullName,
+      firstName: user.firstName,
     };
   }
 

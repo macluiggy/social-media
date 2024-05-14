@@ -5,9 +5,10 @@ import { UserDto } from '../users/dto/users.dto';
 // import { LocalAuthGuard } from './guards/local-auth.guard';
 import { Request } from 'express';
 import ApiStandardResponse from '../common/interceptors/api-response';
+import getApiEndpoint from '../common/utils/getApiEndpoint';
 
 @ApiTags('auth')
-@Controller('api/v1/auth')
+@Controller(getApiEndpoint('auth'))
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
   // @UseGuards(LocalAuthGuard)
