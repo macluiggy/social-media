@@ -3,10 +3,8 @@ import { StorageService } from '../services/storage/storage.service';
 import { ActivatedRoute } from '@angular/router';
 import { CardModule } from 'primeng/card';
 import { PostsService } from '../services/posts/posts.service';
-import { TPost, TPostWithUser } from '../posts/posts.type';
-// import module for p-tabPanel
+import { TPostWithUser } from '../posts/posts.type';
 import { TabView, TabViewModule } from 'primeng/tabview';
-// also for p-tabMenu
 import { TabMenuModule } from 'primeng/tabmenu';
 import { PostsComponent } from '../posts/posts.component';
 import { UserService } from '../services/user/user.service';
@@ -67,7 +65,11 @@ export class ProfileComponent {
   getUserPosts() {
     this.loading = true;
     this.postsService
-      .getUserPosts({ userId: this.userId, page: this.page++, limit: this.limit })
+      .getUserPosts({
+        userId: this.userId,
+        page: this.page++,
+        limit: this.limit,
+      })
       .subscribe({
         next: (res: any) => {
           this.userPosts = [...this.userPosts, ...res.data.items];
