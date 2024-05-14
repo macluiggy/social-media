@@ -11,12 +11,19 @@ import { TabMenuModule } from 'primeng/tabmenu';
 import { PostsComponent } from '../posts/posts.component';
 import { UserService } from '../services/user/user.service';
 import { User } from '../types';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @Component({
   selector: 'app-profile',
   providers: [TabView, PostsComponent],
   standalone: true,
-  imports: [CardModule, TabViewModule, TabMenuModule, PostsComponent],
+  imports: [
+    CardModule,
+    TabViewModule,
+    TabMenuModule,
+    PostsComponent,
+    InfiniteScrollModule,
+  ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
 })
@@ -26,6 +33,8 @@ export class ProfileComponent {
   userId: number;
   userPosts: TPostWithUser[] = [];
   loading = false;
+  page = 1;
+  limit = 2;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -57,16 +66,22 @@ export class ProfileComponent {
 
   getUserPosts() {
     this.loading = true;
-    this.postsService.getUserPosts({ userId: this.userId }).subscribe({
-      next: (res: any) => {
-        this.userPosts = res.data.items;
-      },
-      error: (err) => {
-        console.error(err);
-      },
-      complete: () => {
-        this.loading = false;
-      },
-    });
+    this.postsService
+      .getUserPosts({ userId: this.userId, page: this.page++, limit: this.limit })
+      .subscribe({
+        next: (res: any) => {
+          this.userPosts = [...this.userPosts, ...res.data.items];
+        },
+        error: (err) => {
+          console.error(err);
+        },
+        complete: () => {
+          this.loading = false;
+        },
+      });
+  }
+
+  onScroll() {
+    this.getUserPosts();
   }
 }

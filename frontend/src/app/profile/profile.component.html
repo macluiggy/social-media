@@ -16,7 +16,15 @@
 
 <p-tabView>
   <p-tabPanel header="My Posts">
-    <app-posts [posts]="userPosts" [loading]="loading"></app-posts>
+    <app-posts
+      [posts]="userPosts"
+      [loading]="loading"
+      infiniteScroll
+      [infiniteScrollDistance]="1"
+      [infiniteScrollThrottle]="5"
+      (scrolled)="onScroll()"
+      [loading]="loading"
+    ></app-posts>
   </p-tabPanel>
   <!-- <p-tabPanel header="Shared Posts"> -->
   <!-- <p-card *ngFor="let post of currentUser.sharedPosts">
