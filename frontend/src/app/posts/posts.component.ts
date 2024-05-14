@@ -8,6 +8,9 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { CustomProgressLoadingComponent } from '../custom-progress-loading/custom-progress-loading.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { RouterModule } from '@angular/router';
+import { StorageService } from '../services/storage/storage.service';
+import { MenuModule } from 'primeng/menu';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-posts',
@@ -21,6 +24,7 @@ import { RouterModule } from '@angular/router';
     CustomProgressLoadingComponent,
     ProgressSpinnerModule,
     RouterModule,
+    MenuModule,
   ],
   templateUrl: './posts.component.html',
   styleUrl: './posts.component.scss',
@@ -29,9 +33,24 @@ export class PostsComponent implements OnInit, OnDestroy {
   @Input() posts: TPostWithUser[] = [] as TPostWithUser[];
   firstLoad = true;
   @Input() loading: boolean;
+  loggedInUser = this.storageService.getUser();
+  postMenuItems: MenuItem[] = [];
 
-  constructor(private postsService: PostsService) {
+  constructor(
+    private postsService: PostsService,
+    private storageService: StorageService
+  ) {
     this.loading = true;
+    this.postMenuItems = [
+      {
+        label: 'Delete',
+        icon: 'pi pi-trash',
+      },
+      {
+        label: 'Save',
+        icon: 'pi pi-save',
+      },
+    ];
   }
   ngOnDestroy(): void {
     console.log(`
@@ -41,4 +60,11 @@ export class PostsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {}
+
+  isLoggedInUserPost(post: TPostWithUser) {
+    const isUserPost = post.userId === this.loggedInUser.id;
+    // make the post menu items visible only if the post is created by the logged in user
+    this.postMenuItems[0].visible = isUserPost;
+    return isUserPost;
+  }
 }

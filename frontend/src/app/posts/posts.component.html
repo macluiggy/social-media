@@ -2,12 +2,32 @@
 <div>
   <p-card styleClass="postsCard" [style]="{}">
     <p-header>
+      <div class="menu-container">
+        <button
+          pButton
+          type="button"
+          class="pi pi-ellipsis-v"
+          (click)="menu.toggle($event); isLoggedInUserPost(post)"
+        ></button>
+        <p-menu
+          #menu
+          [model]="postMenuItems"
+          styleClass="w-full md:w-15rem"
+          popup="true"
+        ></p-menu>
+      </div>
       @if (post.user) {
-      <div class="user-info">&#64;
-        <a [routerLink]="['/profile/user', post.user.id]">{{ post.user.username }}</a>
+      <div class="user-info">
+        &#64;
+        <a [routerLink]="['/profile/user', post.user.id]">{{
+          post.user.username
+        }}</a>
       </div>
       }
-      <h2>{{ post.title }}</h2>
+      <div class="post-header-content">
+        <h2>{{ post.title }}</h2>
+        <!-- Add menu button here -->
+      </div>
     </p-header>
     <p>{{ post.content }}</p>
     <!-- Future features -->
@@ -15,9 +35,8 @@
           <p>Likes: {{ post.likes }}</p> -->
   </p-card>
 </div>
-}
-@if (loading) {
-  <div class="spinner-container">
-    <p-progressSpinner></p-progressSpinner>
-  </div>
+} @if (loading) {
+<div class="spinner-container">
+  <p-progressSpinner></p-progressSpinner>
+</div>
 }
