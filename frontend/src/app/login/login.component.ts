@@ -40,13 +40,7 @@ export class LoginComponent implements OnInit {
     this.authService.signIn({ email, password }).subscribe({
       next: (response: any) => {
         const data = response.data;
-        // TODO: change backend to return user object apart from token
-        this.storageService.saveUser(data.user);
         this.user = data.user;
-
-        this.storageService.setToken(data.accessToken);
-
-        this.authService.setIsLoggedIn(true);
 
         this.isLoggedIn = true;
         this.isLoginFailed = false;
