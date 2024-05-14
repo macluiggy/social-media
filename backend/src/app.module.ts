@@ -11,6 +11,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { PostsModule } from './posts/posts.module';
 import { IaApiModule } from './ia-api/ia-api.module';
+import { AiApiModule } from './ai-api/ai-api.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { IaApiModule } from './ia-api/ia-api.module';
     }),
     PostsModule,
     IaApiModule,
+    AiApiModule,
   ],
   controllers: [AppController],
   providers: [AppService],
