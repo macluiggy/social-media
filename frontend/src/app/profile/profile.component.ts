@@ -10,6 +10,7 @@ import { TabView, TabViewModule } from 'primeng/tabview';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { PostsComponent } from '../posts/posts.component';
 import { UserService } from '../services/user/user.service';
+import { User } from '../types';
 
 @Component({
   selector: 'app-profile',
@@ -20,7 +21,8 @@ import { UserService } from '../services/user/user.service';
   styleUrl: './profile.component.scss',
 })
 export class ProfileComponent {
-  currentUser: any;
+  loggedInUser: User | null = null;
+  currentUser: User | null = null;
   userId: number;
   userPosts: TPostWithUser[] = [];
   loading = false;
@@ -40,8 +42,8 @@ export class ProfileComponent {
     this.userService.getUserByUserId(this.userId).subscribe({
       next: (res: any) => {
         this.currentUser = res.data;
-        if (!this.currentUser.profilePhoto) {
-          this.currentUser.profilePhoto =
+        if (!this.currentUser!.profilePhoto) {
+          this.currentUser!.profilePhoto =
             'https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png';
         }
         this.getUserPosts();
