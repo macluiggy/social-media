@@ -15,6 +15,7 @@ import { Request } from 'express';
 import { REQUEST } from '@nestjs/core';
 import Lang from '../lang/lang.type';
 import { DEFAULT_LANG } from '../lang';
+import { AiApiService } from '../ai-api/ai-api.service';
 
 @Injectable({
   scope: Scope.REQUEST,
@@ -26,6 +27,7 @@ export class UsersService {
     private readonly userRepository: Repository<Users>,
     @Inject(REQUEST) private readonly request: Request,
     private dataSource: DataSource,
+    private IAApiService: AiApiService,
   ) {
     const lang = this.request?.['preferredLanguage'] || DEFAULT_LANG;
     this.messages = getMessages(lang);
@@ -68,7 +70,8 @@ export class UsersService {
     return await this.userRepository.find();
   }
 
-  async findOne(id: number): Promise<Users> {
+  async findOne(id: number): Promise<any> {
+    // return await this.IAApiService.generateCompletion('prompt');
     const user = await this.userRepository.findOne({
       where: { id },
     });

@@ -3,11 +3,12 @@ import { UsersService } from './users.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Users } from './users.entity';
 import { UsersController } from './users.controller';
+import { AiApiService } from '../ai-api/ai-api.service';
 // import { LangService } from '../lang/lang.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Users])], // provides the User entity to the UsersService with the repository injection
-  providers: [UsersService],
+  providers: [UsersService, AiApiService],
   controllers: [UsersController],
   exports: [UsersService, TypeOrmModule],
 })
