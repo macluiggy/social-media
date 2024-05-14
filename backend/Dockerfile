@@ -1,4 +1,5 @@
-FROM oven/bun
+# FROM oven/bun
+FROM node
 
 
 ARG DATABASE_URL
@@ -11,11 +12,13 @@ WORKDIR /app
 # Install app dependencies
 COPY package.json ./
 COPY tsconfig.json ./
-COPY bun.lockb ./
+# COPY bun.lockb ./
+COPY package-lock.json ./
 
 # Bundle app source
 COPY . .
 
+RUN npm install -g bun
 RUN bun install -g @nestjs/cli
 RUN bun install
 RUN bun run build
