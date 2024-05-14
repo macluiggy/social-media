@@ -2,8 +2,10 @@
 <div>
   <p-card styleClass="postsCard" [style]="{}">
     <p-header>
-      @if (post.user?.username) {
-      <div class="user-info">&#64;{{ post.user?.username }}</div>
+      @if (post.user) {
+      <div class="user-info">&#64;
+        <a [routerLink]="['/profile/user', post.user.id]">{{ post.user.username }}</a>
+      </div>
       }
       <h2>{{ post.title }}</h2>
     </p-header>

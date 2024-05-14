@@ -6,6 +6,7 @@ type TPostWithUser = {
   createdAt: string;
   updatedAt: string;
   user?: {
+    id: number;
     username: string;
     fullName: string;
   };

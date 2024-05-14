@@ -7,6 +7,7 @@ import { VirtualScrollerModule } from 'primeng/virtualscroller';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { CustomProgressLoadingComponent } from '../custom-progress-loading/custom-progress-loading.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-posts',
@@ -19,6 +20,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     InfiniteScrollModule,
     CustomProgressLoadingComponent,
     ProgressSpinnerModule,
+    RouterModule,
   ],
   templateUrl: './posts.component.html',
   styleUrl: './posts.component.scss',

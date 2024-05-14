@@ -23,24 +23,33 @@ export class ProfileComponent {
   currentUser: any;
   userId: number;
   userPosts: TPostWithUser[] = [];
-  loading = false
+  loading = false;
 
   constructor(
-    private storageService: StorageService,
     private activatedRoute: ActivatedRoute,
     private postsService: PostsService,
     private userService: UserService
   ) {
     this.userId = this.activatedRoute.snapshot.params['userId'];
-    // this.currentUser = this.storageService.getUser();
-    this.currentUser = this.userService.getUserByUserId(this.userId);
 
-    if (!this.currentUser.profilePhoto) {
-      this.currentUser.profilePhoto =
-        'https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png';
-    }
-
+    this.getUserInfo();
     this.getUserPosts();
+  }
+
+  getUserInfo() {
+    this.userService.getUserByUserId(this.userId).subscribe({
+      next: (res: any) => {
+        this.currentUser = res.data;
+        if (!this.currentUser.profilePhoto) {
+          this.currentUser.profilePhoto =
+            'https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png';
+        }
+        this.getUserPosts();
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
   }
 
   getUserPosts() {

@@ -78,7 +78,7 @@ export class PostsService {
     const query = this.postsRepository
       .createQueryBuilder('post')
       .leftJoin('post.user', 'user')
-      .addSelect(['user.username', 'user.firstName'])
+      .addSelect(['user.username', 'user.firstName', 'user.id'])
       .addSelect('RANDOM()', 'random_value') // Alias the RANDOM() function
       .orderBy('random_value', 'ASC') // Use the alias in the orderBy clause
       .addOrderBy('post.id', 'ASC')
