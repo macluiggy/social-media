@@ -96,13 +96,6 @@ export class NavBarComponent {
       // Add more menu items as needed...
     ];
 
-    this.megaMenuItems = [
-      {
-        label: 'Logot',
-        icon: 'pi pi-fw pi-home',
-        command: () => this.logout(),
-      },
-    ];
 
     this.pMenuItems = [
       {
