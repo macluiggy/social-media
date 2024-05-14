@@ -8,7 +8,7 @@ import { TabView, TabViewModule } from 'primeng/tabview';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { PostsComponent } from '../posts/posts.component';
 import { UserService } from '../services/user/user.service';
-import { User } from '../types';
+import { User } from '../common/types';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @Component({
