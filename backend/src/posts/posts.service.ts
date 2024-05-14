@@ -7,6 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import getMessages from '../lang/getMessages';
 import Lang from '../lang/lang.type';
 import paginate from '../common/paginate/paginate';
+// import wait from '../common/utils/wait';
 
 @Injectable({
   scope: Scope.REQUEST,
@@ -72,6 +73,7 @@ export class PostsService {
    * @returns - A promise that resolves to the paginated posts.
    */
   async findRandomPosts({ page, limit }) {
+    // await wait(2000);
     const skip = (page - 1) * limit;
     const query = this.postsRepository
       .createQueryBuilder('post')

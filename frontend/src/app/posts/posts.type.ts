@@ -1,4 +1,4 @@
-type RandomPosts = {
+type TPostWithUser = {
   id: number;
   userId: number;
   title: string;
@@ -20,4 +20,4 @@ type TPost = {
   updatedAt: string;
 };
 
-export { RandomPosts, TPost };
+export { TPostWithUser, TPost };

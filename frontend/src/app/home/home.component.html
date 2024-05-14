@@ -15,11 +15,22 @@
 </header>
 
 } @else {
-  <app-posts></app-posts>
+<app-posts
+  infiniteScroll
+  [infiniteScrollDistance]="1"
+  [infiniteScrollThrottle]="5"
+  (scrolled)="onScroll()"
+  [posts]="randomPosts"
+></app-posts>
+@if (loading) {
+  <div class="spinner-container">
+    <p-progressSpinner></p-progressSpinner>
+  </div>
+}
 }
 <!-- Footer -->
-<footer class="footer mt-auto py-3 bg-light">
+<!-- <footer class="footer mt-auto py-3 bg-light">
   <div class="container text-center">
     <span class="text-muted">© 2024 Your Brand</span>
   </div>
-</footer>
+</footer> -->

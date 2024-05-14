@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { PostsService } from '../services/posts/posts.service';
 import { CardModule } from 'primeng/card';
-import { RandomPosts } from './posts.type';
+import { TPostWithUser } from './posts.type';
 import { CommonModule, NgFor } from '@angular/common';
 import { VirtualScrollerModule } from 'primeng/virtualscroller';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
@@ -24,15 +24,11 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
   styleUrl: './posts.component.scss',
 })
 export class PostsComponent implements OnInit, OnDestroy {
-  randomPosts: RandomPosts[] = [] as RandomPosts[];
-  private page = 1;
-  private limit = 5;
+  @Input() posts: TPostWithUser[] = [] as TPostWithUser[];
   firstLoad = true;
   loading = false;
 
-  constructor(private postsService: PostsService) {
-    this.fetchPosts();
-  }
+  constructor(private postsService: PostsService) {}
   ngOnDestroy(): void {
     console.log(`
   ngOnDestroy is for cleaning up any subscriptions or other resources before the component is destroyed.
@@ -41,26 +37,4 @@ export class PostsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {}
-
-  private fetchPosts() {
-    this.loading = true;
-    this.postsService.getRandomPosts({ limit: 5, page: this.page }).subscribe({
-      next: (response: any) => {
-        this.randomPosts = [...this.randomPosts, ...response.data.items];
-        
-        this.page++;
-      },
-      error: (error) => {
-        console.error(error);
-      },
-      complete: () => {
-        this.loading = false;
-        this.firstLoad = false;
-      },
-    });
-  }
-
-  onScroll() {
-    this.fetchPosts();
-  }
 }
