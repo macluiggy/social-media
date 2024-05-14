@@ -4,6 +4,8 @@ type User = {
   email: string;
   firstName: string;
   profilePhoto?: string;
+  lastName: string;
+  password: string;
 }
 
 

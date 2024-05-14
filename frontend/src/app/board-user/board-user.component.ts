@@ -17,7 +17,8 @@ export class BoardUserComponent implements OnInit {
     email: '',
     password: '',
     username: '',
-    fullName: '',
+    // fullName: '',
+    firstName: '',
   };
   userId: number = 0;
   isSuccessful = false;
@@ -44,7 +45,7 @@ export class BoardUserComponent implements OnInit {
       email: user.email,
       password: user.password,
       username: user.username,
-      fullName: user.fullName,
+      firstName: user.firstName,
     };
   }
 

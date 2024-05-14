@@ -21,7 +21,7 @@ import { User } from '../types';
   styleUrl: './profile.component.scss',
 })
 export class ProfileComponent {
-  loggedInUser: User | null = null;
+  loggedInUser: User | null = this.storageService.getUser();
   currentUser: User | null = null;
   userId: number;
   userPosts: TPostWithUser[] = [];
@@ -30,7 +30,8 @@ export class ProfileComponent {
   constructor(
     private activatedRoute: ActivatedRoute,
     private postsService: PostsService,
-    private userService: UserService
+    private userService: UserService,
+    private storageService: StorageService
   ) {
     this.userId = this.activatedRoute.snapshot.params['userId'];
 

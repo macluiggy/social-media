@@ -1,5 +1,6 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { User } from '../../types';
 
 const USER_KEY = 'user';
 @Injectable({
@@ -40,7 +41,7 @@ export class StorageService {
     }
   }
 
-  public getUser(): any {
+  public getUser(): User {
     if (isPlatformBrowser(this.platformId)) {
       const user = sessionStorage.getItem(USER_KEY);
       if (user) {
@@ -48,7 +49,7 @@ export class StorageService {
       }
     }
 
-    return {};
+    return {} as User;
   }
 
   public isLoggedIn(): boolean {
