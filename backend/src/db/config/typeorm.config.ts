@@ -1,18 +1,20 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 // import * as path from 'path';
-import entities from './db/entities';
+import entities from '../entities';
 import * as dotenv from 'dotenv';
 dotenv.config();
 import { SeederOptions } from 'typeorm-extension';
-import subscribers from './db/subscribers';
-import envVariables from './common/envVariables';
-import userFactory from './db/factories/user.factory';
-import UserSeeder from './db/seeders/user.seeder';
-import DB_MIGRATIONS from './db/migrations';
+import subscribers from '../subscribers';
+import envVariables from '../../common/envVariables';
+import userFactory from '../factories/user.factory';
+import UserSeeder from '../seeders/user.seeder';
+import DB_MIGRATIONS from '../migrations';
+import { DataSource } from 'typeorm';
 
 const { db } = envVariables;
 
 // const migrationsPath = path.join(__dirname, 'db/migrations/*{.ts}');
+// const migrationsPath = './db/migrations/*{.ts}';
 
 const typeOrmConfig: TypeOrmModuleOptions & SeederOptions = {
   type: 'postgres',
@@ -23,6 +25,7 @@ const typeOrmConfig: TypeOrmModuleOptions & SeederOptions = {
   // username: db.username || 'postgres',
   url: db.databaseUrl,
   migrations: DB_MIGRATIONS,
+  // migrations: [migrationsPath],
   entities,
   synchronize: false,
   // seeds: ['serc/db/seeds/**/*{.ts}'],
@@ -32,4 +35,6 @@ const typeOrmConfig: TypeOrmModuleOptions & SeederOptions = {
   subscribers: subscribers,
 };
 
-export default typeOrmConfig;
+export { typeOrmConfig };
+
+export default new DataSource(typeOrmConfig as any);

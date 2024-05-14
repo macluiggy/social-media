@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import typeOrmConfig from './typeorm.config';
+import { typeOrmConfig } from './db/config/typeorm.config';
 import { SetUserPreferredLanguage } from './lang/middleware/lang.middleware';
 import { JwtModule } from '@nestjs/jwt';
 import { ServeStaticModule } from '@nestjs/serve-static';
