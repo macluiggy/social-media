@@ -12,6 +12,10 @@ import { StorageService } from '../services/storage/storage.service';
 import { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
 
+const POST_MENU_ITEMS = {
+  DELETE: 'delete',
+  SAVE: 'save',
+};
 @Component({
   selector: 'app-posts',
   standalone: true,
@@ -43,10 +47,12 @@ export class PostsComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.postMenuItems = [
       {
+        id: POST_MENU_ITEMS.DELETE,
         label: 'Delete',
         icon: 'pi pi-trash',
       },
       {
+        id: POST_MENU_ITEMS.SAVE,
         label: 'Save',
         icon: 'pi pi-save',
       },
@@ -63,8 +69,9 @@ export class PostsComponent implements OnInit, OnDestroy {
 
   isLoggedInUserPost(post: TPostWithUser) {
     const isUserPost = post.userId === this.loggedInUser.id;
-    // make the post menu items visible only if the post is created by the logged in user
-    this.postMenuItems[0].visible = isUserPost;
+    this.postMenuItems.find(
+      (item) => item.id === POST_MENU_ITEMS.DELETE
+    )!.visible = isUserPost;
     return isUserPost;
   }
 }
