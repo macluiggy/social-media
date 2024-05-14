@@ -20,11 +20,11 @@ export class UserService {
     return of('Admin content');
   }
 
-  updateUserData(data: any, userId: string): Observable<any> {
+  updateUserData(data: any, userId: number): Observable<any> {
     return this.http.put(`${this.userApi}/${userId}`, data);
   }
 
-  getUserByUserId(userId: string): Observable<any> {
+  getUserByUserId(userId: number): Observable<any> {
     return this.http.get(`${this.userApi}/${userId}`);
   }
 

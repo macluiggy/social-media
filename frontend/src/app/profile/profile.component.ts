@@ -9,6 +9,7 @@ import { TabView, TabViewModule } from 'primeng/tabview';
 // also for p-tabMenu
 import { TabMenuModule } from 'primeng/tabmenu';
 import { PostsComponent } from '../posts/posts.component';
+import { UserService } from '../services/user/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -27,10 +28,12 @@ export class ProfileComponent {
   constructor(
     private storageService: StorageService,
     private activatedRoute: ActivatedRoute,
-    private postsService: PostsService
+    private postsService: PostsService,
+    private userService: UserService
   ) {
     this.userId = this.activatedRoute.snapshot.params['userId'];
-    this.currentUser = this.storageService.getUser();
+    // this.currentUser = this.storageService.getUser();
+    this.currentUser = this.userService.getUserByUserId(this.userId);
 
     if (!this.currentUser.profilePhoto) {
       this.currentUser.profilePhoto =

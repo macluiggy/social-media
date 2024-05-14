@@ -118,8 +118,10 @@ export class NavBarComponent {
     ];
 
     this.userService.user$.subscribe((user) => {
-      this.userId = user.id;
-      this.updatePMenusItems();
+      if (user) {
+        this.userId = user.id;
+        this.updatePMenusItems();
+      }
     });
   }
 
