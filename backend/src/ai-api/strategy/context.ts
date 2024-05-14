@@ -1,4 +1,4 @@
-import IaStrategy from './ia-strategy';
+import IaStrategy from './ai-strategy';
 
 export default class Context {
   private strategy: IaStrategy;

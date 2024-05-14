@@ -10,7 +10,6 @@ import { JwtModule } from '@nestjs/jwt';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { PostsModule } from './posts/posts.module';
-import { IaApiModule } from './ia-api/ia-api.module';
 import { AiApiModule } from './ai-api/ai-api.module';
 
 @Module({
@@ -34,7 +33,6 @@ import { AiApiModule } from './ai-api/ai-api.module';
       ), // adjust this path as needed
     }),
     PostsModule,
-    IaApiModule,
     AiApiModule,
   ],
   controllers: [AppController],

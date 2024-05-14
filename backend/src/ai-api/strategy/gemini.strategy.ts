@@ -1,4 +1,4 @@
-import IaStrategy from './ia-strategy';
+import IaStrategy from './ai-strategy';
 
 export default class GeminiStrategy implements IaStrategy {
   // later add the constructor to add the configuration from google to add the api key
