@@ -7,8 +7,8 @@ export default class Context implements AiStrategy {
     this.strategy = strategy;
   }
 
-  async generateCompletion(prompt: string): Promise<string> {
-    return this.strategy.generateCompletion(prompt);
+  async createCompletion(prompt: string): Promise<string> {
+    return this.strategy.createCompletion(prompt);
   }
 
   setStrategy(strategy: AiStrategy) {

@@ -1,3 +1,3 @@
 export default interface AiStrategy {
-  generateCompletion(prompt: string): Promise<string>;
+  createCompletion(prompt: string): Promise<string>;
 }
