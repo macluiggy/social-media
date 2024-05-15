@@ -8,13 +8,14 @@ import {
   PASSWORD_FOR_TESTING,
   USERNAME_FOR_TESTING,
 } from '../src/auth/utils/singInUser';
+import { AiApiService } from '../src/ai-api/ai-api.service';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
 
   beforeAll(async () => {
     const result = await setupTestingModule({
-      providers: [UsersService],
+      providers: [UsersService, AiApiService],
     });
     app = result.app;
     const testingModule = result.testingModule;

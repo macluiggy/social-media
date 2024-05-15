@@ -66,9 +66,11 @@ describe('PostsController', () => {
   });
 
   it('should create a post', async () => {
-    expect(await controller.create(dto)).toStrictEqual(
-      new ApiStandardResponse(dto, 'Post created successfully'),
-    );
+    expect(
+      await controller.create(dto, {
+        user: { id: 1 },
+      } as any),
+    ).toStrictEqual(new ApiStandardResponse(dto, 'Post created successfully'));
     expect(service.create).toHaveBeenCalledWith(dto);
   });
 
