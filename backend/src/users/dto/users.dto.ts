@@ -74,4 +74,6 @@ export class UserDto {
   @IsString()
   @Length(0, 20)
   phone?: string;
+
+  profileImage?: Express.Multer.File;
 }

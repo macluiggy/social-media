@@ -1,8 +1,12 @@
 import {
   Body,
   Controller,
+  FileTypeValidator,
+  MaxFileSizeValidator,
+  ParseFilePipe,
   Post,
   Req /**, UseGuards */,
+  UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
@@ -32,8 +36,30 @@ export class AuthController {
 
   @Post('signup')
   @UseInterceptors(FileInterceptor('profileImage'))
-  async signUp(@Body() user: UserDto, profileImage: Express.Multer.File) {
-    console.log('profileImage', profileImage, user);
+  async signUp(
+    @Body() user: UserDto,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({
+            maxSize: 1024 * 1024 * 2,
+            message(maxSize) {
+              return `File too large. Max size is ${maxSize}`;
+            },
+          }),
+          new FileTypeValidator({
+            // regex that starts with image and ends with png, jpg, or jpeg
+            fileType: /^image\/(png|jpg|jpeg)$/,
+          }),
+        ],
+      }),
+    )
+    profileImage: Express.Multer.File,
+  ) {
+    console.log('file', profileImage);
+    return {
+      file: profileImage.buffer.toString('base64'),
+    };
 
     return await this.authService.singUp(user);
   }
