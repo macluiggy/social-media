@@ -2,19 +2,16 @@ import { HfInference } from '@huggingface/inference';
 import AiStrategy from './ai-strategy';
 import envVariables from '../../common/envVariables';
 const { huggingFaceApiKey } = envVariables;
-
-// const huggingFaceApiKey = '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';
-
 export default class HuggingFaceStrategy implements AiStrategy {
   private hfInference: HfInference;
+  private generalModel = 'mistralai/Mistral-7B-Instruct-v0.2';
   constructor() {
-    console.log(huggingFaceApiKey);
     this.hfInference = new HfInference(huggingFaceApiKey);
   }
   // later add the constructor to add the configuration from google to add the api key
   async chatCompletion({ prompt }: { prompt: string }) {
     const out = await this.hfInference.chatCompletion({
-      model: 'mistralai/Mistral-7B-Instruct-v0.2',
+      model: this.generalModel,
       messages: [
         {
           role: 'user',
