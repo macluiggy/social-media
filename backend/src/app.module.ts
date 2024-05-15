@@ -19,19 +19,19 @@ import { AiApiModule } from './ai-api/ai-api.module';
     TypeOrmModule.forRoot(typeOrmConfig),
     TypeOrmModule.forFeature([]),
     JwtModule,
-    ServeStaticModule.forRoot({
-      // rootPath: join(__dirname, '..', 'frontend', 'dist', 'frontend'), // adjust this path as needed
-      rootPath: join(
-        __dirname,
-        '..',
-        '..',
-        '..',
-        'frontend',
-        'dist',
-        'frontend',
-        'browser',
-      ), // adjust this path as needed
-    }),
+    // ServeStaticModule.forRoot({
+    //   // rootPath: join(__dirname, '..', 'frontend', 'dist', 'frontend'), // adjust this path as needed
+    //   rootPath: join(
+    //     __dirname,
+    //     '..',
+    //     '..',
+    //     '..',
+    //     'frontend',
+    //     'dist',
+    //     'frontend',
+    //     'browser',
+    //   ), // adjust this path as needed
+    // }),
     PostsModule,
     AiApiModule,
   ],

@@ -19,7 +19,7 @@ export class UserDto {
   @ApiProperty({ example: 'John Doe' })
   @IsNotEmpty()
   @IsString()
-  fullName: string;
+  firstName: string;
 
   @ApiProperty({ example: 'john.doe@example.com' })
   @IsNotEmpty()
@@ -34,7 +34,7 @@ export class UserDto {
   password: string;
 
   @ApiProperty({ example: true })
-  @IsNotEmpty()
+  @IsOptional()
   @IsBoolean()
   isPasswordReset: boolean;
 
@@ -45,17 +45,17 @@ export class UserDto {
   signature?: string;
 
   @ApiProperty({ example: true })
-  @IsNotEmpty()
+  @IsOptional()
   @IsBoolean()
   isActive: boolean;
 
   @ApiProperty({ example: 'admin' })
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   role: string;
 
   @ApiProperty({ example: '2022-01-01T00:00:00Z' })
-  @IsNotEmpty()
+  @IsOptional()
   @IsDateString()
   createdAt: Date;
 

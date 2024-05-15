@@ -1,4 +1,10 @@
-import { Body, Controller, Post, Req /**, UseGuards */ } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  Req /**, UseGuards */,
+  UseInterceptors,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { UserDto } from '../users/dto/users.dto';
@@ -6,6 +12,7 @@ import { UserDto } from '../users/dto/users.dto';
 import { Request } from 'express';
 import ApiStandardResponse from '../common/interceptors/api-response';
 import getApiEndpoint from '../common/utils/getApiEndpoint';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('auth')
 @Controller(getApiEndpoint('auth'))
@@ -24,7 +31,10 @@ export class AuthController {
   }
 
   @Post('signup')
-  async signUp(@Body() user: UserDto) {
+  @UseInterceptors(FileInterceptor('profileImage'))
+  async signUp(@Body() user: UserDto, profileImage: Express.Multer.File) {
+    console.log('profileImage', profileImage, user);
+
     return await this.authService.singUp(user);
   }
 

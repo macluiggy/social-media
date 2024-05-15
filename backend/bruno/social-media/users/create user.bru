@@ -6,7 +6,7 @@ meta {
 
 post {
   url: {{base_url}}/users
-  body: json
+  body: multipartForm
   auth: bearer
 }
 
@@ -23,6 +23,7 @@ body:json {
     "phone": "1234567890"
   }
 }
+
 
 docs {
   # Create User

@@ -5,6 +5,7 @@ import { SuccesResponseInterceptor } from './common/interceptors/succes-request-
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import envVariables from './common/envVariables';
 import { NestFastifyApplication } from '@nestjs/platform-fastify';
+import { ValidationPipe } from '@nestjs/common';
 
 const port = envVariables.port;
 
@@ -22,6 +23,7 @@ async function bootstrap() {
     credentials: true,
   });
   app.useGlobalInterceptors(new SuccesResponseInterceptor());
+  app.useGlobalPipes(new ValidationPipe());
 
   // open api
   const options = new DocumentBuilder()

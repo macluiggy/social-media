@@ -51,7 +51,7 @@ export class UsersService {
       });
       // return await this.userRepository.save(newUser);
       const data = await queryRunner.manager.save(newUser);
-      await queryRunner.commitTransaction();
+      await queryRunner.rollbackTransaction();
       return data;
     } catch (error) {
       await queryRunner.rollbackTransaction();
@@ -118,10 +118,13 @@ export class UsersService {
   }
 
   async deleteByEmail(email: string): Promise<void> {
-    const user = await this.userRepository.findOneOrFail({
+    const user = await this.userRepository.findOne({
       where: { email },
     });
-    await this.userRepository.delete(user.id);
+
+    if (user) {
+      await this.userRepository.delete(user.id);
+    }
   }
 
   async createUserIfNotExists(user: UserDto): Promise<Users> {
