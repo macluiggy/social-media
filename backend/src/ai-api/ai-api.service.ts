@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import AiStrategy from './strategy/ai-strategy';
 import Context from './strategy/context';
-import GeminiStrategy from './strategy/gemini.strategy';
+// import GeminiStrategy from './strategy/gemini.strategy';
+import HuggingFaceStrategy from './strategy/huggingface.strategy';
 // import { CreateAiApiDto } from './dto/create-ai-api.dto';
 // import { UpdateAiApiDto } from './dto/update-ai-api.dto';
 
@@ -10,7 +11,7 @@ export class AiApiService implements AiStrategy {
   private context: Context;
 
   constructor() {
-    this.context = new Context(new GeminiStrategy());
+    this.context = new Context(new HuggingFaceStrategy());
   }
 
   setStrategy(strategy: AiStrategy) {

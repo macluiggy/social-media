@@ -71,7 +71,7 @@ export class UsersService {
   }
 
   async findOne(id: number): Promise<any> {
-    // return await this.IAApiService.generateCompletion('prompt');
+    return await this.IAApiService.createCompletion('hi there, how are you?');
     const user = await this.userRepository.findOne({
       where: { id },
     });

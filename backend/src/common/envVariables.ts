@@ -36,7 +36,7 @@ const envVariables = {
   nodeEnviroment: NODE_ENV,
   isProduction,
   jwtSecret: process.env.JWT_SECRET,
-  huggingFaceApiKey: process.env.HUGGING_FACE_API_KEY,
+  huggingFaceApiKey: process.env.HUGGINGFACE_API_KEY,
 };
 
 export default envVariables;
