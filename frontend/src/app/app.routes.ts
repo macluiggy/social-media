@@ -13,10 +13,10 @@ export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'profile/user/:userId', component: ProfileComponent, canActivate: [authGuard] },
+  { path: 'profile/user/:userId', component: ProfileComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'admin', component: BoardAdminComponent },
-  { path: 'user', component: BoardUserComponent, canActivate: [authGuard]},
+  { path: 'user', component: BoardUserComponent, canActivate: [authGuard] },
   { path: 'create-post', component: CreatePostComponent },
   { path: '**', component: NotFoundComponent },
   // dont put any routes after this one, it will always redirect to the not found component
