@@ -7,8 +7,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './db/config/typeorm.config';
 import { SetUserPreferredLanguage } from './lang/middleware/lang.middleware';
 import { JwtModule } from '@nestjs/jwt';
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
+// import { ServeStaticModule } from '@nestjs/serve-static';
+// import { join } from 'path';
 import { PostsModule } from './posts/posts.module';
 import { AiApiModule } from './ai-api/ai-api.module';
 
