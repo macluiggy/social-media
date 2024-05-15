@@ -17,8 +17,12 @@ export class AiApiService implements AiStrategy {
   setStrategy(strategy: AiStrategy) {
     this.context.setStrategy(strategy);
   }
-  createCompletion(prompt: string): Promise<string> {
-    return this.context.createCompletion(prompt);
+  chatCompletion({
+    prompt,
+  }: {
+    prompt: string;
+  }): Promise<{ outputResponse: string }> {
+    return this.context.chatCompletion({ prompt });
   }
   // create(createAiApiDto: CreateAiApiDto) {
   //   return 'This action adds a new aiApi';

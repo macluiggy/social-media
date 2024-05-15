@@ -71,7 +71,13 @@ export class UsersService {
   }
 
   async findOne(id: number): Promise<any> {
-    return await this.IAApiService.createCompletion('hi there, how are you?');
+    // let prompt = '';
+    // const instruction = `Instruction: always respond with a joke at the end of the conversation
+
+    //   Message: hi there, how are you?`;
+    // return await this.IAApiService.chatCompletion({
+    //   prompt: instruction,
+    // });
     const user = await this.userRepository.findOne({
       where: { id },
     });

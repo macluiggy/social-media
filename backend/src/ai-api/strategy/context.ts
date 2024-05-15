@@ -6,9 +6,12 @@ export default class Context implements AiStrategy {
   constructor(strategy: AiStrategy) {
     this.strategy = strategy;
   }
-
-  async createCompletion(prompt: string): Promise<string> {
-    return this.strategy.createCompletion(prompt);
+  chatCompletion({
+    prompt,
+  }: {
+    prompt: string;
+  }): Promise<{ outputResponse: string }> {
+    return this.strategy.chatCompletion({ prompt });
   }
 
   setStrategy(strategy: AiStrategy) {
