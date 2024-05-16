@@ -6,7 +6,7 @@ export default class FileStorage implements StorageStrategy {
   constructor(fileStorage: StorageStrategy) {
     this.fileStorage = fileStorage;
   }
-  uploadFile(file: Express.Multer.File, options?: any): Promise<string> {
+  uploadFile(file: Express.Multer.File, options?: any) {
     return this.fileStorage.uploadFile(file, options);
   }
   deleteFile(fileUrl: string, options?: any): Promise<void> {

@@ -17,6 +17,7 @@ import Lang from '../lang/lang.type';
 import { DEFAULT_LANG } from '../lang';
 import { AiApiService } from '../ai-api/ai-api.service';
 import { FileStorageService } from '../file-storage/file-storage.service';
+import { USER } from '../common/constants';
 
 @Injectable({
   scope: Scope.REQUEST,
@@ -48,8 +49,17 @@ export class UsersService {
       if (await this.userAlreadyExists(user)) {
         throw new ConflictException(this.messages.USER.ALREADY_EXISTS);
       }
+      const { storageKey } = await this.fileStorageService.uploadFile(
+        user.profileImage,
+        {
+          key: USER.STORAGE_KEY_PATH.PROFILE_IMAGES(user.username),
+        },
+      );
+      console.log('storageKey', storageKey);
+
       const newUser = this.userRepository.create({
         ...user,
+        // TODO: add column for profile image
       });
       // return await this.userRepository.save(newUser);
       const data = await queryRunner.manager.save(newUser);
