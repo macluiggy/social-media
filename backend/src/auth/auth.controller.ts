@@ -56,11 +56,7 @@ export class AuthController {
     )
     profileImage: Express.Multer.File,
   ) {
-    console.log('file', profileImage);
-    return {
-      file: profileImage.buffer.toString('base64'),
-    };
-
+    user.profileImage = profileImage;
     return await this.authService.singUp(user);
   }
 

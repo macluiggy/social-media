@@ -3,7 +3,7 @@ import StorageStrategy from './strategy/StorageStrategy';
 import R2StorageStrategy from './strategy/R2StorageStrategy';
 
 @Injectable()
-export class FileStorageServiceService implements StorageStrategy {
+export class FileStorageService implements StorageStrategy {
   constructor(
     private fileStorageService: R2StorageStrategy,
     // private fileStorageService: S3StorageStrategy,
