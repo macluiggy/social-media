@@ -55,15 +55,14 @@ export class UsersService {
           key: USER.STORAGE_KEY_PATH.PROFILE_IMAGES(user.username),
         },
       );
-      console.log('storageKey', storageKey);
 
       const newUser = this.userRepository.create({
         ...user,
-        // TODO: add column for profile image
+        profileImageKey: storageKey,
       });
       // return await this.userRepository.save(newUser);
       const data = await queryRunner.manager.save(newUser);
-      await queryRunner.rollbackTransaction();
+      await queryRunner.commitTransaction();
       return data;
     } catch (error) {
       await queryRunner.rollbackTransaction();
@@ -93,10 +92,19 @@ export class UsersService {
     const user = await this.userRepository.findOne({
       where: { id },
     });
+    let profileImageUrl = null;
+    if (user.profileImageKey) {
+      profileImageUrl = await this.fileStorageService.getSignedUrl(
+        user.profileImageKey,
+      );
+    }
     if (!user) {
       throw new NotFoundException('User not found');
     }
-    return user;
+    return {
+      ...user,
+      profileImageUrl,
+    };
   }
 
   async update(id: number, userDto: UserDto): Promise<Users> {

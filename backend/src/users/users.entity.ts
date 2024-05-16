@@ -75,6 +75,14 @@ export class Users {
   @Column({ name: 'phone', type: 'varchar', length: 100, default: '' })
   phone: string;
 
+  @Column({
+    name: 'profile_image_key',
+    type: 'varchar',
+    length: 255,
+    nullable: true,
+  })
+  profileImageKey: string;
+
   @BeforeInsert()
   async checkData() {
     const salt = await bcrypt.genSalt(10);

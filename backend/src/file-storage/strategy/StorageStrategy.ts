@@ -5,5 +5,11 @@ export default interface StorageStrategy {
   ): Promise<{
     storageKey: string;
   }>;
+  getSignedUrl(
+    fileKey: string,
+    options?: {
+      expiresIn?: number;
+    },
+  ): Promise<string>;
   deleteFile(fileUrl: string, options?: any): Promise<void>;
 }

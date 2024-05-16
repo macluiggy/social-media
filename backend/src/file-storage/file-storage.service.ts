@@ -9,6 +9,12 @@ export class FileStorageService implements StorageStrategy {
     this.fileStorageService = R2StorageStrategy.getInstance();
     // this.fileStorageService = S3StorageStrategy.getInstance();
   }
+  getSignedUrl(
+    fileKey: string,
+    options?: { expiresIn?: number },
+  ): Promise<string> {
+    return this.fileStorageService.getSignedUrl(fileKey, options);
+  }
   uploadFile(file: Express.Multer.File, options?: any) {
     return this.fileStorageService.uploadFile(file, options);
   }
