@@ -11,6 +11,7 @@ import { JwtModule } from '@nestjs/jwt';
 // import { join } from 'path';
 import { PostsModule } from './posts/posts.module';
 import { AiApiModule } from './ai-api/ai-api.module';
+import { FileStorageServiceService } from './file-storage-service/file-storage-service.service';
 
 @Module({
   imports: [
@@ -36,7 +37,7 @@ import { AiApiModule } from './ai-api/ai-api.module';
     AiApiModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, FileStorageServiceService],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
