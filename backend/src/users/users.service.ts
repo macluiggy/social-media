@@ -16,6 +16,7 @@ import { REQUEST } from '@nestjs/core';
 import Lang from '../lang/lang.type';
 import { DEFAULT_LANG } from '../lang';
 import { AiApiService } from '../ai-api/ai-api.service';
+import { FileStorageService } from '../file-storage/file-storage.service';
 
 @Injectable({
   scope: Scope.REQUEST,
@@ -28,6 +29,7 @@ export class UsersService {
     @Inject(REQUEST) private readonly request: Request,
     private dataSource: DataSource,
     private IAApiService: AiApiService,
+    private fileStorageService: FileStorageService,
   ) {
     const lang = this.request?.['preferredLanguage'] || DEFAULT_LANG;
     this.messages = getMessages(lang);
