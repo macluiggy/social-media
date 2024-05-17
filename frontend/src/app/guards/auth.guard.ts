@@ -11,6 +11,8 @@ export const authGuard: CanActivateFn = (route, state) => {
     return true;
   }
 
-  authService.logout();
+  console.log('Unauthorized request');
+  
+  authService.logout().subscribe();
   return router.navigate(['/login']);
 };
