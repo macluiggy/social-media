@@ -17,7 +17,11 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'admin', component: BoardAdminComponent },
   { path: 'user', component: BoardUserComponent, canActivate: [authGuard] },
-  { path: 'create-post', component: CreatePostComponent },
+  {
+    path: 'create-post',
+    component: CreatePostComponent,
+    canActivate: [authGuard],
+  },
   { path: '**', component: NotFoundComponent },
   // dont put any routes after this one, it will always redirect to the not found component
 ];

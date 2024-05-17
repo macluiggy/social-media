@@ -28,9 +28,9 @@ export class LoginComponent implements OnInit {
     private storageService: StorageService
   ) {}
   ngOnInit(): void {
-    if (this.storageService.isLoggedIn()) {
-      this.isLoggedIn = true;
-    }
+    this.authService.getIsLoggedIn().subscribe((isLoggedIn) => {
+      this.isLoggedIn = isLoggedIn;
+    });
     this.user = this.storageService.getUser();
   }
 
