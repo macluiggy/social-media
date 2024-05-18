@@ -1,1 +1,52 @@
-<p>profile-settings works!</p>
+<p-card header="Profile Settings">
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+    <div class="p-field">
+      <label for="firstName">First Name</label>
+      <!-- <p-inputText id="firstName" formControlName="firstName"/> -->
+      <input
+        type="text"
+        id="firstName"
+        formControlName="firstName"
+        class="p-inputtext"
+      />
+    </div>
+
+    <div class="p-field">
+      <label for="lastName">Last Name</label>
+      <input class="p-inputtext" id="lastName" formControlName="lastName" />
+    </div>
+
+    <div class="p-field">
+      <label for="username">Username</label>
+      <input class="p-inputtext" id="username" formControlName="username" />
+    </div>
+
+    <div class="p-field">
+      <label for="email">Email</label>
+      <input class="p-inputtext" id="email" formControlName="email" />
+    </div>
+
+    <div class="p-field">
+      <label for="profilePicture">Profile Picture</label>
+      <p-fileUpload
+        name="profilePicture"
+        chooseIcon="pi pi-upload"
+        accept="image/*"
+        maxFileSize="1000000"
+        chooseLabel="Browse"
+        class="p-fileupload-content"
+        [style]="{ marginBottom: '10px' }"
+        #profilePicture
+        (onSelect)="onSelect($event)"
+      ></p-fileUpload>
+      <!-- <input
+        type="file"
+        id="profilePicture"
+        formControlName="profilePicture"
+        class="p-fileupload-content"
+      /> -->
+    </div>
+
+    <p-button type="submit" label="Save Changes"></p-button>
+  </form>
+</p-card>
