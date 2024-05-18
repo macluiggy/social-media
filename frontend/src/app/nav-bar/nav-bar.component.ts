@@ -125,6 +125,18 @@ export class NavBarComponent {
         this.loggedInUser = user;
       }
     });
+    this.refreshUserInfo();
+  }
+
+  refreshUserInfo(): void {
+    this.userService.getUserByUserId(this.userId).subscribe({
+      next: (res: any) => {
+        const previousUser = this.storageService.getUser();
+        const user: User = res.data;
+        const newUser = { ...previousUser, ...user };
+        this.storageService.saveUser(newUser);
+      },
+    });
   }
 
   updatePMenusItems(): void {

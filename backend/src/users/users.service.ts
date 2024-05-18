@@ -127,6 +127,7 @@ export class UsersService {
         updatedUserData[key] = null;
       }
     }
+    let profileImageUrl: string = null;
     if (userDto.profileImage) {
       const { storageKey } = await this.fileStorageService.uploadFile(
         userDto.profileImage,
@@ -136,10 +137,12 @@ export class UsersService {
       );
 
       updatedUserData.profileImageKey = storageKey;
+      profileImageUrl = await this.fileStorageService.getSignedUrl(storageKey);
     }
     delete updatedUserData.profileImage;
 
     const updatedUser = await this.userRepository.save(updatedUserData);
+    updatedUser.profileImageUrl = profileImageUrl;
     delete updatedUser.password;
 
     return updatedUser;

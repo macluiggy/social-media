@@ -21,7 +21,7 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private storageService: StorageService,
-    private userService: UserService,
+    private userService: UserService
   ) {}
 
   signUp(credentials: any) {
@@ -85,14 +85,12 @@ export class AuthService {
   }
 
   /**
-   * This updates the logged in user data, not in the storage, but in the app, it is only in the state of the angular app
+   * This updates the logged in user data
    * @param data
    * @returns
    */
   updateLoggedInUser(user: User) {
-    const previousUser = this.storageService.getUser();
-    const newUser = { ...previousUser, ...user };
-    this.storageService.saveUser(newUser);
+    this.storageService.updateUser(user);
     this.loggedInUserSubject.next(user);
   }
 }
