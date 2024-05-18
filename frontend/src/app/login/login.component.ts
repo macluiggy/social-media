@@ -3,11 +3,13 @@ import { AuthService } from '../services/auth/auth.service';
 import { StorageService } from '../services/storage/storage.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CardModule } from 'primeng/card';
+
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, CardModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
