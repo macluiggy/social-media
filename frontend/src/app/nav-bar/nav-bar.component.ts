@@ -113,7 +113,7 @@ export class NavBarComponent {
       {
         label: 'Settings',
         icon: 'pi pi-fw pi-cog',
-        routerLink: 'user',
+        routerLink: 'settings',
       },
     ];
 
@@ -126,24 +126,7 @@ export class NavBarComponent {
   }
 
   updatePMenusItems(): void {
-    this.pMenuItems = [
-      {
-        label: 'Profile',
-        icon: 'pi pi-fw pi-user',
-        // routerLink: 'profile',
-        routerLink: `profile/user/${this.userId}`,
-      },
-      {
-        label: 'Logout',
-        icon: 'pi pi-fw pi-sign-out',
-        command: () => this.logout(),
-      },
-      {
-        label: 'Settings',
-        icon: 'pi pi-fw pi-cog',
-        routerLink: 'user',
-      },
-    ];
+    this.pMenuItems = [...this.pMenuItems];
   }
 
   updateMenuItems(): void {

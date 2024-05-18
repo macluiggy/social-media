@@ -8,6 +8,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { BoardUserComponent } from './board-user/board-user.component';
 import { authGuard } from './guards/auth.guard';
 import { CreatePostComponent } from './posts/create-post/create-post.component';
+import { SettingsComponent } from './settings/settings.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -20,6 +21,11 @@ export const routes: Routes = [
   {
     path: 'create-post',
     component: CreatePostComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'settings',
+    component: SettingsComponent,
     canActivate: [authGuard],
   },
   { path: '**', component: NotFoundComponent },
