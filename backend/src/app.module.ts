@@ -7,10 +7,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './db/config/typeorm.config';
 import { SetUserPreferredLanguage } from './lang/middleware/lang.middleware';
 import { JwtModule } from '@nestjs/jwt';
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
+// import { ServeStaticModule } from '@nestjs/serve-static';
+// import { join } from 'path';
 import { PostsModule } from './posts/posts.module';
 import { AiApiModule } from './ai-api/ai-api.module';
+import { FileStorageModule } from './file-storage/file-storage.module';
+import { FileStorageService } from './file-storage/file-storage.service';
 
 @Module({
   imports: [
@@ -19,24 +21,25 @@ import { AiApiModule } from './ai-api/ai-api.module';
     TypeOrmModule.forRoot(typeOrmConfig),
     TypeOrmModule.forFeature([]),
     JwtModule,
-    ServeStaticModule.forRoot({
-      // rootPath: join(__dirname, '..', 'frontend', 'dist', 'frontend'), // adjust this path as needed
-      rootPath: join(
-        __dirname,
-        '..',
-        '..',
-        '..',
-        'frontend',
-        'dist',
-        'frontend',
-        'browser',
-      ), // adjust this path as needed
-    }),
+    // ServeStaticModule.forRoot({
+    //   // rootPath: join(__dirname, '..', 'frontend', 'dist', 'frontend'), // adjust this path as needed
+    //   rootPath: join(
+    //     __dirname,
+    //     '..',
+    //     '..',
+    //     '..',
+    //     'frontend',
+    //     'dist',
+    //     'frontend',
+    //     'browser',
+    //   ), // adjust this path as needed
+    // }),
     PostsModule,
     AiApiModule,
+    FileStorageModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, FileStorageService],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {

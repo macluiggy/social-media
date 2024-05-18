@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, catchError, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { StorageService } from '../storage/storage.service';
 import { UserService } from '../user/user.service';
+import { User } from '../../common/types';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,11 @@ import { UserService } from '../user/user.service';
 export class AuthService {
   private isLoggedIn = new BehaviorSubject<boolean>(false);
   private apiUrl = environment.apiUrl;
+  private loggedInUserSubject = new BehaviorSubject<User | null>(null);
+  /**
+   * Observable to get the logged in user, this is used to update the user data, is not from the storage or from API, it is indirectly from any of them
+   */
+  loggedInUser$ = this.loggedInUserSubject.asObservable();
 
   constructor(
     private http: HttpClient,
@@ -27,14 +33,13 @@ export class AuthService {
       tap((response: any) => {
         const data = response.data;
         this.storageService.saveUser(data.user);
-        this.userService.setUser(data.user);
+        this.updateLoggedInUser(data.user);
         this.storageService.setToken(data.accessToken);
         this.setIsLoggedIn(true);
       }),
       catchError((error) => {
         throw error;
       })
-    
     );
   }
 
@@ -68,5 +73,24 @@ export class AuthService {
 
   userIsLoggedIn() {
     return this.storageService.isLoggedIn();
+  }
+
+  /**
+   * This gets the logged in user from backend API
+   * @returns
+   */
+  getLoggedInUser() {
+    const userId = this.storageService.getUser().id;
+    return this.userService.getUserByUserId(userId);
+  }
+
+  /**
+   * This updates the logged in user data
+   * @param data
+   * @returns
+   */
+  updateLoggedInUser(user: User) {
+    this.storageService.updateUser(user);
+    this.loggedInUserSubject.next(user);
   }
 }

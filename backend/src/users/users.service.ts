@@ -16,6 +16,8 @@ import { REQUEST } from '@nestjs/core';
 import Lang from '../lang/lang.type';
 import { DEFAULT_LANG } from '../lang';
 import { AiApiService } from '../ai-api/ai-api.service';
+import { FileStorageService } from '../file-storage/file-storage.service';
+import { USER } from '../common/constants';
 
 @Injectable({
   scope: Scope.REQUEST,
@@ -28,6 +30,7 @@ export class UsersService {
     @Inject(REQUEST) private readonly request: Request,
     private dataSource: DataSource,
     private IAApiService: AiApiService,
+    private fileStorageService: FileStorageService,
   ) {
     const lang = this.request?.['preferredLanguage'] || DEFAULT_LANG;
     this.messages = getMessages(lang);
@@ -46,9 +49,23 @@ export class UsersService {
       if (await this.userAlreadyExists(user)) {
         throw new ConflictException(this.messages.USER.ALREADY_EXISTS);
       }
-      const newUser = this.userRepository.create({
+      let profileImageKey: string = null;
+      if (user.profileImage) {
+        const { storageKey } = await this.fileStorageService.uploadFile(
+          user.profileImage,
+          {
+            key: USER.STORAGE_KEY_PATH.PROFILE_IMAGES(user.username),
+          },
+        );
+        profileImageKey = storageKey;
+      }
+
+      const createUserData = {
         ...user,
-      });
+      };
+      delete createUserData.profileImage;
+      createUserData['profileImageKey'] = profileImageKey;
+      const newUser = this.userRepository.create(createUserData);
       // return await this.userRepository.save(newUser);
       const data = await queryRunner.manager.save(newUser);
       await queryRunner.commitTransaction();
@@ -70,7 +87,7 @@ export class UsersService {
     return await this.userRepository.find();
   }
 
-  async findOne(id: number): Promise<any> {
+  async findOne(id: number) {
     // let prompt = '';
     // const instruction = `Instruction: always respond with a joke at the end of the conversation
 
@@ -80,21 +97,58 @@ export class UsersService {
     // });
     const user = await this.userRepository.findOne({
       where: { id },
+      select: [
+        'id',
+        'username',
+        'email',
+        'firstName',
+        'lastName',
+        'profileImageKey',
+      ],
     });
+
     if (!user) {
       throw new NotFoundException('User not found');
     }
-    return user;
+    return {
+      ...user,
+    };
   }
 
   async update(id: number, userDto: UserDto): Promise<Users> {
     delete userDto.password; // Don't update the password here
     const user = await this.findOne(id);
+
+    if (userDto.username === user.username) {
+      delete userDto.username;
+      delete userDto.username;
+    }
     const updatedUserData = {
       ...user,
       ...userDto,
+      id: +id,
     };
+    for (const key in updatedUserData) {
+      if (updatedUserData[key] === 'null') {
+        updatedUserData[key] = null;
+      }
+    }
+    let profileImageUrl: string = null;
+    if (userDto.profileImage) {
+      const { storageKey } = await this.fileStorageService.uploadFile(
+        userDto.profileImage,
+        {
+          key: USER.STORAGE_KEY_PATH.PROFILE_IMAGES(user.username),
+        },
+      );
+
+      updatedUserData.profileImageKey = storageKey;
+      profileImageUrl = await this.fileStorageService.getSignedUrl(storageKey);
+    }
+    delete updatedUserData.profileImage;
+
     const updatedUser = await this.userRepository.save(updatedUserData);
+    updatedUser.profileImageUrl = profileImageUrl;
     delete updatedUser.password;
 
     return updatedUser;
@@ -118,10 +172,13 @@ export class UsersService {
   }
 
   async deleteByEmail(email: string): Promise<void> {
-    const user = await this.userRepository.findOneOrFail({
+    const user = await this.userRepository.findOne({
       where: { email },
     });
-    await this.userRepository.delete(user.id);
+
+    if (user) {
+      await this.userRepository.delete(user.id);
+    }
   }
 
   async createUserIfNotExists(user: UserDto): Promise<Users> {

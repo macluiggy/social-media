@@ -6,6 +6,7 @@ import { Users } from './users.entity';
 import { DataSource } from 'typeorm';
 import { MOCK_REQUEST } from '../common/tests/constants';
 import { AiApiService } from '../ai-api/ai-api.service';
+import { FileStorageService } from '../file-storage/file-storage.service';
 
 const mockUsersRepository = {
   find: vi.fn(),
@@ -25,6 +26,13 @@ describe('UsersService', () => {
         { provide: DataSource, useValue: {} },
         { provide: 'REQUEST', useValue: MOCK_REQUEST },
         AiApiService,
+        FileStorageService,
+        {
+          provide: AiApiService,
+          useValue: {
+            getResponse: vi.fn(),
+          },
+        },
       ],
     }).compile();
 

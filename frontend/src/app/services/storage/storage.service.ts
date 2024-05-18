@@ -11,7 +11,7 @@ export class StorageService {
 
   clean(): void {
     if (isPlatformBrowser(this.platformId)) {
-      sessionStorage.clear();
+      localStorage.clear();
     }
   }
 
@@ -21,8 +21,8 @@ export class StorageService {
    */
   public saveUser(user: any): void {
     if (isPlatformBrowser(this.platformId)) {
-      sessionStorage.removeItem(USER_KEY);
-      sessionStorage.setItem(USER_KEY, JSON.stringify(user));
+      localStorage.removeItem(USER_KEY);
+      localStorage.setItem(USER_KEY, JSON.stringify(user));
       // save user preferred language
       this.savePreferredLanguage(user.preferredLanguage);
     }
@@ -30,10 +30,10 @@ export class StorageService {
 
   public updateUser(user: any): void {
     if (isPlatformBrowser(this.platformId)) {
-      const oldUser = sessionStorage.getItem(USER_KEY);
+      const oldUser = localStorage.getItem(USER_KEY);
       if (oldUser) {
         const newUser = { ...JSON.parse(oldUser), ...user };
-        sessionStorage.setItem(USER_KEY, JSON.stringify(newUser));
+        localStorage.setItem(USER_KEY, JSON.stringify(newUser));
       }
 
       // save user preferred language
@@ -43,7 +43,7 @@ export class StorageService {
 
   public getUser(): User {
     if (isPlatformBrowser(this.platformId)) {
-      const user = sessionStorage.getItem(USER_KEY);
+      const user = localStorage.getItem(USER_KEY);
       if (user) {
         return JSON.parse(user);
       }
@@ -54,7 +54,7 @@ export class StorageService {
 
   public isLoggedIn(): boolean {
     if (isPlatformBrowser(this.platformId)) {
-      const user = sessionStorage.getItem(USER_KEY);
+      const user = localStorage.getItem(USER_KEY);
       if (user) {
         return true;
       }

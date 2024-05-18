@@ -9,13 +9,14 @@ import {
   USERNAME_FOR_TESTING,
 } from '../src/auth/utils/singInUser';
 import { AiApiService } from '../src/ai-api/ai-api.service';
+import { FileStorageService } from '../src/file-storage/file-storage.service';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
 
   beforeAll(async () => {
     const result = await setupTestingModule({
-      providers: [UsersService, AiApiService],
+      providers: [UsersService, AiApiService, FileStorageService],
     });
     app = result.app;
     const testingModule = result.testingModule;

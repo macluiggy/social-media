@@ -4,8 +4,10 @@ import { inject } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { StorageService } from '../storage/storage.service';
+import { AuthService } from './auth.service';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  const authService = inject(AuthService);
   const storageService = inject(StorageService);
   const authToken = storageService.getToken();
 
@@ -40,6 +42,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
           // Specific handling for unauthorized errors
           console.error('Unauthorized request:', err);
           // You might trigger a re-authentication flow or redirect the user here
+          authService.logout().subscribe();
           router.navigate(['/login']);
         } else {
           // Handle other HTTP error codes

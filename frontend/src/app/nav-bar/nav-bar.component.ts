@@ -16,6 +16,7 @@ import { ToastModule } from 'primeng/toast';
 import { DialogModule } from 'primeng/dialog';
 import { CreatePostComponent } from '../posts/create-post/create-post.component';
 import { UserService } from '../services/user/user.service';
+import { User } from '../common/types';
 
 @Component({
   selector: 'app-nav-bar',
@@ -51,6 +52,7 @@ export class NavBarComponent {
   pMenuItems: MenuItem[];
   displayCreatePostDialog = false;
   userId: number;
+  loggedInUser: User | null = this.storageService.getUser();
 
   constructor(
     private storageService: StorageService,
@@ -113,37 +115,34 @@ export class NavBarComponent {
       {
         label: 'Settings',
         icon: 'pi pi-fw pi-cog',
-        routerLink: 'user',
+        routerLink: 'settings',
       },
     ];
-
-    this.userService.user$.subscribe((user) => {
+    this.authService.loggedInUser$.subscribe((user) => {
       if (user) {
         this.userId = user.id;
         this.updatePMenusItems();
+        this.loggedInUser = user;
       }
+    });
+    if (this.isLoggedIn) {
+      this.refreshUserInfo();
+    }
+  }
+
+  refreshUserInfo(): void {
+    this.userService.getUserByUserId(this.userId).subscribe({
+      next: (res: any) => {
+        const previousUser = this.storageService.getUser();
+        const user: User = res.data;
+        const newUser = { ...previousUser, ...user };
+        this.storageService.saveUser(newUser);
+      },
     });
   }
 
   updatePMenusItems(): void {
-    this.pMenuItems = [
-      {
-        label: 'Profile',
-        icon: 'pi pi-fw pi-user',
-        // routerLink: 'profile',
-        routerLink: `profile/user/${this.userId}`,
-      },
-      {
-        label: 'Logout',
-        icon: 'pi pi-fw pi-sign-out',
-        command: () => this.logout(),
-      },
-      {
-        label: 'Settings',
-        icon: 'pi pi-fw pi-cog',
-        routerLink: 'user',
-      },
-    ];
+    this.pMenuItems = [...this.pMenuItems];
   }
 
   updateMenuItems(): void {

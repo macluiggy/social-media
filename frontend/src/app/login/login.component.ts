@@ -3,11 +3,19 @@ import { AuthService } from '../services/auth/auth.service';
 import { StorageService } from '../services/storage/storage.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    CardModule,
+    ButtonModule,
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -28,9 +36,9 @@ export class LoginComponent implements OnInit {
     private storageService: StorageService
   ) {}
   ngOnInit(): void {
-    if (this.storageService.isLoggedIn()) {
-      this.isLoggedIn = true;
-    }
+    this.authService.getIsLoggedIn().subscribe((isLoggedIn) => {
+      this.isLoggedIn = isLoggedIn;
+    });
     this.user = this.storageService.getUser();
   }
 

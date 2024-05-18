@@ -6,10 +6,15 @@ meta {
 
 get {
   url: {{base_url}}/posts
-  body: none
+  body: multipartForm
   auth: bearer
 }
 
 auth:bearer {
   token: {{TOKEN}}
+}
+
+body:multipart-form {
+  ddd: ddd
+  dddd: @file(/home/luiggy/Documents/PROGRAMMING/IMAGINEAPPS/NUCLEO-ODS/Datos.xlsx)
 }

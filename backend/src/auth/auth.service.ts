@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { UserDto } from '../users/dto/users.dto';
 import { UsersService } from '../users/users.service';
 import { DEFAULT_LANG } from '../lang';
+import envVariables from '../common/envVariables';
 
 @Injectable()
 export class AuthService {
@@ -48,8 +49,9 @@ export class AuthService {
     };
 
     const accessToken = this.jwtService.sign(payload, {
-      secret: process.env.JWT_SECRET,
-      expiresIn: process.env.JWT_EXPIRES_IN,
+      secret: envVariables.jwtSecret,
+      expiresIn: envVariables.jwtExpiresIn,
+      // expiresIn: '10s', // for testing
       // audience: process.env.APP_URL,
     });
 

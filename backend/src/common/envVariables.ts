@@ -36,7 +36,15 @@ const envVariables = {
   nodeEnviroment: NODE_ENV,
   isProduction,
   jwtSecret: process.env.JWT_SECRET,
+  jwtExpiresIn: process.env.JWT_EXPIRES_IN,
   huggingFaceApiKey: process.env.HUGGINGFACE_API_KEY,
+  cloudflare: {
+    apiKey: process.env.CLOUDFLARE_API_KEY,
+    s3AccessKeyId: process.env.CLOUDFLARE_S3_ACCESS_KEY_ID,
+    s3SecretAccessKey: process.env.CLOUDFLARE_S3_SECRET_ACCESS_KEY,
+    accountId: process.env.CLOUDFLARE_ACCOUNT_ID,
+    s3BucketName: process.env.CLOUDFLARE_S3_BUCKET_NAME,
+  },
 };
 
 export default envVariables;

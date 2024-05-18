@@ -6,16 +6,25 @@ meta {
 
 post {
   url: {{base_url}}/auth/signup
-  body: json
+  body: multipartForm
   auth: none
 }
 
 body:json {
   {
-      "fullName": "John Doe",
+      "firstName": "John Doe",
       "username": "johndoe",
-      "email": "example@example.com",
+      "email": "johndoe@mail.com",
       "password": "password",
       "phone": "1234567890"
   }
+}
+
+body:multipart-form {
+  username: jonhdoe
+  firstName: John Doe
+  email: johndoe@mail.com
+  password: password
+  phone: 1234567890
+  profileImage: @file(/home/luiggy/Pictures/Screenshot_2023-04-12_08-34-53.png)
 }

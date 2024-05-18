@@ -21,12 +21,13 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import ApiStandardResponse from '../common/interceptors/api-response';
 import Lang from '../lang/lang.type';
 import getMessages from '../lang/getMessages';
+import { Public } from '../common/decorators/public.decorator';
 
 @Controller({
   path: getApiEndpoint('posts'),
   scope: Scope.REQUEST,
 })
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard) // Applies to all endpoints by default
 @ApiTags('posts')
 @ApiBearerAuth()
 export class PostsController {
@@ -38,7 +39,7 @@ export class PostsController {
     const lang = this.request['preferredLanguage'];
     this.messages = getMessages(lang);
   }
-
+  @Public() // Overrides the class-level guard\
   @Get('random')
   @ApiOperation({
     summary: 'Get random posts along with the user who created each post',

@@ -1,31 +1,28 @@
 import { Component, ViewChild } from '@angular/core';
-import { AuthService } from '../services/auth/auth.service';
-import { CommonModule } from '@angular/common';
-import {
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
-import { UserService } from '../services/user/user.service';
-import { User } from '../common/types';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { User } from '../../common/types';
+// import for <p-inputText
+import { InputTextModule } from 'primeng/inputtext';
 import { FileUploadModule } from 'primeng/fileupload';
+import { AuthService } from '../../services/auth/auth.service';
+import { UserService } from '../../services/user/user.service';
 
 @Component({
-  selector: 'app-register',
+  selector: 'app-profile-settings',
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
-    FormsModule,
     CardModule,
+    ButtonModule,
+    InputTextModule,
     FileUploadModule,
   ],
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.scss',
+  templateUrl: './profile-settings.component.html',
+  styleUrl: './profile-settings.component.scss',
 })
-export class RegisterComponent {
+export class ProfileSettingsComponent {
   @ViewChild('profileImage') profileImage: any;
   userId: number = 0;
 
@@ -39,9 +36,20 @@ export class RegisterComponent {
       lastName: new FormControl(null),
       email: new FormControl(null),
       password: new FormControl(null),
+      id: new FormControl(null),
       username: new FormControl(null),
       // profile picture is a file
       profileImage: new FormControl(null, {}),
+    });
+
+    this.authService.getLoggedInUser().subscribe({
+      next: (res: any) => {
+        const user: User = res.data;
+
+        this.userId = user.id;
+
+        this.profileForm.patchValue(user);
+      },
     });
   }
 
@@ -64,7 +72,7 @@ export class RegisterComponent {
       );
     }
 
-    this.authService.signUp(formData).subscribe({
+    this.userService.updateUserData(formData, this.userId).subscribe({
       next: (res: any) => {
         this.authService.updateLoggedInUser(res.data);
         this.profileImage.clear();
