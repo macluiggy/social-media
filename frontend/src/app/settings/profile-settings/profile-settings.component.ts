@@ -6,6 +6,7 @@ import { User } from '../../common/types';
 // import for <p-inputText
 import { InputTextModule } from 'primeng/inputtext';
 import { FileUploadModule } from 'primeng/fileupload';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-profile-settings',
@@ -24,7 +25,7 @@ export class ProfileSettingsComponent {
   @ViewChild('profilePicture') profilePicture: any;
 
   profileForm: FormGroup;
-  constructor() {
+  constructor(private authService: AuthService) {
     this.profileForm = new FormGroup({
       firstName: new FormControl(''),
       lastName: new FormControl(''),
@@ -34,6 +35,13 @@ export class ProfileSettingsComponent {
       username: new FormControl(''),
       // profile picture is a file
       profilePicture: new FormControl('', {}),
+    });
+    authService.getLoggedInUser().subscribe({
+      next: (res: any) => {
+        const user: User = res.data;
+
+        this.profileForm.patchValue(user);
+      },
     });
   }
 
