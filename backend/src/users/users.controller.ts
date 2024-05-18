@@ -27,6 +27,7 @@ import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
 import getApiEndpoint from '../common/utils/getApiEndpoint';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { Public } from '../common/decorators/public.decorator';
 
 @ApiTags('users')
 @ApiBearerAuth()
@@ -58,6 +59,7 @@ export class UsersController {
     return await this.userService.findAll();
   }
 
+  @Public()
   @Get(':id')
   async findOne(@Param('id') id: number) {
     return await this.userService.findOne(id);
