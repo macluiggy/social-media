@@ -58,7 +58,8 @@ export class AuthController {
     profileImage: Express.Multer.File,
   ) {
     user.profileImage = profileImage;
-    return await this.authService.singUp(user);
+    const data = await this.authService.singUp(user);
+    return new ApiStandardResponse(data, 'User created successfully');
   }
 
   @Post('logout')

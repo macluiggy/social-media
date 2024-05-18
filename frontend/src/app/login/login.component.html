@@ -1,5 +1,5 @@
 <div class="col-md-12">
-  <div >
+  <div>
     <!-- <img
       id="profile-img"
       src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
@@ -16,7 +16,7 @@
         <label for="email">Email</label>
         <input
           type="text"
-          class="form-control"
+          class="p-inputtext"
           name="username"
           [(ngModel)]="form.email"
           required
@@ -31,7 +31,7 @@
         <label for="password">Password</label>
         <input
           type="password"
-          class="form-control"
+          class="p-inputtext"
           name="password"
           [(ngModel)]="form.password"
           required
@@ -43,19 +43,20 @@
         <div class="invalid-feedback">
           @if (password.errors['required']) {
           <div>Password is required</div>
-          }
-          @if (password.errors['minlength']) {
+          } @if (password.errors['minlength']) {
           <div>Password must be at least 6 characters</div>
           }
         </div>
         }
       </div>
       <div class="form-group">
-        <button class="btn btn-primary btn-dark btn-block">Login</button>
+        <p-button type="submit" label="Login"></p-button>
       </div>
     </form>
     } @else {
-    <div class="alert alert-success">Logged in as {{ user.username || user.fullName }}.</div>
+    <div class="alert alert-success">
+      Logged in as {{ user.username || user.fullName }}.
+    </div>
     }
   </div>
 </div>

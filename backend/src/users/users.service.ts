@@ -49,17 +49,23 @@ export class UsersService {
       if (await this.userAlreadyExists(user)) {
         throw new ConflictException(this.messages.USER.ALREADY_EXISTS);
       }
-      const { storageKey } = await this.fileStorageService.uploadFile(
-        user.profileImage,
-        {
-          key: USER.STORAGE_KEY_PATH.PROFILE_IMAGES(user.username),
-        },
-      );
+      let profileImageKey: string = null;
+      if (user.profileImage) {
+        const { storageKey } = await this.fileStorageService.uploadFile(
+          user.profileImage,
+          {
+            key: USER.STORAGE_KEY_PATH.PROFILE_IMAGES(user.username),
+          },
+        );
+        profileImageKey = storageKey;
+      }
 
-      const newUser = this.userRepository.create({
+      const createUserData = {
         ...user,
-        profileImageKey: storageKey,
-      });
+      };
+      delete createUserData.profileImage;
+      createUserData['profileImageKey'] = profileImageKey;
+      const newUser = this.userRepository.create(createUserData);
       // return await this.userRepository.save(newUser);
       const data = await queryRunner.manager.save(newUser);
       await queryRunner.commitTransaction();

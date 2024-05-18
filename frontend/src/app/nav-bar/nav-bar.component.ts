@@ -125,7 +125,9 @@ export class NavBarComponent {
         this.loggedInUser = user;
       }
     });
-    this.refreshUserInfo();
+    if (this.isLoggedIn) {
+      this.refreshUserInfo();
+    }
   }
 
   refreshUserInfo(): void {
