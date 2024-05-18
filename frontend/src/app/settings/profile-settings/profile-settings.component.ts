@@ -49,7 +49,6 @@ export class ProfileSettingsComponent {
         this.userId = user.id;
 
         this.profileForm.patchValue(user);
-        
       },
     });
   }
@@ -57,7 +56,6 @@ export class ProfileSettingsComponent {
   onSubmit() {
     const formData = new FormData();
     const updateUserData = this.profileForm.value;
-    
 
     // Append all properties of updateUserData except the file to formData
     for (const key in updateUserData) {
@@ -74,11 +72,10 @@ export class ProfileSettingsComponent {
       );
     }
 
-    
     this.userService.updateUserData(formData, this.userId).subscribe({
       next: (res: any) => {
-        // this.authService.updateLoggedInUser(res.data);
         this.authService.updateLoggedInUser(res.data);
+        this.profileImage.clear();
       },
     });
   }

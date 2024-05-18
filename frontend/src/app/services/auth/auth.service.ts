@@ -90,6 +90,9 @@ export class AuthService {
    * @returns
    */
   updateLoggedInUser(user: User) {
+    const previousUser = this.storageService.getUser();
+    const newUser = { ...previousUser, ...user };
+    this.storageService.saveUser(newUser);
     this.loggedInUserSubject.next(user);
   }
 }

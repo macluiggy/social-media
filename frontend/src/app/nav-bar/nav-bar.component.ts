@@ -52,7 +52,7 @@ export class NavBarComponent {
   pMenuItems: MenuItem[];
   displayCreatePostDialog = false;
   userId: number;
-  loggedInUser: User | null = null;
+  loggedInUser: User | null = this.storageService.getUser();
 
   constructor(
     private storageService: StorageService,
@@ -118,13 +118,11 @@ export class NavBarComponent {
         routerLink: 'settings',
       },
     ];
-
     this.authService.loggedInUser$.subscribe((user) => {
       if (user) {
         this.userId = user.id;
         this.updatePMenusItems();
         this.loggedInUser = user;
-        
       }
     });
   }

@@ -7,10 +7,8 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root',
 })
 export class UserService {
-  private userApi = `${environment.apiUrl}/users`
+  private userApi = `${environment.apiUrl}/users`;
   constructor(private http: HttpClient) {}
-  private userSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  user$ = this.userSubject.asObservable();
 
   getPublicContent(): Observable<string> {
     return of('Public content');
@@ -26,9 +24,5 @@ export class UserService {
 
   getUserByUserId(userId: number): Observable<any> {
     return this.http.get(`${this.userApi}/${userId}`);
-  }
-
-  setUser(user: any) {
-    this.userSubject.next(user);
   }
 }
