@@ -68,7 +68,7 @@ export class UsersController {
   async update(
     @Param('id') id: number,
     @Body() userDTO: UserDto,
-    @Req() req: any,
+    @Req() req: Request & { user: any },
     @UploadedFile(
       new ParseFilePipe({
         validators: [
@@ -83,6 +83,7 @@ export class UsersController {
             fileType: /^image\/(png|jpg|jpeg)$/,
           }),
         ],
+        fileIsRequired: false,
       }),
     )
     profileImage: Express.Multer.File,

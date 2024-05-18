@@ -52,6 +52,7 @@ export class AuthController {
             fileType: /^image\/(png|jpg|jpeg)$/,
           }),
         ],
+        fileIsRequired: false,
       }),
     )
     profileImage: Express.Multer.File,

@@ -91,6 +91,14 @@ export class UsersService {
     // });
     const user = await this.userRepository.findOne({
       where: { id },
+      select: [
+        'id',
+        'username',
+        'email',
+        'firstName',
+        'lastName',
+        'profileImageKey',
+      ],
     });
     let profileImageUrl = null;
     if (user.profileImageKey) {
@@ -110,10 +118,21 @@ export class UsersService {
   async update(id: number, userDto: UserDto): Promise<Users> {
     delete userDto.password; // Don't update the password here
     const user = await this.findOne(id);
+
+    if (userDto.username === user.username) {
+      delete userDto.username;
+      delete userDto.username;
+    }
     const updatedUserData = {
       ...user,
       ...userDto,
+      id: +id,
     };
+    for (const key in updatedUserData) {
+      if (updatedUserData[key] === 'null') {
+        updatedUserData[key] = null;
+      }
+    }
     if (userDto.profileImage) {
       const { storageKey } = await this.fileStorageService.uploadFile(
         userDto.profileImage,
@@ -121,9 +140,11 @@ export class UsersService {
           key: USER.STORAGE_KEY_PATH.PROFILE_IMAGES(user.username),
         },
       );
+
       updatedUserData.profileImageKey = storageKey;
     }
     delete updatedUserData.profileImage;
+
     const updatedUser = await this.userRepository.save(updatedUserData);
     delete updatedUser.password;
 

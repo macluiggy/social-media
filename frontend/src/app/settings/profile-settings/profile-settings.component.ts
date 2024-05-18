@@ -7,6 +7,7 @@ import { User } from '../../common/types';
 import { InputTextModule } from 'primeng/inputtext';
 import { FileUploadModule } from 'primeng/fileupload';
 import { AuthService } from '../../services/auth/auth.service';
+import { UserService } from '../../services/user/user.service';
 
 @Component({
   selector: 'app-profile-settings',
@@ -22,43 +23,71 @@ import { AuthService } from '../../services/auth/auth.service';
   styleUrl: './profile-settings.component.scss',
 })
 export class ProfileSettingsComponent {
-  @ViewChild('profilePicture') profilePicture: any;
+  @ViewChild('profileImage') profileImage: any;
+  userId: number = 0;
 
   profileForm: FormGroup;
-  constructor(private authService: AuthService) {
+  constructor(
+    private authService: AuthService,
+    private userService: UserService
+  ) {
     this.profileForm = new FormGroup({
-      firstName: new FormControl(''),
-      lastName: new FormControl(''),
-      email: new FormControl(''),
-      password: new FormControl(''),
-      id: new FormControl(''),
-      username: new FormControl(''),
+      firstName: new FormControl(null),
+      lastName: new FormControl(null),
+      email: new FormControl(null),
+      password: new FormControl(null),
+      id: new FormControl(null),
+      username: new FormControl(null),
       // profile picture is a file
-      profilePicture: new FormControl('', {}),
+      profileImage: new FormControl(null, {}),
     });
-    authService.getLoggedInUser().subscribe({
+
+    this.authService.getLoggedInUser().subscribe({
       next: (res: any) => {
         const user: User = res.data;
 
+        this.userId = user.id;
+
         this.profileForm.patchValue(user);
+        
       },
     });
   }
 
   onSubmit() {
-    console.log(this.profileForm.value);
+    const formData = new FormData();
+    const updateUserData = this.profileForm.value;
+    
+
+    // Append all properties of updateUserData except the file to formData
+    for (const key in updateUserData) {
+      if (updateUserData.hasOwnProperty(key) && key !== 'profileImage') {
+        formData.append(key, updateUserData[key]);
+      }
+    }
+
+    // Append the file separately
+    if (this.profileForm.get('profileImage')?.value) {
+      formData.append(
+        'profileImage',
+        this.profileForm.get('profileImage')?.value
+      );
+    }
+
+    
+    this.userService.updateUserData(formData, this.userId).subscribe({
+      next: (res: any) => {
+        console.log(res);
+      },
+    });
   }
 
   onSelect(event: any) {
-    console.log(this.profileForm.value);
-
     for (const file of event.files) {
       this.profileForm.patchValue({
-        profilePicture: file,
+        profileImage: file,
       });
-      this.profileForm.get('profilePicture')?.updateValueAndValidity();
+      this.profileForm.get('profileImage')?.updateValueAndValidity();
     }
-
-    console.log(this.profileForm.value);
   }
 }

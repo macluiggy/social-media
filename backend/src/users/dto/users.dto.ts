@@ -28,9 +28,8 @@ export class UserDto {
   email: string;
 
   @ApiProperty({ example: 'password123' })
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  @Length(8, 150)
   password: string;
 
   @ApiProperty({ example: true })

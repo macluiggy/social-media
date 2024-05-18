@@ -29,22 +29,16 @@
     <div class="p-field">
       <label for="profilePicture">Profile Picture</label>
       <p-fileUpload
-        name="profilePicture"
+        name="profileImage"
         chooseIcon="pi pi-upload"
         accept="image/*"
         maxFileSize="1000000"
         chooseLabel="Browse"
         class="p-fileupload-content"
         [style]="{ marginBottom: '10px' }"
-        #profilePicture
+        #profileImage
         (onSelect)="onSelect($event)"
       ></p-fileUpload>
-      <!-- <input
-        type="file"
-        id="profilePicture"
-        formControlName="profilePicture"
-        class="p-fileupload-content"
-      /> -->
     </div>
 
     <p-button type="submit" label="Save Changes"></p-button>
