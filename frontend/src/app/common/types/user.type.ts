@@ -6,6 +6,8 @@ type User = {
   profilePhoto?: string;
   lastName: string;
   password: string;
+  profileImageKey: string;
+  profileImageUrl: string;
 }
 
 

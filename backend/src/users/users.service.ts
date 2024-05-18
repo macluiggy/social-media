@@ -100,18 +100,12 @@ export class UsersService {
         'profileImageKey',
       ],
     });
-    let profileImageUrl = null;
-    if (user.profileImageKey) {
-      profileImageUrl = await this.fileStorageService.getSignedUrl(
-        user.profileImageKey,
-      );
-    }
+
     if (!user) {
       throw new NotFoundException('User not found');
     }
     return {
       ...user,
-      profileImageUrl,
     };
   }
 

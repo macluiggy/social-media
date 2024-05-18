@@ -73,7 +73,8 @@ export class UsersController {
       new ParseFilePipe({
         validators: [
           new MaxFileSizeValidator({
-            maxSize: 1024 * 1024 * 2,
+            // max size in bytes
+            maxSize: 1024 * 1024,
             message(maxSize) {
               return `File too large. Max size is ${maxSize}`;
             },

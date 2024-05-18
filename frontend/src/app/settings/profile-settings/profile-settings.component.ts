@@ -77,7 +77,8 @@ export class ProfileSettingsComponent {
     
     this.userService.updateUserData(formData, this.userId).subscribe({
       next: (res: any) => {
-        console.log(res);
+        // this.authService.updateLoggedInUser(res.data);
+        this.authService.updateLoggedInUser(res.data);
       },
     });
   }

@@ -16,6 +16,7 @@ import { ToastModule } from 'primeng/toast';
 import { DialogModule } from 'primeng/dialog';
 import { CreatePostComponent } from '../posts/create-post/create-post.component';
 import { UserService } from '../services/user/user.service';
+import { User } from '../common/types';
 
 @Component({
   selector: 'app-nav-bar',
@@ -51,6 +52,7 @@ export class NavBarComponent {
   pMenuItems: MenuItem[];
   displayCreatePostDialog = false;
   userId: number;
+  loggedInUser: User | null = null;
 
   constructor(
     private storageService: StorageService,
@@ -117,10 +119,12 @@ export class NavBarComponent {
       },
     ];
 
-    this.userService.user$.subscribe((user) => {
+    this.authService.loggedInUser$.subscribe((user) => {
       if (user) {
         this.userId = user.id;
         this.updatePMenusItems();
+        this.loggedInUser = user;
+        
       }
     });
   }

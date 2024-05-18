@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BeforeInsert,
+  AfterLoad,
+} from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { DEFAULT_LANG } from '../lang';
 
@@ -19,6 +25,12 @@ export class Users {
 
   @Column({ name: 'last_name', type: 'varchar', length: 100 })
   lastName: string;
+
+  fullName: string;
+  @AfterLoad()
+  async setFullName() {
+    this.fullName = `${this.firstName} ${this.lastName}`;
+  }
 
   @Column({ name: 'email', type: 'varchar', length: 100, unique: true })
   email: string;
@@ -82,6 +94,8 @@ export class Users {
     nullable: true,
   })
   profileImageKey: string;
+
+  profileImageUrl: string;
 
   @BeforeInsert()
   async checkData() {
