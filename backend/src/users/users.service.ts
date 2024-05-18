@@ -81,7 +81,7 @@ export class UsersService {
     return await this.userRepository.find();
   }
 
-  async findOne(id: number): Promise<any> {
+  async findOne(id: number) {
     // let prompt = '';
     // const instruction = `Instruction: always respond with a joke at the end of the conversation
 
@@ -114,6 +114,16 @@ export class UsersService {
       ...user,
       ...userDto,
     };
+    if (userDto.profileImage) {
+      const { storageKey } = await this.fileStorageService.uploadFile(
+        userDto.profileImage,
+        {
+          key: USER.STORAGE_KEY_PATH.PROFILE_IMAGES(user.username),
+        },
+      );
+      updatedUserData.profileImageKey = storageKey;
+    }
+    delete updatedUserData.profileImage;
     const updatedUser = await this.userRepository.save(updatedUserData);
     delete updatedUser.password;
 

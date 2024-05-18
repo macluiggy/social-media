@@ -10,6 +10,11 @@ import {
   Req,
   Scope,
   Inject,
+  UploadedFile,
+  ParseFilePipe,
+  MaxFileSizeValidator,
+  FileTypeValidator,
+  UseInterceptors,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UserDto } from './dto/users.dto';
@@ -21,6 +26,7 @@ import Lang from '../lang/lang.type';
 import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
 import getApiEndpoint from '../common/utils/getApiEndpoint';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('users')
 @ApiBearerAuth()
@@ -58,13 +64,32 @@ export class UsersController {
   }
 
   @Put(':id')
+  @UseInterceptors(FileInterceptor('profileImage'))
   async update(
     @Param('id') id: number,
     @Body() userDTO: UserDto,
     @Req() req: any,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({
+            maxSize: 1024 * 1024 * 2,
+            message(maxSize) {
+              return `File too large. Max size is ${maxSize}`;
+            },
+          }),
+          new FileTypeValidator({
+            // regex that starts with image and ends with png, jpg, or jpeg
+            fileType: /^image\/(png|jpg|jpeg)$/,
+          }),
+        ],
+      }),
+    )
+    profileImage: Express.Multer.File,
   ) {
     const preferredLanguage = req.user.preferredLanguage;
     const messages = getMessages(preferredLanguage);
+    userDTO.profileImage = profileImage;
     return new ApiStandardResponse(
       await this.userService.update(id, userDTO),
       messages.USER.UPDATED,
