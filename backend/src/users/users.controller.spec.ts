@@ -6,6 +6,8 @@ import { UsersService } from './users.service';
 import { DataSource } from 'typeorm';
 import { vi } from 'vitest';
 import { MOCK_REQUEST } from '../common/tests/constants';
+import { AiApiService } from '../ai-api/ai-api.service';
+import { FileStorageService } from '../file-storage/file-storage.service';
 
 const mockUsersRepository = {
   find: vi.fn(),
@@ -35,6 +37,8 @@ describe('UsersController', () => {
           provide: DataSource,
           useValue: {},
         },
+        AiApiService,
+        FileStorageService,
       ],
     }).compile();
 
