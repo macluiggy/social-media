@@ -10,7 +10,9 @@ import { User } from '../../common/types';
   providedIn: 'root',
 })
 export class AuthService {
-  private isLoggedIn = new BehaviorSubject<boolean>(false);
+  private isLoggedIn = new BehaviorSubject<boolean>(
+    this.storageService.isLoggedIn()
+  );
   private apiUrl = environment.apiUrl;
   private loggedInUserSubject = new BehaviorSubject<User | null>(null);
   /**
