@@ -29,6 +29,19 @@ export class FollowsService {
     });
   }
 
+  /**
+   * Get the users that a user is following.
+   * @param userId
+   * @returns
+   */
+  getUserFollowing(userId: number) {
+    return this.followsRepository.find({
+      where: {
+        followerId: userId,
+      },
+    });
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   create(createFollowDto: CreateFollowDto) {
     return 'This action adds a new follow';
