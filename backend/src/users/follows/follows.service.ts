@@ -22,8 +22,11 @@ export class FollowsService {
     return this.followsRepository.save(follow);
   }
 
-  unfollow(followedId: string) {
-    return `This action unfollows a #${followedId}`;
+  unfollow(followedId: number, followerId: number) {
+    return this.followsRepository.delete({
+      followingId: followedId,
+      followerId: followerId,
+    });
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

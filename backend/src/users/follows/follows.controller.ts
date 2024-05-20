@@ -32,18 +32,19 @@ export class FollowsController {
     return this.followsService.findAll();
   }
 
-  @Post('/:followedId/follow')
+  @Post('user/:followedId/follow')
   follow(@Param('followedId') followedId: number, @Req() req: Request) {
     const user = req['user'];
     const followerId = user.id;
-    console.log('followerId', followerId, 'followedId', followedId);
 
     return this.followsService.follow(+followedId, +followerId);
   }
 
-  @Post('/:followedId/unfollow')
-  unfollow(@Param('followedId') followedId: string) {
-    return this.followsService.unfollow(followedId);
+  @Post('user/:followedId/unfollow')
+  unfollow(@Param('followedId') followedId: number, @Req() req: Request) {
+    const followerId = req['user'].id;
+
+    return this.followsService.unfollow(followedId, followerId);
   }
 
   @Get(':id')
