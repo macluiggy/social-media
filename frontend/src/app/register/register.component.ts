@@ -2,15 +2,30 @@ import { Component, ViewChild } from '@angular/core';
 import { AuthService } from '../services/auth/auth.service';
 import { CommonModule } from '@angular/common';
 import {
+  AbstractControl,
   FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  ValidatorFn,
+  Validators,
 } from '@angular/forms';
 import { UserService } from '../services/user/user.service';
-import { User } from '../common/types';
 import { CardModule } from 'primeng/card';
 import { FileUploadModule } from 'primeng/fileupload';
+
+function passwordMatchValidator(
+  formGroup: AbstractControl
+): { [key: string]: boolean } | null {
+  const password = formGroup.get('password');
+  const confirmPassword = formGroup.get('confirmPassword');
+
+  if (!password || !confirmPassword) return null;
+
+  return password.value === confirmPassword.value
+    ? null
+    : { passwordMismatch: true };
+}
 
 @Component({
   selector: 'app-register',
@@ -23,61 +38,65 @@ import { FileUploadModule } from 'primeng/fileupload';
     FileUploadModule,
   ],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss',
+  styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent {
   @ViewChild('profileImage') profileImage: any;
-  userId: number = 0;
 
-  profileForm: FormGroup;
+  registerForm: FormGroup;
+
   constructor(
     private authService: AuthService,
     private userService: UserService
   ) {
-    this.profileForm = new FormGroup({
-      firstName: new FormControl(null),
-      lastName: new FormControl(null),
-      email: new FormControl(null),
-      password: new FormControl(null),
-      username: new FormControl(null),
-      // profile picture is a file
-      profileImage: new FormControl(null, {}),
-    });
+    this.registerForm = new FormGroup(
+      {
+        firstName: new FormControl(null, Validators.required),
+        lastName: new FormControl(null, Validators.required),
+        email: new FormControl(null, [Validators.required, Validators.email]),
+        password: new FormControl(null, [
+          Validators.required,
+          Validators.minLength(8),
+        ]),
+        confirmPassword: new FormControl(null, Validators.required),
+        username: new FormControl(null, Validators.required),
+        profileImage: new FormControl(null, Validators.required),
+      },
+      { validators: passwordMatchValidator }
+    );
   }
 
   onSubmit() {
     const formData = new FormData();
-    const updateUserData = this.profileForm.value;
+      const updateUserData = this.registerForm.value;
 
-    // Append all properties of updateUserData except the file to formData
-    for (const key in updateUserData) {
-      if (updateUserData.hasOwnProperty(key) && key !== 'profileImage') {
-        formData.append(key, updateUserData[key]);
+      for (const key in updateUserData) {
+        if (updateUserData.hasOwnProperty(key) && key !== 'profileImage') {
+          formData.append(key, updateUserData[key]);
+        }
       }
-    }
 
-    // Append the file separately
-    if (this.profileForm.get('profileImage')?.value) {
-      formData.append(
-        'profileImage',
-        this.profileForm.get('profileImage')?.value
-      );
-    }
+      if (this.registerForm.get('profileImage')?.value) {
+        formData.append(
+          'profileImage',
+          this.registerForm.get('profileImage')?.value
+        );
+      }
 
-    this.authService.signUp(formData).subscribe({
-      next: (res: any) => {
-        this.authService.updateLoggedInUser(res.data);
-        this.profileImage.clear();
-      },
-    });
+      this.authService.signUp(formData).subscribe({
+        next: (res: any) => {
+          this.authService.updateLoggedInUser(res.data);
+          this.profileImage.clear();
+        },
+      });
   }
 
   onSelect(event: any) {
     for (const file of event.files) {
-      this.profileForm.patchValue({
+      this.registerForm.patchValue({
         profileImage: file,
       });
-      this.profileForm.get('profileImage')?.updateValueAndValidity();
+      this.registerForm.get('profileImage')?.updateValueAndValidity();
     }
   }
 }
