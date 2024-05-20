@@ -8,6 +8,7 @@ type User = {
   password: string;
   profileImageKey: string;
   profileImageUrl: string;
+  fullName: string;
 }
 
 

@@ -29,7 +29,11 @@ export class Users {
   fullName: string;
   @AfterLoad()
   async setFullName() {
-    this.fullName = `${this.firstName} ${this.lastName}`;
+    if (this.firstName && this.lastName) {
+      this.fullName = `${this.firstName} ${this.lastName}`;
+    } else {
+      this.fullName = this.firstName || this.lastName;
+    }
   }
 
   @Column({ name: 'email', type: 'varchar', length: 100, unique: true })
