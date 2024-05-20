@@ -1,9 +1,23 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { FollowsService } from './follows.service';
 import { CreateFollowDto } from './dto/create-follow.dto';
 import { UpdateFollowDto } from './dto/update-follow.dto';
+import getApiEndpoint from '../../common/utils/getApiEndpoint';
+import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 
-@Controller('follows')
+@UseGuards(JwtAuthGuard)
+@Controller({
+  path: getApiEndpoint('follows'),
+})
 export class FollowsController {
   constructor(private readonly followsService: FollowsService) {}
 
@@ -15,6 +29,11 @@ export class FollowsController {
   @Get()
   findAll() {
     return this.followsService.findAll();
+  }
+
+  @Post('/:followedId/follow')
+  follow(@Param('followedId') followedId: string) {
+    return this.followsService.follow(followedId);
   }
 
   @Get(':id')
