@@ -50,8 +50,8 @@ export class ProfileComponent {
     this.userService.getUserByUserId(this.userId).subscribe({
       next: (res: any) => {
         this.currentUser = res.data;
-        if (!this.currentUser!.profilePhoto) {
-          this.currentUser!.profilePhoto =
+        if (!this.currentUser!.profileImageUrl) {
+          this.currentUser!.profileImageUrl =
             'https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png';
         }
         this.getUserPosts();
