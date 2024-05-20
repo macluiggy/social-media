@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 import { CardModule } from 'primeng/card';
 import { TranslateModule } from '@ngx-translate/core';
 import { PostsService } from '../../services/posts/posts.service';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 @Component({
   selector: 'app-create-post',
@@ -25,6 +26,7 @@ import { PostsService } from '../../services/posts/posts.service';
     CardModule,
     TranslateModule,
     CommonModule,
+    InputTextareaModule,
   ],
   templateUrl: './create-post.component.html',
   styleUrl: './create-post.component.scss',
