@@ -1,9 +1,8 @@
-import { Inject, Injectable, Scope } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateFollowDto } from './dto/create-follow.dto';
 import { UpdateFollowDto } from './dto/update-follow.dto';
 import { Repository } from 'typeorm';
 import { Follow } from './entities/follow.entity';
-import { Users } from '../users.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable({})
