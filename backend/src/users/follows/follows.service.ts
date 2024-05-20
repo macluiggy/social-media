@@ -35,11 +35,13 @@ export class FollowsService {
    * @returns
    */
   getUserFollowing(userId: number) {
-    return this.followsRepository.find({
-      where: {
-        followerId: userId,
-      },
-    });
+    const query = this.followsRepository
+      .createQueryBuilder('follow')
+      .select('follow.followingId')
+      .where('follow.followerId = :userId', { userId })
+      .leftJoinAndSelect('follow.following', 'user');
+
+    return query.getMany();
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
