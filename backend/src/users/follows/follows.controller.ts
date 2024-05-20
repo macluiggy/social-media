@@ -14,7 +14,9 @@ import { CreateFollowDto } from './dto/create-follow.dto';
 import { UpdateFollowDto } from './dto/update-follow.dto';
 import getApiEndpoint from '../../common/utils/getApiEndpoint';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
+import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('follows')
 @UseGuards(JwtAuthGuard)
 @Controller({
   path: getApiEndpoint('follows'),
@@ -33,6 +35,13 @@ export class FollowsController {
   }
 
   @Post('user/:followedId/follow')
+  @ApiOperation({ summary: 'Follow a user' })
+  @ApiParam({
+    name: 'followedId',
+    type: Number,
+    description: 'ID of the user to follow',
+  })
+  @ApiResponse({ status: 200, description: 'Follow successful' })
   follow(@Param('followedId') followedId: number, @Req() req: Request) {
     const user = req['user'];
     const followerId = user.id;
@@ -41,6 +50,13 @@ export class FollowsController {
   }
 
   @Post('user/:followedId/unfollow')
+  @ApiOperation({ summary: 'Unfollow a user' })
+  @ApiParam({
+    name: 'followedId',
+    type: Number,
+    description: 'ID of the user to unfollow',
+  })
+  @ApiResponse({ status: 200, description: 'Unfollow successful' })
   unfollow(@Param('followedId') followedId: number, @Req() req: Request) {
     const followerId = req['user'].id;
 
