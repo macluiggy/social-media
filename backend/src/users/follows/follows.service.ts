@@ -7,6 +7,11 @@ export class FollowsService {
   follow(followedId: string) {
     return `This action follows a #${followedId}`;
   }
+
+  unfollow(followedId: string) {
+    return `This action unfollows a #${followedId}`;
+  }
+
   create(createFollowDto: CreateFollowDto) {
     return 'This action adds a new follow';
   }

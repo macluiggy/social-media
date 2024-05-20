@@ -36,6 +36,11 @@ export class FollowsController {
     return this.followsService.follow(followedId);
   }
 
+  @Post('/:followedId/unfollow')
+  unfollow(@Param('followedId') followedId: string) {
+    return this.followsService.unfollow(followedId);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.followsService.findOne(+id);

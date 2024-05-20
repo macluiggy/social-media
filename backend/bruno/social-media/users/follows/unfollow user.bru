@@ -1,0 +1,15 @@
+meta {
+  name: unfollow user
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/follows/2/unfollow
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{TOKEN}}
+}
