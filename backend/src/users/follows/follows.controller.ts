@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import { FollowsService } from './follows.service';
 import { CreateFollowDto } from './dto/create-follow.dto';
@@ -32,8 +33,12 @@ export class FollowsController {
   }
 
   @Post('/:followedId/follow')
-  follow(@Param('followedId') followedId: string) {
-    return this.followsService.follow(followedId);
+  follow(@Param('followedId') followedId: number, @Req() req: Request) {
+    const user = req['user'];
+    const followerId = user.id;
+    console.log('followerId', followerId, 'followedId', followedId);
+
+    return this.followsService.follow(+followedId, +followerId);
   }
 
   @Post('/:followedId/unfollow')

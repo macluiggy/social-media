@@ -10,7 +10,8 @@ export class CreateFollowTable1716224928997 implements MigrationInterface {
         created_at TIMESTAMP DEFAULT NOW(),
         updated_at TIMESTAMP DEFAULT NOW(),
         FOREIGN KEY (follower_id) REFERENCES users(id),
-        FOREIGN KEY (following_id) REFERENCES users(id)
+        FOREIGN KEY (following_id) REFERENCES users(id),
+        UNIQUE (follower_id, following_id)
       );
     `);
   }

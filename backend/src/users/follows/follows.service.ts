@@ -1,17 +1,33 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, Scope } from '@nestjs/common';
 import { CreateFollowDto } from './dto/create-follow.dto';
 import { UpdateFollowDto } from './dto/update-follow.dto';
+import { Repository } from 'typeorm';
+import { Follow } from './entities/follow.entity';
+import { Users } from '../users.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 
-@Injectable()
+@Injectable({})
 export class FollowsService {
-  follow(followedId: string) {
-    return `This action follows a #${followedId}`;
+  constructor(
+    @InjectRepository(Follow)
+    private readonly followsRepository: Repository<Follow>,
+  ) {}
+
+  follow(followedId: number, followerId: number) {
+    const data = {
+      followerId: followerId,
+      followingId: followedId,
+    };
+
+    const follow = this.followsRepository.create(data);
+    return this.followsRepository.save(follow);
   }
 
   unfollow(followedId: string) {
     return `This action unfollows a #${followedId}`;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   create(createFollowDto: CreateFollowDto) {
     return 'This action adds a new follow';
   }
@@ -24,6 +40,7 @@ export class FollowsService {
     return `This action returns a #${id} follow`;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   update(id: number, updateFollowDto: UpdateFollowDto) {
     return `This action updates a #${id} follow`;
   }
