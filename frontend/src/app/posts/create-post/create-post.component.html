@@ -12,7 +12,10 @@
       "optional" | translate
     }}</small>
   </div>
-  <div class="form-group" style="display: flex; width: 100%; flex-direction: column;">
+  <div
+    class="form-group"
+    style="display: flex; width: 100%; flex-direction: column"
+  >
     <label for="content">{{ "content" | translate }}</label>
     <textarea
       class="p-inputtextarea"
@@ -30,5 +33,14 @@
     </div>
     }
   </div>
-  <p-button [label]="'submit' | translate" type="submit"></p-button>
+  <p-button [label]="'submit' | translate" type="submit">
+    @if (loading && postForm.valid) {
+    <p-progressSpinner
+      styleClass="w-1rem h-1rem"
+      strokeWidth="8"
+      animationDuration=".5s"
+    >
+    </p-progressSpinner>
+    }
+  </p-button>
 </form>

@@ -14,7 +14,7 @@ import { CardModule } from 'primeng/card';
 import { TranslateModule } from '@ngx-translate/core';
 import { PostsService } from '../../services/posts/posts.service';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 @Component({
   selector: 'app-create-post',
   standalone: true,
@@ -27,6 +27,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     TranslateModule,
     CommonModule,
     InputTextareaModule,
+    ProgressSpinnerModule,
   ],
   templateUrl: './create-post.component.html',
   styleUrl: './create-post.component.scss',
@@ -35,6 +36,7 @@ export class CreatePostComponent {
   value = false;
   postForm: FormGroup;
   submitting = false;
+  loading = false;
 
   constructor(private fb: FormBuilder, private postService: PostsService) {
     this.postForm = new FormGroup({
@@ -46,7 +48,12 @@ export class CreatePostComponent {
   }
   onSubmit() {
     this.submitting = true;
-    console.log(this.postForm.value);
+    if (!this.postForm.valid) {
+      return;
+    }
+    if (this.postForm.valid) {
+      this.loading = true;
+    }
 
     if (this.postForm.valid) {
       this.postService.createPost(this.postForm.value).subscribe({
@@ -57,6 +64,9 @@ export class CreatePostComponent {
         error: (err) => {
           console.error(err);
           this.submitting = false;
+        },
+        complete: () => {
+          this.loading = false;
         },
       });
     }
