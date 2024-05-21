@@ -1,1 +1,5 @@
-<p>follow-button works!</p>
+@if (!isFollowing) {
+<button (click)="followUser()">Follow</button>
+} @else {
+<button (click)="unfollowUser()">Unfollow</button>
+}

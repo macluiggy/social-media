@@ -61,6 +61,23 @@ export class FollowsService {
     return query.getMany();
   }
 
+  /**
+   * Check if the logged-in user is following another user.
+   * @param loggedInUserId
+   * @param otherUserId
+   * @returns
+   */
+  async isUserFollowing(
+    loggedInUserId: number,
+    otherUserId: number,
+  ): Promise<boolean> {
+    const follow = await this.followsRepository.findOne({
+      where: { followerId: loggedInUserId, followingId: otherUserId },
+    });
+
+    return !!follow;
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   create(createFollowDto: CreateFollowDto) {
     return 'This action adds a new follow';

@@ -7,7 +7,6 @@ import {
   Param,
   Delete,
   UseGuards,
-  Req,
 } from '@nestjs/common';
 import { FollowsService } from './follows.service';
 import { CreateFollowDto } from './dto/create-follow.dto';
@@ -34,33 +33,44 @@ export class FollowsController {
     return this.followsService.findAll();
   }
 
-  @Post('user/:followedId/follow')
+  @Post('user/:userId/follow/:otherUserId')
   @ApiOperation({ summary: 'Follow a user' })
   @ApiParam({
-    name: 'followedId',
+    name: 'otherUserId',
     type: Number,
     description: 'ID of the user to follow',
   })
+  @ApiParam({
+    name: 'userId',
+    type: Number,
+    description: 'ID of the follower',
+  })
   @ApiResponse({ status: 200, description: 'Follow successful' })
-  follow(@Param('followedId') followedId: number, @Req() req: Request) {
-    const user = req['user'];
-    const followerId = user.id;
-
+  follow(
+    @Param('otherUserId') followedId: number,
+    @Param('userId') followerId: number,
+  ) {
     return this.followsService.follow(+followedId, +followerId);
   }
 
-  @Post('user/:followedId/unfollow')
+  @Delete('user/:userId/unfollow/:otherUserId')
   @ApiOperation({ summary: 'Unfollow a user' })
   @ApiParam({
-    name: 'followedId',
+    name: 'otherUserId',
     type: Number,
     description: 'ID of the user to unfollow',
   })
+  @ApiParam({
+    name: 'userId',
+    type: Number,
+    description: 'ID of the follower',
+  })
   @ApiResponse({ status: 200, description: 'Unfollow successful' })
-  unfollow(@Param('followedId') followedId: number, @Req() req: Request) {
-    const followerId = req['user'].id;
-
-    return this.followsService.unfollow(followedId, followerId);
+  unfollow(
+    @Param('otherUserId') followedId: number,
+    @Param('userId') followerId: number,
+  ) {
+    return this.followsService.unfollow(+followedId, +followerId);
   }
 
   @ApiOperation({ summary: 'Get the users that a user is following' })
@@ -72,7 +82,7 @@ export class FollowsController {
   })
   @ApiResponse({ status: 200, description: 'Get following users successful' })
   getFollowing(@Param('userId') userId: number) {
-    return this.followsService.getUserFollowing(userId);
+    return this.followsService.getUserFollowing(+userId);
   }
 
   @ApiOperation({ summary: 'Get the followers of a user' })
@@ -80,7 +90,29 @@ export class FollowsController {
   @ApiResponse({ status: 200, description: 'Get followers successful' })
   @Get('user/:userId/followers')
   getFollowers(@Param('userId') userId: number) {
-    return this.followsService.getUserFollowers(userId);
+    return this.followsService.getUserFollowers(+userId);
+  }
+
+  @ApiOperation({
+    summary: 'Check if the logged-in user is following another user',
+  })
+  @ApiParam({
+    name: 'userId',
+    type: Number,
+    description: 'ID of the logged-in user',
+  })
+  @ApiParam({
+    name: 'otherUserId',
+    type: Number,
+    description: 'ID of the other user',
+  })
+  @ApiResponse({ status: 200, description: 'Check successful' })
+  @Get('user/:userId/following/:otherUserId')
+  isUserFollowing(
+    @Param('userId') loggedInUserId: number,
+    @Param('otherUserId') otherUserId: number,
+  ) {
+    return this.followsService.isUserFollowing(+loggedInUserId, +otherUserId);
   }
 
   @Get(':id')
