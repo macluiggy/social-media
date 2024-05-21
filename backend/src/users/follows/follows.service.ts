@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateFollowDto } from './dto/create-follow.dto';
 import { UpdateFollowDto } from './dto/update-follow.dto';
 import { Repository } from 'typeorm';
@@ -13,6 +13,9 @@ export class FollowsService {
   ) {}
 
   follow(followedId: number, followerId: number) {
+    if (followedId === followerId) {
+      throw new BadRequestException('You cannot follow yourself');
+    }
     const data = {
       followerId: followerId,
       followingId: followedId,

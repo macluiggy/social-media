@@ -11,6 +11,7 @@ import { UserService } from '../services/user/user.service';
 import { User } from '../common/types';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FollowButtonComponent } from './follow-button/follow-button.component';
+import { AuthService } from '../services/auth/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -28,7 +29,7 @@ import { FollowButtonComponent } from './follow-button/follow-button.component';
   styleUrl: './profile.component.scss',
 })
 export class ProfileComponent {
-  loggedInUser: User | null = this.storageService.getUser();
+  loggedInUser: User | null = this.authService.getLoggedInUserFromStorage();
   currentUser: User | null = null;
   userId: number;
   userPosts: TPostWithUser[] = [];
@@ -40,7 +41,8 @@ export class ProfileComponent {
     private activatedRoute: ActivatedRoute,
     private postsService: PostsService,
     private userService: UserService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private authService: AuthService
   ) {
     this.userId = this.activatedRoute.snapshot.params['userId'];
 
