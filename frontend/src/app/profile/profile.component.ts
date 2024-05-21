@@ -16,6 +16,7 @@ import { DialogModule } from 'primeng/dialog';
 import { FollowersComponent } from './followers/followers.component';
 import { FollowingComponent } from './following/following.component';
 import { FollowsComponent } from './follows/follows.component';
+import { FollowsService } from '../services/follows/follows.service';
 
 @Component({
   selector: 'app-profile',
@@ -45,13 +46,16 @@ export class ProfileComponent implements OnChanges {
   page = 1;
   limit = 2;
   displayFollowsDialog = false;
+  followersCount = 0;
+  followingCount = 0;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private postsService: PostsService,
     private userService: UserService,
     private storageService: StorageService,
-    private authService: AuthService
+    private authService: AuthService,
+    private followService: FollowsService
   ) {
     this.userId = this.activatedRoute.snapshot.params['userId'];
 
@@ -87,6 +91,22 @@ export class ProfileComponent implements OnChanges {
         console.error(err);
       },
     });
+    this.followService.getFollowersCount(this.userId).subscribe({
+      next: (res: any) => {
+        this.followersCount = res.data.count;
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
+    this.followService.getFollowingCount(this.userId).subscribe({
+      next: (res: any) => {
+        this.followingCount = res.data.count;
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
   }
 
   getUserPosts() {
@@ -117,5 +137,4 @@ export class ProfileComponent implements OnChanges {
   showFollowsDialog() {
     this.displayFollowsDialog = true;
   }
-
 }

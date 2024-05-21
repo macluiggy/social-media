@@ -40,4 +40,14 @@ export class FollowsService {
   getUserFollowing(userId: number) {
     return this.http.get(`${this.apiUrl}/follows/user/${userId}/following`);
   }
+
+  // {{base_url}}/follows/user/1/following/count
+  getFollowingCount(userId: number) {
+    return this.http.get(`${this.apiUrl}/follows/user/${userId}/following/count`);
+  }
+
+  // {{base_url}}/follows/user/1/followers/count
+  getFollowersCount(userId: number) {
+    return this.http.get(`${this.apiUrl}/follows/user/${userId}/followers/count`);
+  }
 }

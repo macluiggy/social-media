@@ -143,6 +143,32 @@ export class FollowsService {
     return !!follow;
   }
 
+  /**
+   * Get the count of followers of a user.
+   * @param userId
+   * @returns
+   */
+  async getFollowersCount(userId: number): Promise<number> {
+    return await this.followsRepository.count({
+      where: {
+        followingId: userId,
+      },
+    });
+  }
+
+  /**
+   * Get the count of users a user is following.
+   * @param userId
+   * @returns
+   */
+  async getFollowingCount(userId: number): Promise<number> {
+    return await this.followsRepository.count({
+      where: {
+        followerId: userId,
+      },
+    });
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   create(createFollowDto: CreateFollowDto) {
     return 'This action adds a new follow';

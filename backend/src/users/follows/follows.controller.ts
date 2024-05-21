@@ -33,6 +33,18 @@ export class FollowsController {
     return this.followsService.findAll();
   }
 
+  @Get('user/:userId/followers/count')
+  async getFollowersCount(@Param('userId') userId: number) {
+    const count = await this.followsService.getFollowersCount(+userId);
+    return { count };
+  }
+
+  @Get('user/:userId/following/count')
+  async getFollowingCount(@Param('userId') userId: number) {
+    const count = await this.followsService.getFollowingCount(+userId);
+    return { count };
+  }
+
   @Post('user/:userId/follow/:otherUserId')
   @ApiOperation({ summary: 'Follow a user' })
   @ApiParam({
