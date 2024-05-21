@@ -9,10 +9,10 @@
 </p-dialog> -->
 
 <p-tabView>
-  <p-tabPanel header="Followers">
+  <p-tabPanel header="Following">
     <app-following [userId]="userId"></app-following>
   </p-tabPanel>
-  <!-- <p-tabPanel header="Following">
-    <app-followers></app-followers>
-  </p-tabPanel> -->
+  <p-tabPanel header="Followers">
+    <app-followers [userId]="userId"></app-followers>
+  </p-tabPanel>
 </p-tabView>
