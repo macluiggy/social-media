@@ -10,6 +10,7 @@ import { PostsComponent } from '../posts/posts.component';
 import { UserService } from '../services/user/user.service';
 import { User } from '../common/types';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { FollowButtonComponent } from './follow-button/follow-button.component';
 
 @Component({
   selector: 'app-profile',
@@ -21,6 +22,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     TabMenuModule,
     PostsComponent,
     InfiniteScrollModule,
+    FollowButtonComponent,
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
