@@ -7,7 +7,21 @@
       class="profile-photo"
     />
     @if (loggedInUser && loggedInUser.id !== currentUser.id) {
-    <app-follow-button [userId]="userId"></app-follow-button>
+    <div class="follow-info">
+      <app-follow-button [userId]="userId"></app-follow-button>
+      <div class="follow-counts">
+        <p>
+          <a href="">
+            <strong> {{ 1234 }} Followers </strong>
+          </a>
+        </p>
+        <p>
+          <a href="">
+            <strong> {{ 1234 }} Following </strong>
+          </a>
+        </p>
+      </div>
+    </div>
     }
   </p-header>
   <div class="container">

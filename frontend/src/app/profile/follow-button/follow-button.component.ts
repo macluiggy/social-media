@@ -2,11 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
 import { FollowsService } from '../../services/follows/follows.service';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-follow-button',
   standalone: true,
-  imports: [],
+  imports: [ButtonModule],
   templateUrl: './follow-button.component.html',
   styleUrl: './follow-button.component.scss',
 })
