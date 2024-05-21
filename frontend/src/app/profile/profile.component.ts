@@ -44,8 +44,7 @@ export class ProfileComponent implements OnChanges {
   loading = false;
   page = 1;
   limit = 2;
-  displayFollowersDialog = true;
-  displayFollowingDialog = false;
+  displayFollowsDialog = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -115,11 +114,8 @@ export class ProfileComponent implements OnChanges {
     this.getUserPosts();
   }
 
-  showFollowersDialog() {
-    this.displayFollowersDialog = true;
+  showFollowsDialog() {
+    this.displayFollowsDialog = true;
   }
 
-  showFollowingDialog() {
-    this.displayFollowingDialog = true;
-  }
 }

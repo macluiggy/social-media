@@ -10,12 +10,12 @@
       <app-follow-button [userId]="userId"></app-follow-button>
       <div class="follow-counts">
         <p>
-          <a (click)="showFollowersDialog()">
+          <a (click)="showFollowsDialog()">
             <strong> {{ 1234 }} Followers </strong>
           </a>
         </p>
         <p>
-          <a (click)="showFollowingDialog()">
+          <a (click)="showFollowsDialog()">
             <strong> {{ 1234 }} Following </strong>
           </a>
         </p>
@@ -51,17 +51,9 @@
 }
 
 <p-dialog
-  [(visible)]="displayFollowersDialog"
+  [(visible)]="displayFollowsDialog"
   [responsive]="true"
   [style]="{ width: '70vw' }"
 >
   <app-follows [userId]="userId"></app-follows>
 </p-dialog>
-<!-- 
-<p-dialog
-  [(visible)]="displayFollowingDialog"
-  [modal]="true"
-  [style]="{ width: '70vw' }"
->
-  <app-follows></app-follows>
-</p-dialog> -->
