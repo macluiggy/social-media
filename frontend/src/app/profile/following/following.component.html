@@ -1,23 +1,21 @@
 <p-table [value]="userFollowing">
-  <!-- <ng-template pTemplate="header">
-    <tr>
-      <th>Name</th>
-      <th>Username</th>
-      <th>Actions</th>
-    </tr>
-  </ng-template> -->
   <ng-template pTemplate="body" let-user>
     <tr>
       <td>
-        <img
-          [src]="user.profileImageUrl || defaultProfileImage"
-          alt="Profile Photo"
-          class="profile-photo"
-          style="width: 50px; height: 50px; border-radius: 50%;"
-        />
+        <a [routerLink]="['/profile/user', user.id]">
+          <img
+            [src]="user.profileImageUrl || defaultProfileImage"
+            alt="Profile Photo"
+            class="profile-photo"
+            style="width: 50px; height: 50px; border-radius: 50%"
+          />
+        </a>
       </td>
-      <td>{{ user.firstName }}</td>
-      <td>{{ user.username }}</td>
+      <td>
+        <a [routerLink]="['/profile/user', user.id]">{{ user.firstName }}</a>
+        <br />
+        <a [routerLink]="['/profile/user', user.id]">{{ user.username }}</a>
+      </td>
       <td>
         <app-follow-button [userId]="user.id"></app-follow-button>
       </td>

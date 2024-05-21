@@ -5,11 +5,12 @@ import { CardModule } from 'primeng/card';
 import { DEFAULT_PROFILE_IMAGE } from '../../common/constants';
 import { TableModule } from 'primeng/table';
 import { FollowButtonComponent } from '../follow-button/follow-button.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-following',
   standalone: true,
-  imports: [CardModule, TableModule, FollowButtonComponent],
+  imports: [CardModule, TableModule, FollowButtonComponent, RouterModule],
   templateUrl: './following.component.html',
   styleUrl: './following.component.scss',
 })

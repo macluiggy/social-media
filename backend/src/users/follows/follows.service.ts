@@ -51,7 +51,13 @@ export class FollowsService {
       .select(['f.followerId'])
       .addSelect(`(${subQuery.getQuery()})`, 'areFriends')
       .leftJoin('f.following', 'user')
-      .addSelect(['user.id', 'user.username', 'user.email'])
+      .addSelect([
+        'user.id',
+        'user.username',
+        'user.email',
+        'user.profileImageKey',
+        'user.firstName',
+      ])
       .where('f.followerId = :userId', { userId });
     const result = await query.getRawMany();
     const mappedResultPromise = result.map(async (item) => {
@@ -67,6 +73,7 @@ export class FollowsService {
         email: item.user_email,
         areFriends: +item.areFriends > 0,
         profileImageUrl,
+        firstName: item.user_first_name,
       };
     });
     const mappedResult = await Promise.all(mappedResultPromise);
@@ -95,6 +102,7 @@ export class FollowsService {
         'user.username',
         'user.email',
         'user.profileImageKey',
+        'user.firstName',
       ])
       .where('f.followingId = :userId', { userId });
     const result = await query.getRawMany();
@@ -111,6 +119,7 @@ export class FollowsService {
         email: item.user_email,
         areFriends: +item.areFriends > 0,
         profileImageUrl,
+        firstName: item.user_first_name,
       };
     });
     const mappedResult = await Promise.all(mappedResultPromise);
