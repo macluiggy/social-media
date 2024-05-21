@@ -2,17 +2,20 @@ import { Component, Input, OnChanges } from '@angular/core';
 import { UserWithFollows } from '../../common/types/user.type';
 import { FollowsService } from '../../services/follows/follows.service';
 import { CardModule } from 'primeng/card';
+import { DEFAULT_PROFILE_IMAGE } from '../../common/constants';
+import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-following',
   standalone: true,
-  imports: [CardModule],
+  imports: [CardModule, TableModule],
   templateUrl: './following.component.html',
   styleUrl: './following.component.scss',
 })
 export class FollowingComponent implements OnChanges {
   @Input() userId!: number;
   userFollowing: UserWithFollows[] = [];
+  defaultProfileImage = DEFAULT_PROFILE_IMAGE;
   constructor(private followService: FollowsService) {
     this.getUserFollowing();
   }

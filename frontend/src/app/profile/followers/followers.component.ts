@@ -28,7 +28,6 @@ export class FollowersComponent implements OnChanges {
     if (!this.userId) return;
     this.followService.getUserFollowers(this.userId).subscribe((res: any) => {
       this.userFollowers = res.data;
-      console.log(this.userFollowers);
     });
   }
 }
