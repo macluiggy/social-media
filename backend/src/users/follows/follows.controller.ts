@@ -75,6 +75,14 @@ export class FollowsController {
     return this.followsService.getUserFollowing(userId);
   }
 
+  @ApiOperation({ summary: 'Get the followers of a user' })
+  @ApiParam({ name: 'userId', type: Number, description: 'ID of the user' })
+  @ApiResponse({ status: 200, description: 'Get followers successful' })
+  @Get('user/:userId/followers')
+  getFollowers(@Param('userId') userId: number) {
+    return this.followsService.getUserFollowers(userId);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.followsService.findOne(+id);

@@ -39,7 +39,24 @@ export class FollowsService {
       .createQueryBuilder('follow')
       .select('follow.followingId')
       .where('follow.followerId = :userId', { userId })
-      .leftJoinAndSelect('follow.following', 'user');
+      .leftJoin('follow.following', 'user')
+      .addSelect(['user.id', 'user.username', 'user.email']);
+
+    return query.getMany();
+  }
+
+  /**
+   * Get the followers of a user.
+   * @param userId
+   * @returns
+   */
+  getUserFollowers(userId: number) {
+    const query = this.followsRepository
+      .createQueryBuilder('follow')
+      .select('follow.followerId')
+      .where('follow.followingId = :userId', { userId })
+      .leftJoin('follow.follower', 'user')
+      .addSelect(['user.id', 'user.username', 'user.email']);
 
     return query.getMany();
   }
