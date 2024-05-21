@@ -58,7 +58,6 @@ export class CreatePostComponent {
     if (this.postForm.valid) {
       this.postService.createPost(this.postForm.value).subscribe({
         next: (res) => {
-          console.log(res);
           this.submitting = false;
         },
         error: (err) => {

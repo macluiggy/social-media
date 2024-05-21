@@ -17,7 +17,7 @@ export class FollowButtonComponent implements OnChanges {
   constructor(private followService: FollowsService) {
     this.checkIfFollowing();
   }
-  
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['userId'] && this.userId) {
       this.checkIfFollowing();
@@ -28,8 +28,6 @@ export class FollowButtonComponent implements OnChanges {
     if (!this.userId) return;
 
     this.followService.checkIfFollowing(this.userId).subscribe((res: any) => {
-      console.log(res.data);
-
       this.isFollowing = res.data;
     });
   }

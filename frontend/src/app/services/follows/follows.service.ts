@@ -12,9 +12,7 @@ export class FollowsService {
 
   checkIfFollowing(otherUserId: number) {
     const loggedInUserId = this.authService.getLoggedInUserFromStorage().id;
-    console.log('loggedInUserId', loggedInUserId, otherUserId);
     
-    // {{base_url}}/follows/user/1/following/2
     return this.http.get(
       `${this.apiUrl}/follows/user/${loggedInUserId}/following/${otherUserId}`
     );
