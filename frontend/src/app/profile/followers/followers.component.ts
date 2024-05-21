@@ -6,11 +6,12 @@ import { DEFAULT_PROFILE_IMAGE } from '../../common/constants';
 import { TableModule } from 'primeng/table';
 import { FollowButtonComponent } from '../follow-button/follow-button.component';
 import { RouterModule } from '@angular/router';
+import { UserRowComponent } from '../../user-row/user-row.component';
 
 @Component({
   selector: 'app-followers',
   standalone: true,
-  imports: [CardModule, TableModule, FollowButtonComponent, RouterModule],
+  imports: [CardModule, TableModule, FollowButtonComponent, RouterModule, UserRowComponent],
   templateUrl: './followers.component.html',
   styleUrl: './followers.component.scss',
 })
