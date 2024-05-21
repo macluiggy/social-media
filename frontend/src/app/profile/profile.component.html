@@ -52,8 +52,10 @@
 
 <p-dialog
   [(visible)]="displayFollowsDialog"
-  [responsive]="true"
-  [style]="{ width: '70vw' }"
+  [modal]="true"
+  [baseZIndex]="10000"
+  [dismissableMask]="true"
+  styleClass="follow-dialog"
 >
   <app-follows [userId]="userId"></app-follows>
 </p-dialog>
