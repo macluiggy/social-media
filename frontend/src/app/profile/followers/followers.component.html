@@ -1,14 +1,28 @@
-<div class="p-grid">
-  @for (user of userFollowers; track $index) {
-    <div class="p-col-12 p-md-6 p-lg-4" >
-      <p-card [header]="user.firstName" [subheader]="user.username" styleClass="following-container">
-        <div class="following-container">
-          <p-footer>
-            hola
-            <!-- <button pButton type="button" label="Unfollow" (click)="unfollow(user.id)"></button> -->
-          </p-footer>
-        </div>
-      </p-card>
-    </div>
-  }   
-</div>
+<p-table [value]="userFollowers">
+  <!-- <ng-template pTemplate="header">
+    <tr>
+      <th>Name</th>
+      <th>Username</th>
+      <th>Actions</th>
+    </tr>
+  </ng-template> -->
+  <ng-template pTemplate="body" let-user>
+    <tr>
+      <td>
+        <img
+          [src]="user.profileImageUrl || defaultProfileImage"
+          alt="Profile Photo"
+          class="profile-photo"
+          style="width: 50px; height: 50px; border-radius: 50%;"
+        />
+      </td>
+      <td>{{ user.firstName }}</td>
+      <td>{{ user.username }}</td>
+      <td>
+        <button pButton type="button" label="Unfollow">
+          click
+        </button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

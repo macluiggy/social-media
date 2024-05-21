@@ -4,12 +4,14 @@ import { UpdateFollowDto } from './dto/update-follow.dto';
 import { Repository } from 'typeorm';
 import { Follow } from './entities/follow.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { FileStorageService } from '../../file-storage/file-storage.service';
 
 @Injectable({})
 export class FollowsService {
   constructor(
     @InjectRepository(Follow)
     private readonly followsRepository: Repository<Follow>,
+    private fileStorageService: FileStorageService,
   ) {}
 
   follow(followedId: number, followerId: number) {
@@ -52,15 +54,22 @@ export class FollowsService {
       .addSelect(['user.id', 'user.username', 'user.email'])
       .where('f.followerId = :userId', { userId });
     const result = await query.getRawMany();
-    const mappedResult = result.map((item) => {
+    const mappedResultPromise = result.map(async (item) => {
+      const profileImagekey = item.user_profile_image_key;
+      let profileImageUrl = null;
+      if (profileImagekey) {
+        profileImageUrl =
+          await this.fileStorageService.getSignedUrl(profileImagekey);
+      }
       return {
         id: item.user_id,
         username: item.user_username,
         email: item.user_email,
         areFriends: +item.areFriends > 0,
+        profileImageUrl,
       };
     });
-
+    const mappedResult = await Promise.all(mappedResultPromise);
     return mappedResult;
   }
 
@@ -81,17 +90,30 @@ export class FollowsService {
       .select(['f.followerId'])
       .addSelect(`(${subQuery.getQuery()})`, 'areFriends')
       .leftJoin('f.follower', 'user')
-      .addSelect(['user.id', 'user.username', 'user.email'])
+      .addSelect([
+        'user.id',
+        'user.username',
+        'user.email',
+        'user.profileImageKey',
+      ])
       .where('f.followingId = :userId', { userId });
     const result = await query.getRawMany();
-    const mappedResult = result.map((item) => {
+    const mappedResultPromise = result.map(async (item) => {
+      const profileImagekey = item.user_profile_image_key;
+      let profileImageUrl = null;
+      if (profileImagekey) {
+        profileImageUrl =
+          await this.fileStorageService.getSignedUrl(profileImagekey);
+      }
       return {
         id: item.user_id,
         username: item.user_username,
         email: item.user_email,
         areFriends: +item.areFriends > 0,
+        profileImageUrl,
       };
     });
+    const mappedResult = await Promise.all(mappedResultPromise);
     return mappedResult;
   }
 
