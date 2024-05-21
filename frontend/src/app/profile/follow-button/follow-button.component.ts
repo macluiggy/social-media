@@ -14,8 +14,13 @@ import { ButtonModule } from 'primeng/button';
 export class FollowButtonComponent implements OnChanges {
   @Input() userId!: number;
   isFollowing = false;
+  loggedInUser = this.authService.getLoggedInUserFromStorage();
+  currentUserIsLoggedInUser = this.userId == this.loggedInUser?.id;
 
-  constructor(private followService: FollowsService) {
+  constructor(
+    private followService: FollowsService,
+    private authService: AuthService
+  ) {
     this.checkIfFollowing();
   }
 

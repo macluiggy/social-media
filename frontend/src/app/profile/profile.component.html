@@ -6,7 +6,6 @@
       alt="Profile Photo"
       class="profile-photo"
     />
-    @if (loggedInUser && loggedInUser.id !== currentUser.id) {
     <div class="follow-info">
       <app-follow-button [userId]="userId"></app-follow-button>
       <div class="follow-counts">
@@ -22,7 +21,6 @@
         </p>
       </div>
     </div>
-    }
   </p-header>
   <div class="container">
     <p><strong>Name:</strong> {{ currentUser.firstName }}</p>
