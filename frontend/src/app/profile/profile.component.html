@@ -11,12 +11,12 @@
       <app-follow-button [userId]="userId"></app-follow-button>
       <div class="follow-counts">
         <p>
-          <a href="">
+          <a (click)="showFollowersDialog()">
             <strong> {{ 1234 }} Followers </strong>
           </a>
         </p>
         <p>
-          <a href="">
+          <a (click)="showFollowingDialog()">
             <strong> {{ 1234 }} Following </strong>
           </a>
         </p>
@@ -51,3 +51,23 @@
   <!-- </p-tabPanel> -->
 </p-tabView>
 }
+
+<p-dialog
+  header="Followers"
+  [(visible)]="displayFollowersDialog"
+  [modal]="true"
+  [responsive]="true"
+  [style]="{ width: '50vw' }"
+>
+  <app-followers></app-followers>
+</p-dialog>
+
+<p-dialog
+  header="Following"
+  [(visible)]="displayFollowingDialog"
+  [modal]="true"
+  [responsive]="true"
+  [style]="{ width: '50vw' }"
+>
+  <app-following></app-following>
+</p-dialog>

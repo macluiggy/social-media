@@ -12,6 +12,9 @@ import { User } from '../common/types';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FollowButtonComponent } from './follow-button/follow-button.component';
 import { AuthService } from '../services/auth/auth.service';
+import { DialogModule } from 'primeng/dialog';
+import { FollowersComponent } from './followers/followers.component';
+import { FollowingComponent } from './following/following.component';
 
 @Component({
   selector: 'app-profile',
@@ -24,6 +27,9 @@ import { AuthService } from '../services/auth/auth.service';
     PostsComponent,
     InfiniteScrollModule,
     FollowButtonComponent,
+    DialogModule,
+    FollowersComponent,
+    FollowingComponent,
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
@@ -36,6 +42,8 @@ export class ProfileComponent {
   loading = false;
   page = 1;
   limit = 2;
+  displayFollowersDialog = true;
+  displayFollowingDialog = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -89,5 +97,13 @@ export class ProfileComponent {
 
   onScroll() {
     this.getUserPosts();
+  }
+
+  showFollowersDialog() {
+    this.displayFollowersDialog = true;
+  }
+
+  showFollowingDialog() {
+    this.displayFollowingDialog = true;
   }
 }
