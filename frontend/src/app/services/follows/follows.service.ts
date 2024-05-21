@@ -12,7 +12,7 @@ export class FollowsService {
 
   checkIfFollowing(otherUserId: number) {
     const loggedInUserId = this.authService.getLoggedInUserFromStorage().id;
-    
+
     return this.http.get(
       `${this.apiUrl}/follows/user/${loggedInUserId}/following/${otherUserId}`
     );
@@ -31,5 +31,13 @@ export class FollowsService {
     return this.http.delete(
       `${this.apiUrl}/follows/user/${loggedInUserId}/unfollow/${otherUserId}`
     );
+  }
+
+  getUserFollowers(userId: number) {
+    return this.http.get(`${this.apiUrl}/follows/user/${userId}/followers`);
+  }
+
+  getUserFollowing(userId: number) {
+    return this.http.get(`${this.apiUrl}/follows/user/${userId}/following`);
   }
 }

@@ -50,8 +50,7 @@ export class FollowsService {
       .addSelect(`(${subQuery.getQuery()})`, 'areFriends')
       .leftJoin('f.following', 'user')
       .addSelect(['user.id', 'user.username', 'user.email'])
-      .where('f.followerId = :userId', { userId })
-      .cache(10000); // 10 seconds
+      .where('f.followerId = :userId', { userId });
     const result = await query.getRawMany();
     const mappedResult = result.map((item) => {
       return {

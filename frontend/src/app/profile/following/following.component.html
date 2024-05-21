@@ -1,1 +1,14 @@
-<p>following works!</p>
+<div class="p-grid">
+  @for (user of userFollowing; track $index) {
+    <div class="p-col-12 p-md-6 p-lg-4" >
+      <p-card [header]="user.firstName" [subheader]="user.username" styleClass="following-container">
+        <div class="following-container">
+          <p-footer>
+            hola
+            <!-- <button pButton type="button" label="Unfollow" (click)="unfollow(user.id)"></button> -->
+          </p-footer>
+        </div>
+      </p-card>
+    </div>
+  }   
+</div>

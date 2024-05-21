@@ -54,18 +54,16 @@
 
 <p-dialog
   [(visible)]="displayFollowersDialog"
-  [modal]="true"
   [responsive]="true"
-  [style]="{ width: '50vw' }"
+  [style]="{ width: '70vw' }"
 >
-  <app-follows></app-follows>
+  <app-follows [userId]="userId"></app-follows>
 </p-dialog>
-
+<!-- 
 <p-dialog
   [(visible)]="displayFollowingDialog"
   [modal]="true"
-  [responsive]="true"
-  [style]="{ width: '50vw' }"
+  [style]="{ width: '70vw' }"
 >
   <app-follows></app-follows>
-</p-dialog>
+</p-dialog> -->
