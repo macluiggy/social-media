@@ -37,15 +37,30 @@ export class FollowsService {
    * @param userId
    * @returns
    */
-  getUserFollowing(userId: number) {
-    const query = this.followsRepository
-      .createQueryBuilder('follow')
-      .select('follow.followingId')
-      .where('follow.followerId = :userId', { userId })
-      .leftJoin('follow.following', 'user')
-      .addSelect(['user.id', 'user.username', 'user.email']);
+  async getUserFollowing(userId: number) {
+    const subQuery = this.followsRepository
+      .createQueryBuilder('f2')
+      .select('COUNT(*)')
+      .where('f2.followingId = f.followerId')
+      .andWhere('f2.followerId = f.followingId');
 
-    return query.getMany();
+    const query = this.followsRepository
+      .createQueryBuilder('f')
+      .select(['f.followerId'])
+      .addSelect(`(${subQuery.getQuery()})`, 'areFriends')
+      .leftJoin('f.following', 'user')
+      .addSelect(['user.id', 'user.username', 'user.email'])
+      .where('f.followerId = :userId', { userId });
+    const result = await query.getRawMany();
+    const mappedResult = result.map((item) => {
+      return {
+        id: item.user_id,
+        username: item.user_username,
+        email: item.user_email,
+        areFriends: +item.areFriends > 0,
+      };
+    });
+    return mappedResult;
   }
 
   /**
@@ -53,15 +68,30 @@ export class FollowsService {
    * @param userId
    * @returns
    */
-  getUserFollowers(userId: number) {
-    const query = this.followsRepository
-      .createQueryBuilder('follow')
-      .select('follow.followerId')
-      .where('follow.followingId = :userId', { userId })
-      .leftJoin('follow.follower', 'user')
-      .addSelect(['user.id', 'user.username', 'user.email']);
+  async getUserFollowers(userId: number) {
+    const subQuery = this.followsRepository
+      .createQueryBuilder('f2')
+      .select('COUNT(*)')
+      .where('f2.followingId = f.followerId')
+      .andWhere('f2.followerId = f.followingId');
 
-    return query.getMany();
+    const query = this.followsRepository
+      .createQueryBuilder('f')
+      .select(['f.followerId'])
+      .addSelect(`(${subQuery.getQuery()})`, 'areFriends')
+      .leftJoin('f.follower', 'user')
+      .addSelect(['user.id', 'user.username', 'user.email'])
+      .where('f.followingId = :userId', { userId });
+    const result = await query.getRawMany();
+    const mappedResult = result.map((item) => {
+      return {
+        id: item.user_id,
+        username: item.user_username,
+        email: item.user_email,
+        areFriends: +item.areFriends > 0,
+      };
+    });
+    return mappedResult;
   }
 
   /**
