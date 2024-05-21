@@ -4,11 +4,12 @@ import { FollowsService } from '../../services/follows/follows.service';
 import { CardModule } from 'primeng/card';
 import { DEFAULT_PROFILE_IMAGE } from '../../common/constants';
 import { TableModule } from 'primeng/table';
+import { FollowButtonComponent } from '../follow-button/follow-button.component';
 
 @Component({
   selector: 'app-following',
   standalone: true,
-  imports: [CardModule, TableModule],
+  imports: [CardModule, TableModule, FollowButtonComponent],
   templateUrl: './following.component.html',
   styleUrl: './following.component.scss',
 })
