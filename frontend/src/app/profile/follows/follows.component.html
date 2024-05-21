@@ -1,1 +1,18 @@
-<p>follows works!</p>
+<!-- <p>follows works!</p> -->
+<!-- <p-dialog 
+  header="Followerssss" 
+  [modal]="true" 
+  [responsive]="true" 
+  [style]="{ width: '50vw' }"
+>
+
+</p-dialog> -->
+
+<p-tabView>
+  <p-tabPanel header="Followers">
+    <app-following></app-following>
+  </p-tabPanel>
+  <p-tabPanel header="Following">
+    <app-followers></app-followers>
+  </p-tabPanel>
+</p-tabView>
