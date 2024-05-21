@@ -15,6 +15,7 @@ import { AuthService } from '../services/auth/auth.service';
 import { DialogModule } from 'primeng/dialog';
 import { FollowersComponent } from './followers/followers.component';
 import { FollowingComponent } from './following/following.component';
+import { FollowsComponent } from './follows/follows.component';
 
 @Component({
   selector: 'app-profile',
@@ -30,6 +31,7 @@ import { FollowingComponent } from './following/following.component';
     DialogModule,
     FollowersComponent,
     FollowingComponent,
+    FollowsComponent,
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
