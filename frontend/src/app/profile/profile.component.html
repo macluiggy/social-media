@@ -57,5 +57,5 @@
   [dismissableMask]="true"
   styleClass="follow-dialog"
 >
-  <app-follows [userId]="userId"></app-follows>
+  <app-follows [userId]="userId" (closeDialog)="closeDialog()"></app-follows>
 </p-dialog>

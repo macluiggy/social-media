@@ -1,4 +1,10 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+} from '@angular/core';
 import { DialogModule } from 'primeng/dialog';
 import { TabView, TabViewModule } from 'primeng/tabview';
 import { FollowingComponent } from '../following/following.component';
@@ -23,11 +29,16 @@ export class FollowsComponent implements OnChanges {
   @Input() userId!: number;
   userFollowers: UserWithFollows[] = [];
   userFollowing: UserWithFollows[] = [];
+  @Output() closeDialog = new EventEmitter();
   constructor(private followService: FollowsService) {
     this.getUserFollowers();
     this.getUserFollowing();
   }
 
+  onCloseDialog() {
+    this.closeDialog.emit();
+  }
+  
   ngOnChanges() {
     this.getUserFollowers();
     this.getUserFollowing();

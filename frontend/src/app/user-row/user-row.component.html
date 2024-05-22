@@ -2,7 +2,7 @@
   <ng-template pTemplate="body" let-user>
     <tr>
       <td>
-        <a [routerLink]="['/profile/user', user.id]">
+        <a [routerLink]="['/profile/user', user.id]" (click)="handleUserClick()">
           <img
             [src]="user.profileImageUrl || defaultProfileImage"
             alt="Profile Photo"
@@ -12,9 +12,9 @@
         </a>
       </td>
       <td>
-        <a [routerLink]="['/profile/user', user.id]">{{ user.firstName }}</a>
+        <a [routerLink]="['/profile/user', user.id]" (click)="handleUserClick()">{{ user.firstName }}</a>
         <br />
-        <a [routerLink]="['/profile/user', user.id]">{{ user.username }}</a>
+        <a [routerLink]="['/profile/user', user.id]" (click)="handleUserClick()">{{ user.username }}</a>
       </td>
       <td>
         <app-follow-button [userId]="user.id"></app-follow-button>

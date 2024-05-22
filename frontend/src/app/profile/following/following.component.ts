@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { UserWithFollows } from '../../common/types/user.type';
 import { FollowsService } from '../../services/follows/follows.service';
 import { CardModule } from 'primeng/card';
@@ -25,8 +25,13 @@ export class FollowingComponent implements OnChanges {
   @Input() userId!: number;
   userFollowing: UserWithFollows[] = [];
   defaultProfileImage = DEFAULT_PROFILE_IMAGE;
+  @Output() closeDialog = new EventEmitter();
   constructor(private followService: FollowsService) {
     this.getUserFollowing();
+  }
+
+  onCloseDialog() {
+    this.closeDialog.emit();
   }
 
   ngOnChanges() {

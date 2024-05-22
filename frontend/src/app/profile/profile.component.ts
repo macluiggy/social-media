@@ -66,6 +66,10 @@ export class ProfileComponent implements OnChanges {
     });
   }
 
+  closeDialog() {
+    this.displayFollowsDialog = false;
+  }
+
   initializeComponent() {
     this.userId = this.activatedRoute.snapshot.params['userId'];
     this.getUserInfo();

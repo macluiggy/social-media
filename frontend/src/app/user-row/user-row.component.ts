@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TableModule } from 'primeng/table';
 import { FollowButtonComponent } from '../profile/follow-button/follow-button.component';
@@ -15,4 +15,9 @@ import { UserWithFollows } from '../common/types/user.type';
 export class UserRowComponent {
   defaultProfileImage = DEFAULT_PROFILE_IMAGE;
   @Input() users: UserWithFollows[] = [];
+  @Output() closeDialog = new EventEmitter();
+
+  handleUserClick() {
+    this.closeDialog.emit();
+  }
 }

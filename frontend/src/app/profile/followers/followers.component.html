@@ -1,1 +1,4 @@
-<app-user-row [users]="userFollowers"></app-user-row>
+<app-user-row
+  [users]="userFollowers"
+  (closeDialog)="onCloseDialog()"
+></app-user-row>

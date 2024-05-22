@@ -10,9 +10,9 @@
 
 <p-tabView>
   <p-tabPanel header="Following">
-    <app-following [userId]="userId"></app-following>
+    <app-following [userId]="userId" (closeDialog)="onCloseDialog()"></app-following>
   </p-tabPanel>
   <p-tabPanel header="Followers">
-    <app-followers [userId]="userId"></app-followers>
+    <app-followers [userId]="userId" (closeDialog)="onCloseDialog()"></app-followers>
   </p-tabPanel>
 </p-tabView>
