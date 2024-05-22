@@ -95,4 +95,12 @@ export class AuthService {
     this.storageService.updateUser(user);
     this.loggedInUserSubject.next(user);
   }
+
+  /**
+   * This is not from the API, it is from the storage, it should bring the same as the getLoggedInUser, but the difference is that the getLoggedInUser is from the API and could have more updated data
+   * @returns
+   */
+  getLoggedInUserFromStorage() {
+    return this.storageService.getUser();
+  }
 }

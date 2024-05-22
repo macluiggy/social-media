@@ -6,6 +6,21 @@
       alt="Profile Photo"
       class="profile-photo"
     />
+    <div class="follow-info">
+      <app-follow-button [userId]="userId"></app-follow-button>
+      <div class="follow-counts">
+        <p>
+          <a (click)="showFollowsDialog()">
+            <strong> {{ followersCount }} Followers </strong>
+          </a>
+        </p>
+        <p>
+          <a (click)="showFollowsDialog()">
+            <strong> {{ followingCount }} Following </strong>
+          </a>
+        </p>
+      </div>
+    </div>
   </p-header>
   <div class="container">
     <p><strong>Name:</strong> {{ currentUser.firstName }}</p>
@@ -34,3 +49,13 @@
   <!-- </p-tabPanel> -->
 </p-tabView>
 }
+
+<p-dialog
+  [(visible)]="displayFollowsDialog"
+  [modal]="true"
+  [baseZIndex]="10000"
+  [dismissableMask]="true"
+  styleClass="follow-dialog"
+>
+  <app-follows [userId]="userId" (closeDialog)="closeDialog()"></app-follows>
+</p-dialog>
