@@ -170,6 +170,7 @@
                   </ul>
                 </li>
               </ul> -->
+              @if (isLoggedIn) {
               <ul class="list-none p-3 m-0">
                 <li>
                   <div>
@@ -183,6 +184,7 @@
                   </div>
                 </li>
               </ul>
+              }
               <ul class="list-none p-3 m-0">
                 <li>
                   <div>
@@ -197,6 +199,7 @@
                 </li>
               </ul>
             </div>
+            @if (isLoggedIn) {
             <div class="mt-auto">
               <hr class="mb-3 mx-3 border-top-1 border-none surface-border" />
               <a
@@ -211,6 +214,7 @@
                 <span class="font-bold">{{ loggedInUser?.fullName }}</span>
               </a>
             </div>
+            }
           </div>
         </ng-template>
       </p-sidebar>
