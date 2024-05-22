@@ -6,20 +6,21 @@ import { AppModule } from '../src/app.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import entities from '../src/db/entities';
 import { HttpExceptionFilter } from '../src/common/filters/http-exception.filter';
+import { typeOrmConfig } from '../src/db/config/typeorm.config';
 
 export default async function setupTestingModule({
   imports = [],
   exports = [],
   controllers = [],
   providers = [],
-}: {
-  imports?: ModuleMetadata['imports'];
-  exports?: ModuleMetadata['exports'];
-  controllers?: ModuleMetadata['controllers'];
-  providers?: ModuleMetadata['providers'];
-} = {}) {
+}: ModuleMetadata = {}) {
   const moduleFixture: TestingModule = await Test.createTestingModule({
-    imports: [AppModule, TypeOrmModule.forFeature(entities), ...imports],
+    imports: [
+      AppModule,
+      TypeOrmModule.forRoot(typeOrmConfig),
+      TypeOrmModule.forFeature(entities),
+      ...imports,
+    ],
     exports,
     controllers,
     providers,

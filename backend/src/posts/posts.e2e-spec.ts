@@ -128,8 +128,8 @@ describe('Post Controller (e2e)', () => {
       .set({
         authorization: `Bearer ${accessToken}`,
       });
-    console.log(JSON.stringify(res.body, null, 2));
 
+    expect(res.statusCode).toBe(200);
     // expect(res.status).toBe(200);
     // expect(res.body.data.items).toBeInstanceOf(Array);
     // expect(res.body.data.total).toBeGreaterThan(0);

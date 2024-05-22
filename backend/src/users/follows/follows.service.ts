@@ -68,7 +68,7 @@ export class FollowsService {
           await this.fileStorageService.getSignedUrl(profileImagekey);
       }
       return {
-        id: item.user_id,
+        id: +item.user_id,
         username: item.user_username,
         email: item.user_email,
         areFriends: +item.areFriends > 0,
@@ -114,7 +114,7 @@ export class FollowsService {
           await this.fileStorageService.getSignedUrl(profileImagekey);
       }
       return {
-        id: item.user_id,
+        id: +item.user_id,
         username: item.user_username,
         email: item.user_email,
         areFriends: +item.areFriends > 0,

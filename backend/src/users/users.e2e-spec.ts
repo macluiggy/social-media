@@ -1,14 +1,10 @@
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
-
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { typeOrmConfig } from '../db/config/typeorm.config';
 import getApiEndpoint from '../common/utils/getApiEndpoint';
 import { it } from 'vitest';
 import { Users } from '../users/users.entity';
-import { UsersModule } from '../users/users.module';
+import { userModuleMetadata } from '../users/users.module';
 import { USERNAME_FOR_TESTING, signInUser } from '../auth/utils/singInUser';
-import { AuthModule } from '../auth/auth.module';
 import setupTestingModule from '../../test/setUpTestingModule';
 
 describe('UsersController (e2e)', () => {
@@ -17,9 +13,7 @@ describe('UsersController (e2e)', () => {
   let accessToken: string;
 
   beforeAll(async () => {
-    const testingModule = await setupTestingModule({
-      imports: [UsersModule, TypeOrmModule.forRoot(typeOrmConfig), AuthModule],
-    });
+    const testingModule = await setupTestingModule(userModuleMetadata);
     app = testingModule.app;
 
     const data = await signInUser(app);

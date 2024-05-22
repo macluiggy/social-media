@@ -9,11 +9,17 @@ import { TPostWithUser } from '../posts/posts.type';
 import { PostsService } from '../services/posts/posts.service';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { catchError, of, retry } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ButtonModule, PostsComponent, InfiniteScrollModule, ProgressSpinnerModule],
+  imports: [
+    ButtonModule,
+    PostsComponent,
+    InfiniteScrollModule,
+    ProgressSpinnerModule,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
@@ -23,7 +29,6 @@ export class HomeComponent implements OnInit {
   randomPosts: TPostWithUser[] = [] as TPostWithUser[];
   loading = false;
   private page = 1;
-  
 
   test = environment.test;
   constructor(
@@ -42,26 +47,35 @@ export class HomeComponent implements OnInit {
       error: (error) => {
         console.error(error);
       },
-      complete: () => {
-      },
+      complete: () => {},
     });
   }
 
   private fetchPosts() {
     this.loading = true;
-    this.postsService.getRandomPosts({ limit: 5, page: this.page }).subscribe({
-      next: (response: any) => {
-        this.randomPosts = [...this.randomPosts, ...response.data.items];
-        
-        this.page++;
-      },
-      error: (error) => {
-        console.error(error);
-      },
-      complete: () => {
-        this.loading = false;
-      },
-    });
+    this.postsService
+      .getRandomPosts({ limit: 5, page: this.page })
+      .pipe(
+        retry(3), // Retry the request up to 3 times
+        catchError((error) => {
+          console.error(error);
+          // Handle the error here if needed
+          return of(null); // Return a fallback value to complete the observable chain
+        })
+      )
+      .subscribe({
+        next: (response: any) => {
+          this.randomPosts = [...this.randomPosts, ...response.data.items];
+
+          this.page++;
+        },
+        error: (error) => {
+          console.error(error);
+        },
+        complete: () => {
+          this.loading = false;
+        },
+      });
   }
 
   onScroll() {
