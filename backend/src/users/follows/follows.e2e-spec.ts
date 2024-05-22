@@ -80,7 +80,29 @@ describe('Follow e2e', () => {
     expect(res.body.data).toBeInstanceOf(Array);
   });
 
-  // 'user/:userId/unfollow/:otherUserId'
+  it('/user/:userId/followers GET, should get the followers of a user', async () => {
+    const endpoint = getApiEndpoint(`follows/user/${randomUser.id}/followers`);
+
+    const res = await request(app.getHttpServer())
+      .get(endpoint)
+      .set({
+        authorization: `Bearer ${accessToken}`,
+      });
+
+    // console.log(res.body);
+    const body = res.body;
+
+    // find the user that was followed
+    const followerUser = body.data.find((u: Users) => +u.id === +user.id);
+
+    expect(followerUser).toBeDefined();
+    expect(followerUser.id).toBe(user.id);
+    expect(followerUser.email).toBe(user.email);
+
+    expect(res.status).toBe(200);
+    expect(res.body.data).toBeInstanceOf(Array);
+  });
+
   it('/user/:userId/unfollow/:otherUserId DELETE, should unfollow a user', async () => {
     const endpoint = getApiEndpoint(
       `follows/user/${user.id}/unfollow/${randomUser.id}`,
