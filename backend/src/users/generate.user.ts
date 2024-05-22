@@ -17,9 +17,12 @@ export default function generateUser(userData: Users = {} as Users): Users {
       firstName: user.firstName,
       lastName: user.lastName,
     });
-  user.password = faker.internet.password({
-    memorable: true,
-  });
+  user.password =
+    userData.password ||
+    faker.internet.password({
+      memorable: true,
+    });
   user.phone = faker.phone.number();
+
   return user;
 }
