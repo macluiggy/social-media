@@ -6,17 +6,14 @@ import { it } from 'vitest';
 import { Users } from '../users/users.entity';
 import { Repository } from 'typeorm';
 import setupTestingModule from '../../test/setUpTestingModule';
+import generateUser from '../users/generate.user';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
   let userRepository: Repository<Users>;
 
   // const user = { email: 'test@test.com', password: 'password', };
-  const user = new Users();
-  user.email = 'example@mail.com';
-  user.password = 'password';
-  user.username = 'example';
-  user.firstName = 'example';
+  const user = generateUser();
 
   beforeAll(async () => {
     const testingModule = await setupTestingModule();

@@ -3,10 +3,15 @@ import {
   EntitySubscriberInterface,
   InsertEvent,
   UpdateEvent,
+  RemoveEvent,
 } from 'typeorm';
 import { validateOrReject } from 'class-validator';
 import { Users } from './users.entity';
 import { FileStorageService } from '../file-storage/file-storage.service';
+import {
+  EMAIL_FOR_TESTING,
+  USERNAME_FOR_TESTING,
+} from '../auth/utils/singInUser';
 
 @EventSubscriber()
 export class UserSubscriber implements EntitySubscriberInterface<Users> {
@@ -29,6 +34,16 @@ export class UserSubscriber implements EntitySubscriberInterface<Users> {
         entity.profileImageKey,
       );
       entity.profileImageUrl = profileImageUrl;
+    }
+  }
+  async beforeRemove(event: RemoveEvent<Users>): Promise<any> {
+    if (
+      event.entity.email === EMAIL_FOR_TESTING ||
+      event.entity.username === USERNAME_FOR_TESTING
+    ) {
+      throw new Error(
+        `You should not delete the user for testing purposes with email: ${EMAIL_FOR_TESTING} or username: ${USERNAME_FOR_TESTING}`,
+      );
     }
   }
 }
