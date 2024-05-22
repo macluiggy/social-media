@@ -101,6 +101,21 @@ describe('Follow e2e', () => {
     expect(res.body.data).toBeInstanceOf(Array);
   });
 
+  it('/user/:userId/following/:otherUserId GET, should check if the logged-in user is following another user', async () => {
+    const endpoint = getApiEndpoint(
+      `follows/user/${user.id}/following/${randomUser.id}`,
+    );
+
+    const res = await request(app.getHttpServer())
+      .get(endpoint)
+      .set({
+        authorization: `Bearer ${accessToken}`,
+      });
+
+    expect(res.status).toBe(200);
+    expect(res.body.data).toBe(true);
+  });
+
   it('/user/:userId/unfollow/:otherUserId DELETE, should unfollow a user', async () => {
     const endpoint = getApiEndpoint(
       `follows/user/${user.id}/unfollow/${randomUser.id}`,
@@ -115,6 +130,21 @@ describe('Follow e2e', () => {
     expect(res.status).toBe(200);
     expect(res.body.data).toBeDefined();
     expect(res.body.data.affected).toBe(1);
+  });
+
+  it('/user/:userId/following/:otherUserId GET, should check if the logged-in user is following another user', async () => {
+    const endpoint = getApiEndpoint(
+      `follows/user/${user.id}/following/${randomUser.id}`,
+    );
+
+    const res = await request(app.getHttpServer())
+      .get(endpoint)
+      .set({
+        authorization: `Bearer ${accessToken}`,
+      });
+
+    expect(res.status).toBe(200);
+    expect(res.body.data).toBe(false);
   });
 
   afterAll(async () => {
