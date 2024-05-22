@@ -10,6 +10,8 @@ import {
 } from '../src/auth/utils/singInUser';
 import { AiApiService } from '../src/ai-api/ai-api.service';
 import { FileStorageService } from '../src/file-storage/file-storage.service';
+import generateUser from '../src/users/generate.user';
+import { Users } from '../src/users/users.entity';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -27,12 +29,14 @@ describe('AppController (e2e)', () => {
     /**
      * Create a user for testing, this user is mean to use in these e2e tests for endpoints that require a user to be authenticated.
      */
-    await usersService.createUserIfNotExists({
-      email: EMAIL_FOR_TESTING,
-      username: USERNAME_FOR_TESTING,
-      password: PASSWORD_FOR_TESTING,
-      fullName: FULL_NAME_FOR_TESTING,
-    } as any);
+    await usersService.createUserIfNotExists(
+      generateUser({
+        email: EMAIL_FOR_TESTING,
+        username: USERNAME_FOR_TESTING,
+        password: PASSWORD_FOR_TESTING,
+        firstName: FULL_NAME_FOR_TESTING,
+      } as Users),
+    );
   });
 
   beforeEach(async () => {

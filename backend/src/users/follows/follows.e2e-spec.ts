@@ -66,7 +66,6 @@ describe('Follow e2e', () => {
       .set({
         authorization: `Bearer ${accessToken}`,
       });
-    // console.log(res.body);
     const body = res.body;
 
     // find the user that was followed
@@ -89,7 +88,6 @@ describe('Follow e2e', () => {
         authorization: `Bearer ${accessToken}`,
       });
 
-    // console.log(res.body);
     const body = res.body;
 
     // find the user that was followed

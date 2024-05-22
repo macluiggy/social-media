@@ -1,18 +1,22 @@
 import { faker } from '@faker-js/faker';
 import { Users } from './users.entity';
 
-export default function generateUser(): Users {
+export default function generateUser(userData: Users = {} as Users): Users {
   const user = new Users();
-  user.firstName = faker.person.firstName();
+  user.firstName = userData.firstName || faker.person.firstName();
   user.lastName = faker.person.lastName();
-  user.username = faker.internet.userName({
-    firstName: user.firstName,
-    lastName: user.lastName,
-  });
-  user.email = faker.internet.email({
-    firstName: user.firstName,
-    lastName: user.lastName,
-  });
+  user.username =
+    userData.username ||
+    faker.internet.userName({
+      firstName: user.firstName,
+      lastName: user.lastName,
+    });
+  user.email =
+    userData.email ||
+    faker.internet.email({
+      firstName: user.firstName,
+      lastName: user.lastName,
+    });
   user.password = faker.internet.password({
     memorable: true,
   });
