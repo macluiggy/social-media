@@ -58,6 +58,45 @@ describe('Follow e2e', () => {
     expect(res.body.data).toBeDefined();
   });
 
+  it('/user/:userId/following GET, should get the users that a user is following', async () => {
+    const endpoint = getApiEndpoint(`follows/user/${user.id}/following`);
+
+    const res = await request(app.getHttpServer())
+      .get(endpoint)
+      .set({
+        authorization: `Bearer ${accessToken}`,
+      });
+    // console.log(res.body);
+    const body = res.body;
+
+    // find the user that was followed
+    const followedUser = body.data.find((u: Users) => +u.id === +randomUser.id);
+
+    expect(followedUser).toBeDefined();
+    expect(followedUser.id).toBe(randomUser.id);
+    expect(followedUser.email).toBe(randomUser.email);
+
+    expect(res.status).toBe(200);
+    expect(res.body.data).toBeInstanceOf(Array);
+  });
+
+  // 'user/:userId/unfollow/:otherUserId'
+  it('/user/:userId/unfollow/:otherUserId DELETE, should unfollow a user', async () => {
+    const endpoint = getApiEndpoint(
+      `follows/user/${user.id}/unfollow/${randomUser.id}`,
+    );
+
+    const res = await request(app.getHttpServer())
+      .delete(endpoint)
+      .set({
+        authorization: `Bearer ${accessToken}`,
+      });
+
+    expect(res.status).toBe(200);
+    expect(res.body.data).toBeDefined();
+    expect(res.body.data.affected).toBe(1);
+  });
+
   afterAll(async () => {
     // delete data from the database
     await userRespository.remove(randomUser);
