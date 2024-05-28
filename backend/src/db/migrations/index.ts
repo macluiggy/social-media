@@ -3,7 +3,6 @@ import { CreateTableUser1684206622652 } from './1713999461685-create-users';
 import { CreateTablePosts1715007703628 } from './1715007703628-create-table-posts';
 import { AddProfileKeyToUsersTable1715898100002 } from './1715898100002-add-profile-key-to-users-table';
 import { CreateFollowTable1716224928997 } from './1716224928997-create-follow-table';
-import { Migrations1716902557133 } from './1716902557133-migrations';
 
 const DB_MIGRATIONS = [
   CreateTableSeeders1713999461685,
@@ -11,7 +10,6 @@ const DB_MIGRATIONS = [
   CreateTablePosts1715007703628,
   AddProfileKeyToUsersTable1715898100002,
   CreateFollowTable1716224928997,
-  Migrations1716902557133,
 ];
 
 export default DB_MIGRATIONS;
