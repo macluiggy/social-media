@@ -8,6 +8,9 @@ import envVariables from '../../common/envVariables';
 // import userFactory from '../factories/user.factory';
 // import DB_MIGRATIONS from '../migrations';
 import { DataSource } from 'typeorm';
+import migrations from '../migrations';
+import seeders from '../seeders';
+import factories from '../factories';
 // import seeders from '../seeders';
 
 const { db } = envVariables;
@@ -18,9 +21,9 @@ const typeOrmConfig: TypeOrmModuleOptions & SeederOptions = {
   entities: entities,
   subscribers: subscribers,
   synchronize: false,
-  migrations: [__dirname + '/../migrations/*{.ts}'],
-  seeds: [__dirname + '/../seeders/*{.ts,.js}'],
-  factories: [__dirname + '/../factories/*{.ts}'],
+  migrations: migrations,
+  seeds: seeders,
+  factories: factories,
   migrationsRun: true,
 };
 
