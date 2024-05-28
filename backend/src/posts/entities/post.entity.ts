@@ -37,10 +37,6 @@ export class Post {
   })
   updatedAt: Date;
 
-  // add test column
-  @Column({ type: 'text', nullable: true })
-  test: string;
-
   @ManyToOne(() => Users)
   @JoinColumn({ name: 'user_id' })
   user: Users;
