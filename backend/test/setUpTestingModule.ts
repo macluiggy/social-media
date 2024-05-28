@@ -4,7 +4,7 @@ import { ModuleMetadata } from '@nestjs/common';
 import { SuccesResponseInterceptor } from '../src/common/interceptors/succes-request-response.interceptor';
 import { AppModule } from '../src/app.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import entities from '../src/db/entities';
+import entities from '../src/db/config/entities';
 import { HttpExceptionFilter } from '../src/common/filters/http-exception.filter';
 import { typeOrmConfig } from '../src/db/config/typeorm.config';
 

@@ -1,4 +1,4 @@
-import UserSeeder from './seeders/user.seeder';
+import UserSeeder from '../seeders/user.seeder';
 
 const seeders = [UserSeeder];
 

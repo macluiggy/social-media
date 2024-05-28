@@ -1,17 +1,14 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import entities from '../entities';
+import entities from './entities';
 import * as dotenv from 'dotenv';
 dotenv.config();
 import { SeederOptions } from 'typeorm-extension';
-import subscribers from '../subscribers';
+import subscribers from './subscribers';
 import envVariables from '../../common/envVariables';
-// import userFactory from '../factories/user.factory';
-// import DB_MIGRATIONS from '../migrations';
 import { DataSource } from 'typeorm';
-import migrations from '../migrations';
-import seeders from '../seeders';
-import factories from '../factories';
-// import seeders from '../seeders';
+import migrations from './migrations';
+import seeders from './seeders';
+import factories from './factories';
 
 const { db } = envVariables;
 // detect entity files by ending with .entity.ts

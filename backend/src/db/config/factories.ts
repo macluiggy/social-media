@@ -1,4 +1,4 @@
-import userFactory from './factories/user.factory';
+import userFactory from '../factories/user.factory';
 
 const factories = [userFactory];
 
