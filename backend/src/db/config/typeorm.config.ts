@@ -3,12 +3,12 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
 dotenv.config();
 import { SeederOptions } from 'typeorm-extension';
-import subscribers from '../subscribers';
+// import subscribers from '../subscribers';
 import envVariables from '../../common/envVariables';
 // import userFactory from '../factories/user.factory';
 // import DB_MIGRATIONS from '../migrations';
 import { DataSource } from 'typeorm';
-import seeders from '../seeders';
+// import seeders from '../seeders';
 
 const { db } = envVariables;
 // detect entity files by ending with .entity.ts
@@ -18,9 +18,9 @@ const typeOrmConfig: TypeOrmModuleOptions & SeederOptions = {
   migrations: [__dirname + '/../migrations/*{.ts,.js}'],
   entities: [__dirname + '/../../**/*.entity{.ts,.js}'],
   synchronize: false,
-  seeds: seeders,
+  seeds: [__dirname + '/../seeders/*{.ts,.js}'],
   factories: [__dirname + '/../factories/*{.ts,.js}'],
-  subscribers: subscribers,
+  subscribers: [__dirname + '/../../**/*.subscriber{.ts,.js}'],
   migrationsRun: true,
 };
 
