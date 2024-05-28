@@ -21,6 +21,7 @@ const typeOrmConfig: TypeOrmModuleOptions & SeederOptions = {
   seeds: seeders,
   factories: [userFactory],
   subscribers: subscribers,
+  migrationsRun: true,
 };
 
 export { typeOrmConfig };
