@@ -7,6 +7,7 @@ import { Users } from '../users/users.entity';
 import { Repository } from 'typeorm';
 import setupTestingModule from '../../test/setUpTestingModule';
 import generateUser from '../users/generate.user';
+import { authModuleMetadata } from './auth.module';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -16,7 +17,7 @@ describe('AppController (e2e)', () => {
   const user = generateUser();
 
   beforeAll(async () => {
-    const testingModule = await setupTestingModule();
+    const testingModule = await setupTestingModule(authModuleMetadata);
 
     app = testingModule.app;
     const moduleFixture = testingModule.testingModule;

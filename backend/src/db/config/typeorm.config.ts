@@ -1,9 +1,9 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-// import entities from '../entities';
+import entities from '../entities';
 import * as dotenv from 'dotenv';
 dotenv.config();
 import { SeederOptions } from 'typeorm-extension';
-// import subscribers from '../subscribers';
+import subscribers from '../subscribers';
 import envVariables from '../../common/envVariables';
 // import userFactory from '../factories/user.factory';
 // import DB_MIGRATIONS from '../migrations';
@@ -15,12 +15,12 @@ const { db } = envVariables;
 const typeOrmConfig: TypeOrmModuleOptions & SeederOptions = {
   type: 'postgres',
   url: db.databaseUrl,
-  migrations: [__dirname + '/../migrations/*{.ts,.js}'],
-  entities: [__dirname + '/../../**/*.entity{.ts,.js}'],
+  entities: entities,
+  subscribers: subscribers,
   synchronize: false,
+  migrations: [__dirname + '/../migrations/*{.ts}'],
   seeds: [__dirname + '/../seeders/*{.ts,.js}'],
-  factories: [__dirname + '/../factories/*{.ts,.js}'],
-  subscribers: [__dirname + '/../../**/*.subscriber{.ts,.js}'],
+  factories: [__dirname + '/../factories/*{.ts}'],
   migrationsRun: true,
 };
 
