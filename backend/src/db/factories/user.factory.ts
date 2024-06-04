@@ -1,5 +1,6 @@
 import { setSeederFactory } from 'typeorm-extension';
 import { entitiesObject } from '../config/entities';
+import { DEFAULT_LANG } from '../../lang';
 const { Users } = entitiesObject;
 
 export default setSeederFactory(Users, (faker) => {
@@ -16,6 +17,7 @@ export default setSeederFactory(Users, (faker) => {
     firstName: user.firstName,
     lastName: user.lastName,
   });
+  user.preferredLanguage = DEFAULT_LANG;
 
   return user;
 });
