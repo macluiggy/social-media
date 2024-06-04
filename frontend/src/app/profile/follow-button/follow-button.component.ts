@@ -16,6 +16,7 @@ export class FollowButtonComponent implements OnChanges {
   isFollowing = false;
   loggedInUser = this.authService.getLoggedInUserFromStorage();
   currentUserIsLoggedInUser = this.userId == this.loggedInUser?.id;
+  isLoggedIn = this.authService.userIsLoggedIn();
 
   constructor(
     private followService: FollowsService,
@@ -31,7 +32,7 @@ export class FollowButtonComponent implements OnChanges {
   }
 
   checkIfFollowing() {
-    if (!this.userId) return;
+    if (!this.userId || !this.authService.userIsLoggedIn()) return;
 
     this.followService.checkIfFollowing(this.userId).subscribe((res: any) => {
       this.isFollowing = res.data;

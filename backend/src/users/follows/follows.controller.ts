@@ -14,6 +14,7 @@ import { UpdateFollowDto } from './dto/update-follow.dto';
 import getApiEndpoint from '../../common/utils/getApiEndpoint';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Public } from '../../common/decorators/public.decorator';
 
 @ApiTags('follows')
 @UseGuards(JwtAuthGuard)
@@ -33,12 +34,14 @@ export class FollowsController {
     return this.followsService.findAll();
   }
 
+  @Public()
   @Get('user/:userId/followers/count')
   async getFollowersCount(@Param('userId') userId: number) {
     const count = await this.followsService.getFollowersCount(+userId);
     return { count };
   }
 
+  @Public()
   @Get('user/:userId/following/count')
   async getFollowingCount(@Param('userId') userId: number) {
     const count = await this.followsService.getFollowingCount(+userId);
@@ -85,6 +88,7 @@ export class FollowsController {
     return this.followsService.unfollow(+followedId, +followerId);
   }
 
+  @Public()
   @ApiOperation({ summary: 'Get the users that a user is following' })
   @Get('user/:userId/following')
   @ApiParam({
@@ -97,6 +101,7 @@ export class FollowsController {
     return this.followsService.getUserFollowing(+userId);
   }
 
+  @Public()
   @ApiOperation({ summary: 'Get the followers of a user' })
   @ApiParam({ name: 'userId', type: Number, description: 'ID of the user' })
   @ApiResponse({ status: 200, description: 'Get followers successful' })
@@ -105,6 +110,7 @@ export class FollowsController {
     return this.followsService.getUserFollowers(+userId);
   }
 
+  @Public()
   @ApiOperation({
     summary: 'Check if the logged-in user is following another user',
   })

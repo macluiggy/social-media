@@ -89,6 +89,7 @@ export class PostsController {
     return new ApiStandardResponse(deleted, this.messages.POST.DELETED);
   }
 
+  @Public()
   @Get('user/:userId')
   @ApiOperation({ summary: 'Get all posts by user id' })
   async findUserPosts(
