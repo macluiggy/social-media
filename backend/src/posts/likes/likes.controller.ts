@@ -1,9 +1,20 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { LikesService } from './likes.service';
 import { CreateLikeDto } from './dto/create-like.dto';
 import { UpdateLikeDto } from './dto/update-like.dto';
+import getApiEndpoint from '../../common/utils/getApiEndpoint';
 
-@Controller('likes')
+@Controller({
+  path: getApiEndpoint('likes'),
+})
 export class LikesController {
   constructor(private readonly likesService: LikesService) {}
 
