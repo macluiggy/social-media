@@ -44,5 +44,6 @@ export class Post {
   user: Users;
 
   @OneToMany('Like', (like: Like) => like.post)
+  @JoinColumn({ name: 'id' })
   likes: Like[];
 }

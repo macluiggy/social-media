@@ -5,6 +5,7 @@ import {
   BeforeInsert,
   AfterLoad,
   OneToMany,
+  JoinColumn,
   // OneToMany,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
@@ -113,8 +114,10 @@ export class Users {
 
   // relations
   @OneToMany('Like', (like: Like) => like.user)
+  @JoinColumn({ name: 'id' })
   likes: Like[];
 
   @OneToMany('Post', (post: Post) => post.user)
+  @JoinColumn({ name: 'id' })
   posts: Post[];
 }

@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { Users } from '../../../users/users.entity';
 import { Post } from '../../entities/post.entity';
 
@@ -23,8 +29,10 @@ export class Like {
   deletedAt: Date | null;
 
   @ManyToOne('Users', (user: Users) => user.likes)
+  @JoinColumn({ name: 'user_id' })
   user: Users;
 
   @ManyToOne('Post', (post: Post) => post.likes)
+  @JoinColumn({ name: 'post_id' })
   post: Post;
 }
