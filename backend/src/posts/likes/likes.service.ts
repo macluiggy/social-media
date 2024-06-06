@@ -59,4 +59,17 @@ export class LikesService {
       items: likes,
     });
   }
+
+  /**
+   * Checks if a user has liked a specific post.
+   * @param postId
+   * @param userId
+   * @returns
+   */
+  async hasUserLikedPost(postId: number, userId: number) {
+    const like = await this.likeRepository.findOne({
+      where: { postId, userId },
+    });
+    return !!like;
+  }
 }

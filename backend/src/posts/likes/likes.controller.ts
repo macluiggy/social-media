@@ -17,6 +17,7 @@ import {
   ApiBearerAuth,
   ApiOperation,
   ApiParam,
+  ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
 
@@ -61,6 +62,18 @@ export class LikesController {
     type: Number,
     description: 'ID of the post',
   })
+  @ApiQuery({
+    name: 'page',
+    type: Number,
+    required: false,
+    description: 'Page number',
+  })
+  @ApiQuery({
+    name: 'limit',
+    type: Number,
+    required: false,
+    description: 'Number of likes per page',
+  })
   findByPostId(
     @Param('postId') postId: string,
     @Query() query: { page: number; limit: number },
@@ -68,5 +81,25 @@ export class LikesController {
     const { page = 1, limit = 10 } = query;
 
     return this.likesService.findByPostId(+postId, { query: { page, limit } });
+  }
+
+  @Get('/hasLiked/:postId')
+  @ApiOperation({
+    summary: 'Check if a user has liked a specific post',
+    description:
+      'This endpoint returns true if the user has liked the specified post, false otherwise',
+  })
+  @ApiParam({
+    name: 'postId',
+    type: Number,
+    description: 'ID of the post',
+  })
+  async hasUserLikedPost(
+    @Param('postId') postId: string,
+    @Req() req: Request,
+  ): Promise<boolean> {
+    const user = req['user'];
+    const userId = user.id;
+    return this.likesService.hasUserLikedPost(+postId, +userId);
   }
 }
