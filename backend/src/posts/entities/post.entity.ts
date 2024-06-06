@@ -39,7 +39,10 @@ export class Post {
   })
   updatedAt: Date;
 
-  @ManyToOne('Users', (user: Users) => user.posts, { onDelete: 'CASCADE' })
+  @ManyToOne('Users', (user: Users) => user.posts, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn({ name: 'user_id' })
   user: Users;
 

@@ -28,11 +28,17 @@ export class Like {
   @Column({ type: 'timestamp', name: 'deleted_at', nullable: true })
   deletedAt: Date | null;
 
-  @ManyToOne('Users', (user: Users) => user.likes)
+  @ManyToOne('Users', (user: Users) => user.likes, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn({ name: 'user_id' })
   user: Users;
 
-  @ManyToOne('Post', (post: Post) => post.likes)
+  @ManyToOne('Post', (post: Post) => post.likes, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn({ name: 'post_id' })
   post: Post;
 }
