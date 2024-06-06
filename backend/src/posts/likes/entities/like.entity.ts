@@ -4,11 +4,13 @@ import {
   Column,
   ManyToOne,
   JoinColumn,
+  Unique,
 } from 'typeorm';
 import { Users } from '../../../users/users.entity';
 import { Post } from '../../entities/post.entity';
 
 @Entity('likes')
+@Unique('UQ_USER_POST', ['userId', 'postId'])
 export class Like {
   @PrimaryGeneratedColumn('increment')
   id: number;
@@ -28,6 +30,7 @@ export class Like {
   @Column({ type: 'timestamp', name: 'deleted_at', nullable: true })
   deletedAt: Date | null;
 
+  // relations
   @ManyToOne('Users', (user: Users) => user.likes, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
