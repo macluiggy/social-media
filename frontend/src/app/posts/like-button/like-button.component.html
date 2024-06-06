@@ -1,1 +1,4 @@
-<p>like-button works!</p>
+<p-button
+  [icon]="liked ? 'pi pi-thumbs-up-fill' : 'pi pi-thumbs-up'"
+  (click)="likePost()"
+></p-button>
