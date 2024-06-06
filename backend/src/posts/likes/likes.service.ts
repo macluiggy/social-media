@@ -17,18 +17,16 @@ export class LikesService {
   }
 
   findAll() {
-    return `This action returns all likes`;
+    return this.likeRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} like`;
-  }
-
-  update(id: number, updateLikeDto: UpdateLikeDto) {
-    return `This action updates a #${id} like`;
+    return this.likeRepository.findOne({
+      where: { id },
+    });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} like`;
+    return this.likeRepository.delete(id);
   }
 }
