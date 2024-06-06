@@ -1,4 +1,5 @@
 import { Post } from '../../posts/entities/post.entity';
+import { Like } from '../../posts/likes/entities/like.entity';
 import { Follow } from '../../users/follows/entities/follow.entity';
 import { Users } from '../../users/users.entity';
 import { SeederEntity } from '../seeders.entity';
@@ -9,4 +10,4 @@ export const entitiesObject = {
 };
 
 export type Entities = Users | SeederEntity | Post;
-export default [Users, SeederEntity, Post, Follow];
+export default [Users, SeederEntity, Post, Follow, Like];

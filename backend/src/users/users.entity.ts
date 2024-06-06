@@ -4,9 +4,15 @@ import {
   Column,
   BeforeInsert,
   AfterLoad,
+  OneToMany,
+  JoinColumn,
+  // OneToMany,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { DEFAULT_LANG } from '../lang';
+import { Post } from '../posts/entities/post.entity';
+import { Like } from '../posts/likes/entities/like.entity';
+import { Follow } from './follows/entities/follow.entity';
 
 @Entity({
   name: 'users',
@@ -106,4 +112,21 @@ export class Users {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
   }
+
+  // relations
+  @OneToMany('Like', (like: Like) => like.user)
+  @JoinColumn({ name: 'id' })
+  likes: Like[];
+
+  @OneToMany('Post', (post: Post) => post.user)
+  @JoinColumn({ name: 'id' })
+  posts: Post[];
+
+  @OneToMany('Follow', (follow: Follow) => follow.follower)
+  @JoinColumn({ name: 'id' })
+  following: Follow[];
+
+  @OneToMany('Follow', (follow: Follow) => follow.following)
+  @JoinColumn({ name: 'id' })
+  followers: Follow[];
 }

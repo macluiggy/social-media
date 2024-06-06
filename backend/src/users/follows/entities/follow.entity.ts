@@ -5,11 +5,13 @@ import {
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
+  Unique,
 } from 'typeorm';
 import { Users } from '../../users.entity';
 
 // typeorm entity
 @Entity('follows')
+@Unique('UQ_FOLLOWER_FOLLOWING', ['followerId', 'followingId'])
 export class Follow {
   @PrimaryGeneratedColumn()
   id: number;
@@ -26,18 +28,15 @@ export class Follow {
   @CreateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
-  @ManyToOne(() => Users, {
+  @ManyToOne(() => Users, (user: Users) => user.followers, {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'follower_id' })
   follower: Users;
 
-  @ManyToOne(
-    () => Users,
-    {
-      onDelete: 'CASCADE',
-    } /** , (user) => user.following */,
-  )
+  @ManyToOne(() => Users, (user: Users) => user.following, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'following_id' })
   following: Users;
 }

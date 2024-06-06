@@ -1,0 +1,62 @@
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+  Unique,
+} from 'typeorm';
+import { Users } from '../../../users/users.entity';
+import { Post } from '../../entities/post.entity';
+
+@Entity('likes')
+@Unique('UQ_USER_POST', ['userId', 'postId'])
+export class Like {
+  @PrimaryGeneratedColumn('increment')
+  id: number;
+
+  @Column({ type: 'int', name: 'user_id', nullable: false })
+  userId: number;
+
+  @Column({ type: 'int', name: 'post_id', nullable: false })
+  postId: number;
+
+  @Column({
+    type: 'timestamp',
+    name: 'created_at',
+    nullable: false,
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  createdAt: Date;
+
+  @Column({
+    type: 'timestamp',
+    name: 'updated_at',
+    nullable: false,
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  updatedAt: Date;
+
+  @Column({
+    type: 'timestamp',
+    name: 'deleted_at',
+    nullable: true,
+    default: null,
+  })
+  deletedAt: Date | null;
+
+  // relations
+  @ManyToOne('Users', (user: Users) => user.likes, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn({ name: 'user_id' })
+  user: Users;
+
+  @ManyToOne('Post', (post: Post) => post.likes, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn({ name: 'post_id' })
+  post: Post;
+}
