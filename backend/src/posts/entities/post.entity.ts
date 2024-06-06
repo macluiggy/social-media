@@ -6,8 +6,10 @@ import {
   JoinColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  // OneToMany,
 } from 'typeorm';
 import { Users } from '../../users/users.entity';
+// import { Like } from '../likes/entities/like.entity';
 
 @Entity('posts')
 export class Post {
@@ -43,4 +45,7 @@ export class Post {
   })
   @JoinColumn({ name: 'user_id' })
   user: Users;
+
+  // @OneToMany(() => Like, (like) => like.post)
+  // likes: Like[];
 }

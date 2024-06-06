@@ -4,9 +4,11 @@ import {
   Column,
   BeforeInsert,
   AfterLoad,
+  // OneToMany,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { DEFAULT_LANG } from '../lang';
+// import { Like } from '../posts/likes/entities/like.entity';
 
 @Entity({
   name: 'users',
@@ -106,4 +108,8 @@ export class Users {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
   }
+
+  // relations
+  // @OneToMany(() => Like, (like) => like.user)
+  // likes: Like[];
 }
