@@ -36,7 +36,13 @@ export class LikesService {
    * @param param1
    * @returns
    */
-  async findByPostId(postId: number, { query: { page = 1, limit = 10 } }) {
+  async findByPostId(
+    postId: number,
+    options: { query: { page: number; limit: number } } = {
+      query: { page: 1, limit: 10 },
+    },
+  ) {
+    const { page, limit } = options.query;
     const skip = (page - 1) * limit;
     const [likes, total] = await this.likeRepository
       .createQueryBuilder('like')

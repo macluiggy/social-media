@@ -18,8 +18,8 @@ export default class StandardizedPaginateResult<T> {
     total: number;
     items: T[];
   }) {
-    this.page = page;
-    this.limit = limit;
+    this.page = +page;
+    this.limit = +limit;
     this.total = total;
     this.items = items;
   }
