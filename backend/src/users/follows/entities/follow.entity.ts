@@ -26,18 +26,15 @@ export class Follow {
   @CreateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
-  @ManyToOne(() => Users, {
+  @ManyToOne(() => Users, (user: Users) => user.followers, {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'follower_id' })
   follower: Users;
 
-  @ManyToOne(
-    () => Users,
-    {
-      onDelete: 'CASCADE',
-    } /** , (user) => user.following */,
-  )
+  @ManyToOne(() => Users, (user: Users) => user.following, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'following_id' })
   following: Users;
 }

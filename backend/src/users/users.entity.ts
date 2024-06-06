@@ -12,6 +12,7 @@ import * as bcrypt from 'bcrypt';
 import { DEFAULT_LANG } from '../lang';
 import { Post } from '../posts/entities/post.entity';
 import { Like } from '../posts/likes/entities/like.entity';
+import { Follow } from './follows/entities/follow.entity';
 
 @Entity({
   name: 'users',
@@ -120,4 +121,12 @@ export class Users {
   @OneToMany('Post', (post: Post) => post.user)
   @JoinColumn({ name: 'id' })
   posts: Post[];
+
+  @OneToMany('Follow', (follow: Follow) => follow.follower)
+  @JoinColumn({ name: 'id' })
+  following: Follow[];
+
+  @OneToMany('Follow', (follow: Follow) => follow.following)
+  @JoinColumn({ name: 'id' })
+  followers: Follow[];
 }
