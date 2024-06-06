@@ -5,11 +5,13 @@ import {
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
+  Unique,
 } from 'typeorm';
 import { Users } from '../../users.entity';
 
 // typeorm entity
 @Entity('follows')
+@Unique('UQ_FOLLOWER_FOLLOWING', ['followerId', 'followingId'])
 export class Follow {
   @PrimaryGeneratedColumn()
   id: number;
