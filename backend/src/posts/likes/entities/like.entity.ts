@@ -21,13 +21,28 @@ export class Like {
   @Column({ type: 'int', name: 'post_id', nullable: false })
   postId: number;
 
-  @Column({ type: 'timestamp', name: 'created_at', nullable: false })
+  @Column({
+    type: 'timestamp',
+    name: 'created_at',
+    nullable: false,
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   createdAt: Date;
 
-  @Column({ type: 'timestamp', name: 'updated_at', nullable: false })
+  @Column({
+    type: 'timestamp',
+    name: 'updated_at',
+    nullable: false,
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   updatedAt: Date;
 
-  @Column({ type: 'timestamp', name: 'deleted_at', nullable: true })
+  @Column({
+    type: 'timestamp',
+    name: 'deleted_at',
+    nullable: true,
+    default: null,
+  })
   deletedAt: Date | null;
 
   // relations

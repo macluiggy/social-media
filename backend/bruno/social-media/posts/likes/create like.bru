@@ -6,10 +6,16 @@ meta {
 
 post {
   url: {{base_url}}/likes/
-  body: none
+  body: json
   auth: bearer
 }
 
 auth:bearer {
   token: {{TOKEN}}
+}
+
+body:json {
+  {
+    "postId": 1
+  }
 }

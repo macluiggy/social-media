@@ -5,6 +5,7 @@ import { AddLikeEntity1717688090801 } from '../migrations/1717688090801-add-like
 import { AddCascadeOptionsInLikeTable1717688569232 } from '../migrations/1717688569232-add-cascade-options-in-like-table';
 import { UniqueConstraintLikeEntity1717689713669 } from '../migrations/1717689713669-unique-constraint-like-entity';
 import { UniqueConstraintFollowEntity1717689884271 } from '../migrations/1717689884271-unique-constraint-follow-entity';
+import { AddDefaulValuesForDatesInLikeEntity1717692220840 } from '../migrations/1717692220840-add-defaul-values-for-dates-in-like-entity';
 
 export default [
   FirstOne1716904139007,
@@ -14,4 +15,5 @@ export default [
   AddCascadeOptionsInLikeTable1717688569232,
   UniqueConstraintLikeEntity1717689713669,
   UniqueConstraintFollowEntity1717689884271,
+  AddDefaulValuesForDatesInLikeEntity1717692220840,
 ];
