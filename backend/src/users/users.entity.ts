@@ -4,11 +4,13 @@ import {
   Column,
   BeforeInsert,
   AfterLoad,
+  OneToMany,
   // OneToMany,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { DEFAULT_LANG } from '../lang';
-// import { Like } from '../posts/likes/entities/like.entity';
+import { Post } from '../posts/entities/post.entity';
+import { Like } from '../posts/likes/entities/like.entity';
 
 @Entity({
   name: 'users',
@@ -110,6 +112,9 @@ export class Users {
   }
 
   // relations
-  // @OneToMany(() => Like, (like) => like.user)
-  // likes: Like[];
+  @OneToMany('Like', (like: Like) => like.user)
+  likes: Like[];
+
+  @OneToMany('Post', (post: Post) => post.user)
+  posts: Post[];
 }
