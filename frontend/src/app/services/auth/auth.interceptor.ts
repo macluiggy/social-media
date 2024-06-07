@@ -42,7 +42,12 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
           // Specific handling for unauthorized errors
           console.error('Unauthorized request:', err);
           // You might trigger a re-authentication flow or redirect the user here
-          authService.logout().subscribe();
+          const loggedInUser = authService.getLoggedInUserFromStorage()
+          
+
+          if (loggedInUser) {
+            authService.logout().subscribe();
+          }
           router.navigate(['/login']);
         } else {
           // Handle other HTTP error codes

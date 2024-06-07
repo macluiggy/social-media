@@ -11,7 +11,7 @@ export class FollowsService {
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   checkIfFollowing(otherUserId: number) {
-    const loggedInUserId = this.authService.getLoggedInUserFromStorage().id;
+    const loggedInUserId = this.authService.getLoggedInUserFromStorage()?.id;
 
     return this.http.get(
       `${this.apiUrl}/follows/user/${loggedInUserId}/following/${otherUserId}`
@@ -19,7 +19,7 @@ export class FollowsService {
   }
 
   followUser(otherUserId: number) {
-    const loggedInUserId = this.authService.getLoggedInUserFromStorage().id;
+    const loggedInUserId = this.authService.getLoggedInUserFromStorage()?.id;
     return this.http.post(
       `${this.apiUrl}/follows/user/${loggedInUserId}/follow/${otherUserId}`,
       {}
@@ -27,7 +27,7 @@ export class FollowsService {
   }
 
   unfollowUser(otherUserId: number) {
-    const loggedInUserId = this.authService.getLoggedInUserFromStorage().id;
+    const loggedInUserId = this.authService.getLoggedInUserFromStorage()?.id;
     return this.http.delete(
       `${this.apiUrl}/follows/user/${loggedInUserId}/unfollow/${otherUserId}`
     );

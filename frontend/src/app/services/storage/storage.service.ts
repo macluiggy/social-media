@@ -41,7 +41,11 @@ export class StorageService {
     }
   }
 
-  public getUser(): User {
+  /**
+   * Get the user from the local storage, it will be null if the user is not logged in
+   * @returns User | null
+   */
+  public getUser(): User | null {
     if (isPlatformBrowser(this.platformId)) {
       const user = localStorage.getItem(USER_KEY);
       if (user) {
@@ -49,7 +53,7 @@ export class StorageService {
       }
     }
 
-    return {} as User;
+    return null;
   }
 
   public isLoggedIn(): boolean {

@@ -82,7 +82,10 @@ export class AuthService {
    * @returns
    */
   getLoggedInUser() {
-    const userId = this.storageService.getUser().id;
+    const userId = this.storageService.getUser()?.id;
+    if (!userId) {
+      return null;
+    }
     return this.userService.getUserByUserId(userId);
   }
 

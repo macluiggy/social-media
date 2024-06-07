@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { PostsService } from '../services/posts/posts.service';
 import { CardModule } from 'primeng/card';
 import { TPostWithUser } from './posts.type';
@@ -14,6 +14,7 @@ import { MenuItem } from 'primeng/api';
 import { ConfirmationService } from 'primeng/api';
 // p confirm dialog
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { LikeButtonComponent } from './like-button/like-button.component';
 
 const POST_MENU_ITEMS = {
   DELETE: 'delete',
@@ -34,11 +35,12 @@ const POST_MENU_ITEMS = {
     RouterModule,
     MenuModule,
     ConfirmDialogModule,
+    LikeButtonComponent,
   ],
   templateUrl: './posts.component.html',
   styleUrl: './posts.component.scss',
 })
-export class PostsComponent implements OnInit, OnDestroy {
+export class PostsComponent implements OnInit, OnDestroy, OnChanges {
   @Input() posts: TPostWithUser[] = [] as TPostWithUser[];
   firstLoad = true;
   @Input() loading: boolean;
@@ -51,6 +53,7 @@ export class PostsComponent implements OnInit, OnDestroy {
     private storageService: StorageService,
     private confirmationService: ConfirmationService
   ) {
+    
     this.loading = true;
     this.postMenuItems = [
       {
@@ -77,7 +80,14 @@ export class PostsComponent implements OnInit, OnDestroy {
     `);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+
+  }
+
+  ngOnChanges() {
+    console.log(this.posts);
+    
+  }
 
   /**
    * Check if the post is created by the logged in user, if so, show the options that are available to the logged in user
@@ -85,7 +95,7 @@ export class PostsComponent implements OnInit, OnDestroy {
    * @returns
    */
   isLoggedInUserPost(post: TPostWithUser) {
-    const isUserPost = post.userId === this.loggedInUser.id;
+    const isUserPost = post.userId === this.loggedInUser?.id;
     this.postMenuItems.find(
       (item) => item.id === POST_MENU_ITEMS.DELETE
     )!.visible = isUserPost;
