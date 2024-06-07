@@ -26,6 +26,10 @@ export class LikesService {
     });
   }
 
+  removeByPostIdAndUserId(postId: number, userId: number) {
+    return this.likeRepository.delete({ postId, userId });
+  }
+
   remove(id: number) {
     return this.likeRepository.delete(id);
   }

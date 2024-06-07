@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { PostsService } from '../services/posts/posts.service';
 import { CardModule } from 'primeng/card';
 import { TPostWithUser } from './posts.type';
@@ -40,7 +40,7 @@ const POST_MENU_ITEMS = {
   templateUrl: './posts.component.html',
   styleUrl: './posts.component.scss',
 })
-export class PostsComponent implements OnInit, OnDestroy {
+export class PostsComponent implements OnInit, OnDestroy, OnChanges {
   @Input() posts: TPostWithUser[] = [] as TPostWithUser[];
   firstLoad = true;
   @Input() loading: boolean;
@@ -53,6 +53,7 @@ export class PostsComponent implements OnInit, OnDestroy {
     private storageService: StorageService,
     private confirmationService: ConfirmationService
   ) {
+    
     this.loading = true;
     this.postMenuItems = [
       {
@@ -79,7 +80,14 @@ export class PostsComponent implements OnInit, OnDestroy {
     `);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+
+  }
+
+  ngOnChanges() {
+    console.log(this.posts);
+    
+  }
 
   /**
    * Check if the post is created by the logged in user, if so, show the options that are available to the logged in user

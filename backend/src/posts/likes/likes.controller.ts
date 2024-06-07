@@ -47,9 +47,10 @@ export class LikesController {
     return this.likesService.findOne(+id);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.likesService.remove(+id);
+  @Delete('post/:postId')
+  remove(@Param('postId') postId: string, @Req() req: Request) {
+    const user = req['user'];
+    return this.likesService.removeByPostIdAndUserId(+postId, +user.id);
   }
 
   @Get('post/:postId')

@@ -1,16 +1,64 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
+import { LikesService } from '../../services/likes/likes.service';
+import { TPostWithUser } from '../posts.type';
 
 @Component({
   selector: 'app-like-button',
   standalone: true,
   imports: [ButtonModule],
   templateUrl: './like-button.component.html',
-  styleUrl: './like-button.component.scss'
+  styleUrl: './like-button.component.scss',
 })
-export class LikeButtonComponent {
-  liked = true;
+export class LikeButtonComponent implements OnInit {
+  liked = false;
+  @Input() post: TPostWithUser = {} as TPostWithUser;
+  postId: number;
+  constructor(private likesService: LikesService) {
+    this.postId = this.post?.id;
+  }
+
+  ngOnInit(): void {
+    this.postId = this.post?.id;
+    this.isLikedByLoggedInUser();
+  }
+
+  clickLikeButton() {
+    if (this.liked) {
+      this.unlikePost();
+    } else {
+      this.likePost();
+    }
+  }
+
   likePost() {
     // Like the post
+    this.likesService.likePost(this.postId).subscribe({
+      next: () => {
+        console.log('liked');
+        
+        this.isLikedByLoggedInUser();
+      },
+    });
+  }
+
+  unlikePost() {
+    // Unlike the post
+    this.likesService.unlikePost(this.postId).subscribe({
+      next: () => {
+        console.log('unliked');
+        this.isLikedByLoggedInUser();
+      },
+    });
+  }
+
+  isLikedByLoggedInUser() {
+    this.likesService.isLikedByLoggedInUser(this.postId).subscribe({
+      next: (res: any) => {
+        console.log(res.data);
+        
+        this.liked = res.data
+      },
+    });
   }
 }

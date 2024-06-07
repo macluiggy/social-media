@@ -73,6 +73,18 @@ export class PostsService {
    * @returns - A promise that resolves to the paginated posts.
    */
   async findRandomPosts({ page, limit }) {
+    // for testing return with a persistend order
+    // const postsTest = await this.postsRepository.find({
+    //   take: limit,
+    //   skip: (page - 1) * limit,
+    //   order: { id: 'ASC' },
+    // });
+    // return {
+    //   items: postsTest,
+    //   total: postsTest.length,
+    //   page,
+    //   limit,
+    // };
     // await wait(2000);
     const skip = (page - 1) * limit;
     const query = this.postsRepository
