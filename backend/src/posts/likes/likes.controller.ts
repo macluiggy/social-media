@@ -20,6 +20,7 @@ import {
   ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
+import { Public } from '../../common/decorators/public.decorator';
 
 @Controller({
   path: getApiEndpoint('likes'),
@@ -53,6 +54,7 @@ export class LikesController {
     return this.likesService.removeByPostIdAndUserId(+postId, +user.id);
   }
 
+  @Public()
   @Get('post/:postId')
   @ApiOperation({
     summary: 'Get all likes for a specific post',

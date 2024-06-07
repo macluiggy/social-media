@@ -33,12 +33,12 @@ export class BoardUserComponent implements OnInit {
 
   ngOnInit(): void {
     // get logged in user
-    let user = this.storageService.getUser();
+    let user = this.storageService.getUser()!;
 
     this.userId = user.id;
     const userDB = this.userService.getUserByUserId(this.userId);
     this.storageService.updateUser(userDB);
-    user = this.storageService.getUser();
+    user = this.storageService.getUser()!;
 
     // put it in the form
     this.form = {

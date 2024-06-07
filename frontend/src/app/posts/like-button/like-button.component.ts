@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { LikesService } from '../../services/likes/likes.service';
 import { TPostWithUser } from '../posts.type';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-like-button',
@@ -15,13 +16,19 @@ export class LikeButtonComponent implements OnInit {
   @Input() post: TPostWithUser = {} as TPostWithUser;
   postId: number;
   likesCount = 0;
-  constructor(private likesService: LikesService) {
+  isLoggedIn = this.authService.userIsLoggedIn();
+  constructor(
+    private likesService: LikesService,
+    private authService: AuthService
+  ) {
     this.postId = this.post?.id;
   }
 
   ngOnInit(): void {
     this.postId = this.post?.id;
-    this.isLikedByLoggedInUser();
+    if (this.isLoggedIn) {
+      this.isLikedByLoggedInUser();
+    }
     this.getLikes();
   }
 

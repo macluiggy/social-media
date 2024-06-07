@@ -95,7 +95,7 @@ export class PostsComponent implements OnInit, OnDestroy, OnChanges {
    * @returns
    */
   isLoggedInUserPost(post: TPostWithUser) {
-    const isUserPost = post.userId === this.loggedInUser.id;
+    const isUserPost = post.userId === this.loggedInUser?.id;
     this.postMenuItems.find(
       (item) => item.id === POST_MENU_ITEMS.DELETE
     )!.visible = isUserPost;

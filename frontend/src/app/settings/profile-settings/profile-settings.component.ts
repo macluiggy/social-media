@@ -42,7 +42,7 @@ export class ProfileSettingsComponent {
       profileImage: new FormControl(null, {}),
     });
 
-    this.authService.getLoggedInUser().subscribe({
+    this.authService.getLoggedInUser()?.subscribe({
       next: (res: any) => {
         const user: User = res.data;
 

@@ -60,7 +60,7 @@ export class NavBarComponent {
     private router: Router,
     private userService: UserService
   ) {
-    this.userId = this.storageService.getUser().id;
+    this.userId = this.storageService.getUser()?.id as number
 
     this.items = [
       {
@@ -198,7 +198,7 @@ export class NavBarComponent {
   ngOnInit(): void {
     this.authService.getIsLoggedIn().subscribe((loggedIn) => {
       this.isLoggedIn = loggedIn;
-      this.username = this.storageService.getUser().username;
+      this.username = this.authService.getLoggedInUserFromStorage()?.username;
       this.updateMenuItems();
     });
     this.isLoggedIn = this.storageService.isLoggedIn();
@@ -206,7 +206,7 @@ export class NavBarComponent {
     if (this.isLoggedIn) {
       const user = this.storageService.getUser();
 
-      this.username = user.username;
+      this.username = user?.username;
     }
     this.updateMenuItems();
   }
