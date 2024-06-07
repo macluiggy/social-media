@@ -1,4 +1,4 @@
-import { DataSource, Repository } from 'typeorm';
+import { DataSource } from 'typeorm';
 import { Seeder, SeederFactory, SeederFactoryManager } from 'typeorm-extension';
 import { SeederEntity } from '../seeders.entity';
 import { Users } from '../../users/users.entity';
@@ -20,20 +20,16 @@ export class PopulizeTables1716408463154 implements Seeder {
       where: { name: seederName },
     });
 
-    // if (seeder) {
-    //   console.log(`Seeder "${seederName}" already executed. Skipping...`);
-    //   return;
-    // }
-
-    // ---------------------------------------------------
-
-    // respositories
-    const followRepository = dataSource.getRepository(Follow);
+    if (seeder) {
+      console.log(`Seeder "${seederName}" already executed. Skipping...`);
+      return;
+    }
 
     // factories
     const userFactory = factoryManager.get(Users);
     const postsFactory = factoryManager.get(Post);
     const likeFactory = factoryManager.get(Like);
+    const followFactory = factoryManager.get(Follow);
 
     const usersSaved = await this.seedUsersTable({ userFactory });
     const postsSaved = await this.seedPostsTable({
@@ -48,7 +44,7 @@ export class PopulizeTables1716408463154 implements Seeder {
     });
 
     await this.seedFollowsTable({
-      followRepository,
+      followFactory,
       users: usersSaved,
     });
 
@@ -90,27 +86,40 @@ export class PopulizeTables1716408463154 implements Seeder {
     return populatedPosts.flat();
   }
 
+  /**
+   * Make every user follow every other user
+   * Note: This is a cuadratic operation O(n^2), so it can be slow with a large number of users, so please only add a few users in the userFactory
+   * @param param0
+   */
   async seedFollowsTable({
-    followRepository,
+    followFactory,
     users,
   }: {
-    followRepository: Repository<Follow>;
+    followFactory: SeederFactory<Follow, unknown>;
     users: Users[];
   }) {
-    const firstUser = users[0];
-    const followPromises = users.slice(1).map(async (user) => {
-      await followRepository.insert({
-        follower: user,
-        following: firstUser,
-      });
-      await followRepository.insert({
-        follower: firstUser,
-        following: user,
-      });
-    });
-    await Promise.all(followPromises);
+    const polulatedFollows: Follow[] = [];
+    // make every user follow every other user
+    for (const user of users) {
+      for (const otherUser of users) {
+        if (user.id === otherUser.id) {
+          continue;
+        }
+        const follow = await followFactory.save({
+          following: user,
+          follower: otherUser,
+        });
+        polulatedFollows.push(follow);
+      }
+    }
   }
 
+  /**
+   * Make every user like every post
+   * Note: This is a cuadratic operation O(n^2), so it can be slow with a large number of users and posts, so please only add a few users and posts in the userFactory and postsFactory
+   * @param param0
+   * @returns
+   */
   async seedLikesTable({
     likeFactory,
     posts,
@@ -121,6 +130,7 @@ export class PopulizeTables1716408463154 implements Seeder {
     users: Users[];
   }) {
     const populatedLikes: Like[] = [];
+    // make every user like every post
     for (const post of posts) {
       for (const user of users) {
         const like = await likeFactory.save({
