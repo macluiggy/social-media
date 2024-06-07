@@ -14,6 +14,7 @@ export class LikeButtonComponent implements OnInit {
   liked = false;
   @Input() post: TPostWithUser = {} as TPostWithUser;
   postId: number;
+  likesCount = 0;
   constructor(private likesService: LikesService) {
     this.postId = this.post?.id;
   }
@@ -21,6 +22,7 @@ export class LikeButtonComponent implements OnInit {
   ngOnInit(): void {
     this.postId = this.post?.id;
     this.isLikedByLoggedInUser();
+    this.getLikes();
   }
 
   clickLikeButton() {
@@ -35,9 +37,8 @@ export class LikeButtonComponent implements OnInit {
     // Like the post
     this.likesService.likePost(this.postId).subscribe({
       next: () => {
-        console.log('liked');
-        
         this.isLikedByLoggedInUser();
+        this.getLikes();
       },
     });
   }
@@ -46,8 +47,8 @@ export class LikeButtonComponent implements OnInit {
     // Unlike the post
     this.likesService.unlikePost(this.postId).subscribe({
       next: () => {
-        console.log('unliked');
         this.isLikedByLoggedInUser();
+        this.getLikes();
       },
     });
   }
@@ -55,9 +56,15 @@ export class LikeButtonComponent implements OnInit {
   isLikedByLoggedInUser() {
     this.likesService.isLikedByLoggedInUser(this.postId).subscribe({
       next: (res: any) => {
-        console.log(res.data);
-        
-        this.liked = res.data
+        this.liked = res.data;
+      },
+    });
+  }
+
+  getLikes() {
+    this.likesService.getLikes(this.postId).subscribe({
+      next: (res: any) => {
+        this.likesCount = res.data.total;
       },
     });
   }
