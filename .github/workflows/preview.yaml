@@ -6,7 +6,7 @@ on:
       - 'backend/**'  # Only trigger on changes within the backend directory
     branches:
       - main  # Change this to your default branch if different
-  workflow_dispatch:  # Allow manual triggering
+  workflow_dispatch:  # Allow manual triggering 
 
 jobs:
   deploy:
