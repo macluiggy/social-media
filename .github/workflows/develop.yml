@@ -1,9 +1,9 @@
-name: Deploy Backend to Vercel
+name: Deploy Backend to Vercel to staging
 
 on:
   push:
     branches:
-      - main  # Change this to your default branch if different
+      - develop  # Change this to your default branch if different
 
 jobs:
   deploy:
@@ -38,4 +38,4 @@ jobs:
         working-directory: backend  # Set the working directory to the backend folder
         run: |
           bun install -g vercel
-          vercel deploy --prod --token $VERCEL_TOKEN --confirm
+          vercel deploy --token $VERCEL_TOKEN --confirm
