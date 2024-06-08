@@ -27,7 +27,7 @@ jobs:
 
       - name: Serve the app development
         working-directory: backend  # Set the working directory to the backend folder
-        run: npm run dev
+        run: npm run start:dev
 
       - name: Build the project
         working-directory: backend  # Set the working directory to the backend folder
