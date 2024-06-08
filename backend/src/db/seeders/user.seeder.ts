@@ -4,6 +4,12 @@ import { SeederEntity } from '../seeders.entity';
 import { Users } from '../../users/users.entity';
 import * as bcrypt from 'bcrypt';
 import { DEFAULT_LANG } from '../../lang';
+import {
+  EMAIL_FOR_TESTING,
+  FULL_NAME_FOR_TESTING,
+  PASSWORD_FOR_TESTING,
+  USERNAME_FOR_TESTING,
+} from '../../auth/utils/singInUser';
 
 export default class UserSeeder implements Seeder {
   public async run(
@@ -35,6 +41,17 @@ export default class UserSeeder implements Seeder {
         createdAt: new Date(),
         updatedAt: new Date(),
         username: 'macluiggy',
+        preferredLanguage: DEFAULT_LANG,
+      },
+      {
+        firstName: FULL_NAME_FOR_TESTING,
+        lastName: 'ferrin',
+        email: EMAIL_FOR_TESTING,
+        password: await bcrypt.hash(PASSWORD_FOR_TESTING, 10),
+        phone: '123456789',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        username: USERNAME_FOR_TESTING,
         preferredLanguage: DEFAULT_LANG,
       },
     ]);
