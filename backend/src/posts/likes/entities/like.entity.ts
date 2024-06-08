@@ -6,6 +6,8 @@ import {
   JoinColumn,
   Unique,
   CreateDateColumn,
+  DeleteDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Users } from '../../../users/users.entity';
 import { Post } from '../../entities/post.entity';
@@ -28,14 +30,13 @@ export class Like {
   })
   createdAt: Date;
 
-  @Column({
+  @UpdateDateColumn({
     name: 'updated_at',
-    nullable: false,
     default: () => 'CURRENT_TIMESTAMP',
   })
   updatedAt: Date;
 
-  @Column({
+  @DeleteDateColumn({
     name: 'deleted_at',
     nullable: true,
     default: null,
