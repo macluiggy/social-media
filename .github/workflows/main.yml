@@ -25,6 +25,10 @@ jobs:
         working-directory: backend  # Set the working directory to the backend folder
         run: npm install
 
+      - name: Serve the app development
+        working-directory: backend  # Set the working directory to the backend folder
+        run: npm run dev
+
       - name: Build the project
         working-directory: backend  # Set the working directory to the backend folder
         run: npm run build  # Use the appropriate build command for your project
