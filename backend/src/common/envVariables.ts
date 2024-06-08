@@ -39,7 +39,7 @@ const envVariables = {
   nodeEnviroment: NODE_ENV,
   isProduction,
   jwtSecret: process.env.JWT_SECRET,
-  jwtExpiresIn: process.env.JWT_EXPIRES_IN,
+  jwtExpiresIn: process.env.JWT_EXPIRES_IN || '1d',
   huggingFaceApiKey: process.env.HUGGINGFACE_API_KEY,
   cloudflare: {
     apiKey: process.env.CLOUDFLARE_API_KEY,
