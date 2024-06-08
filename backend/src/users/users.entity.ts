@@ -6,6 +6,9 @@ import {
   AfterLoad,
   OneToMany,
   JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
   // OneToMany,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
@@ -73,24 +76,23 @@ export class Users {
   })
   preferredLanguage: string;
 
-  @Column({
+  @CreateDateColumn({
     name: 'created_at',
-    type: 'timestamp with time zone',
     default: () => 'CURRENT_TIMESTAMP',
   })
   createdAt: Date;
 
-  @Column({
+  @UpdateDateColumn({
     name: 'updated_at',
-    type: 'timestamp with time zone',
-    nullable: true,
+    nullable: false,
+    default: () => 'CURRENT_TIMESTAMP',
   })
   updatedAt: Date;
 
-  @Column({
+  @DeleteDateColumn({
     name: 'deleted_at',
-    type: 'timestamp with time zone',
     nullable: true,
+    default: null,
   })
   deletedAt: Date;
 

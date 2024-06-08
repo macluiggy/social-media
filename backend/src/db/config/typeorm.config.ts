@@ -23,6 +23,17 @@ const typeOrmConfig: TypeOrmModuleOptions & SeederOptions = {
   factories: factories,
   migrationsRun: true,
 };
+// const typeOrmConfig: TypeOrmModuleOptions & SeederOptions = {
+//   type: 'sqlite',
+//   database: 'database.sqlite',
+//   entities: entities,
+//   subscribers: subscribers,
+//   synchronize: false,
+//   migrations: migrations,
+//   seeds: seeders,
+//   factories: factories,
+//   migrationsRun: true,
+// };
 
 export { typeOrmConfig };
 

@@ -5,6 +5,7 @@ import {
   ManyToOne,
   JoinColumn,
   Unique,
+  CreateDateColumn,
 } from 'typeorm';
 import { Users } from '../../../users/users.entity';
 import { Post } from '../../entities/post.entity';
@@ -21,16 +22,13 @@ export class Like {
   @Column({ type: 'int', name: 'post_id', nullable: false })
   postId: number;
 
-  @Column({
-    type: 'timestamp',
+  @CreateDateColumn({
     name: 'created_at',
-    nullable: false,
     default: () => 'CURRENT_TIMESTAMP',
   })
   createdAt: Date;
 
   @Column({
-    type: 'timestamp',
     name: 'updated_at',
     nullable: false,
     default: () => 'CURRENT_TIMESTAMP',
@@ -38,7 +36,6 @@ export class Like {
   updatedAt: Date;
 
   @Column({
-    type: 'timestamp',
     name: 'deleted_at',
     nullable: true,
     default: null,
