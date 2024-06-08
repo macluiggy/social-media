@@ -85,7 +85,6 @@ export class PostsComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges() {
-    console.log(this.posts);
     
   }
 

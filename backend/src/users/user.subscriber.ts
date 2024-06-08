@@ -22,8 +22,6 @@ export class UserSubscriber implements EntitySubscriberInterface<Users> {
   }
 
   async beforeInsert(event: InsertEvent<Users>) {
-    console.log('before insert');
-
     await validateOrReject(event.entity);
   }
 
