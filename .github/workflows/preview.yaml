@@ -23,16 +23,17 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./backend/  # Set the working directory to the backend folder
-        run: npm install
+        run: cd ./backend/ && npm install
 
       - name: Build the project
         working-directory: ./backend/  # Set the working directory to the backend folder
-        run: npm run build  # Use the appropriate build command for your project
+        run: cd ./backend/ && npm run build  # Use the appropriate build command for your project
 
       - name: Deploy to Vercel
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         working-directory: ./backend/  # Set the working directory to the backend folder
         run: |
+          cd ./backend/ &&
           npm install -g vercel
           vercel --prod --token $VERCEL_TOKEN --confirm
