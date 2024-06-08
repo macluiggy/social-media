@@ -23,10 +23,10 @@ const typeOrmConfig: TypeOrmModuleOptions & SeederOptions = {
   seeds: seeders,
   factories: factories,
   migrationsRun: true,
-  ssl: {
-    rejectUnauthorized: false,
-  },
 };
+if (envVariables.db.ssl) {
+  Object.assign(typeOrmConfig, { ssl: envVariables.db.ssl });
+}
 // const typeOrmConfig: TypeOrmModuleOptions & SeederOptions = {
 //   type: 'sqlite',
 //   database: 'database.sqlite',

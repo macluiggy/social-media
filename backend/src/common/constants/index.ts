@@ -8,6 +8,7 @@ const NODE_ENVIRONMENTS = {
   PRODUCTION: 'production',
   DEVELOPMENT: 'development',
   TEST: 'test',
+  STAGING: 'staging',
 };
 
 const ONE_WEEK_IN_SECONDS = 60 * 60 * 24 * 7;

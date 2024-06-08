@@ -17,6 +17,7 @@ export class LikeButtonComponent implements OnInit {
   postId: number;
   likesCount = 0;
   isLoggedIn = this.authService.userIsLoggedIn();
+  isProcessingClick = false;
   constructor(
     private likesService: LikesService,
     private authService: AuthService
@@ -33,6 +34,9 @@ export class LikeButtonComponent implements OnInit {
   }
 
   clickLikeButton() {
+    if (this.isProcessingClick) {
+      return;
+    }
     if (this.liked) {
       this.unlikePost();
     } else {
@@ -42,11 +46,18 @@ export class LikeButtonComponent implements OnInit {
 
   likePost() {
     // Like the post
+    this.isProcessingClick = true;
     this.likesService.likePost(this.postId).subscribe({
       next: () => {
         this.isLikedByLoggedInUser();
         this.getLikes();
       },
+      complete: () => {
+        this.isProcessingClick = false;
+      },
+      error: () => {
+        this.isProcessingClick = false;
+      }
     });
   }
 
@@ -57,6 +68,12 @@ export class LikeButtonComponent implements OnInit {
         this.isLikedByLoggedInUser();
         this.getLikes();
       },
+      complete: () => {
+        this.isProcessingClick = false;
+      },
+      error: () => {
+        this.isProcessingClick = false;
+      }
     });
   }
 
@@ -65,6 +82,12 @@ export class LikeButtonComponent implements OnInit {
       next: (res: any) => {
         this.liked = res.data;
       },
+      complete: () => {
+        this.isProcessingClick = false;
+      },
+      error: () => {
+        this.isProcessingClick = false;
+      }
     });
   }
 

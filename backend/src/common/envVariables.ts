@@ -6,13 +6,7 @@ dotenv.config();
 
 const NODE_ENV = process.env.NODE_ENV || NODE_ENVIRONMENTS.DEVELOPMENT;
 const isProduction = NODE_ENV === 'production';
-// const DB_HOST = isProduction ? process.env.DB_HOST_PROD : process.env.DB_HOST;
-// const DB_USER = isProduction ? process.env.DB_USER_PROD : process.env.DB_USER;
-// const DB_PASSWORD = isProduction
-//   ? process.env.DB_PASSWORD_PROD
-//   : process.env.DB_PASSWORD;
-// const DB_NAME = isProduction ? process.env.DB_NAME_PROD : process.env.DB_NAME;
-// const DB_PORT = isProduction ? process.env.DB_PORT_PROD : process.env.DB_PORT;
+
 const DB_HOST = process.env.DB_HOST;
 const DB_USER = process.env.DB_USER;
 const DB_PASSWORD = process.env.DB_PASSWORD;
@@ -23,7 +17,7 @@ const allDbVariablesSeparatedAreDefined =
 const databaseUrl = allDbVariablesSeparatedAreDefined
   ? `postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`
   : process.env.DATABASE_URL;
-// const DB_SSL_CERT = process.env.DB_SSL_CERT;
+const DB_SSL_CERT = process.env.DB_SSL_CA_CERT;
 
 const envVariables = {
   apiVersion: process.env.API_VERSION || 'v1',
@@ -35,6 +29,7 @@ const envVariables = {
     databaseName: DB_NAME || 'postgres',
     username: DB_USER || 'postgres',
     databaseUrl,
+    ssl: false,
   },
   nodeEnviroment: NODE_ENV,
   isProduction,
@@ -49,5 +44,14 @@ const envVariables = {
     s3BucketName: process.env.CLOUDFLARE_S3_BUCKET_NAME,
   },
 };
+
+if (DB_SSL_CERT) {
+  Object.assign(envVariables.db, {
+    ssl: {
+      rejectUnauthorized: false,
+      ca: DB_SSL_CERT,
+    },
+  });
+}
 
 export default envVariables;
