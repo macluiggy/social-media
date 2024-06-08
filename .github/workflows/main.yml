@@ -2,9 +2,10 @@ name: Deploy Backend to Vercel
 
 on:
   push:
+    paths:
+      - 'backend/**'  # Only trigger on changes within the backend directory
     branches:
       - develop  # Change this to your default branch if different
-  workflow_dispatch:  # Allow manual triggering
 
 jobs:
   deploy:
