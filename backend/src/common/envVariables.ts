@@ -18,9 +18,12 @@ const DB_USER = process.env.DB_USER;
 const DB_PASSWORD = process.env.DB_PASSWORD;
 const DB_NAME = process.env.DB_NAME;
 const DB_PORT = process.env.DB_PORT;
-const databaseUrl =
-  process.env.DATABASE_URL ||
-  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`;
+const allDbVariablesSeparatedAreDefined =
+  DB_HOST && DB_USER && DB_PASSWORD && DB_NAME && DB_PORT;
+const databaseUrl = allDbVariablesSeparatedAreDefined
+  ? `postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`
+  : process.env.DATABASE_URL;
+// const DB_SSL_CERT = process.env.DB_SSL_CERT;
 
 const envVariables = {
   apiVersion: process.env.API_VERSION || 'v1',
