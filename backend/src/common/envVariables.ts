@@ -44,7 +44,7 @@ const envVariables = {
     s3BucketName: process.env.CLOUDFLARE_S3_BUCKET_NAME,
   },
 };
-
+//
 if (DB_SSL_CERT) {
   Object.assign(envVariables.db, {
     ssl: {
