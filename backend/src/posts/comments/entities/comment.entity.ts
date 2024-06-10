@@ -5,6 +5,8 @@ import {
   ManyToOne,
   OneToMany,
   JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Post } from '../../entities/post.entity';
 import { Users } from '../../../users/users.entity';
@@ -17,19 +19,40 @@ export class PostComment {
   @Column()
   content: string;
 
-  @ManyToOne('Users', (user: Users) => user.comments)
+  @ManyToOne('Users', (user: Users) => user.comments, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn({ name: 'user_id' })
   user: Users;
 
-  @ManyToOne('Post', (post: Post) => post.comments)
+  @ManyToOne('Post', (post: Post) => post.comments, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn({ name: 'post_id' })
   post: Post;
 
-  @ManyToOne(() => PostComment, (comment) => comment.childComments)
+  @ManyToOne(() => PostComment, (comment) => comment.childComments, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn({ name: 'parent_comment_id' })
   parentComment: PostComment;
 
   @OneToMany(() => PostComment, (comment) => comment.parentComment)
   @JoinColumn({ name: 'parent_comment_id' })
   childComments: PostComment[];
+
+  @CreateDateColumn({
+    name: 'created_at',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  createdAt: Date;
+
+  @UpdateDateColumn({
+    name: 'updated_at',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  updatedAt: Date;
 }
