@@ -1,9 +1,20 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
+import getApiEndpoint from '../../common/utils/getApiEndpoint';
 
-@Controller('comments')
+@Controller({
+  path: getApiEndpoint('post-comments'),
+})
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
 

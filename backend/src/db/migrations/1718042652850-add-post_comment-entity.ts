@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class AddCommentsEntity1718041853736 implements MigrationInterface {
-  name = 'AddCommentsEntity1718041853736';
+export class AddPostCommentEntity1718042652850 implements MigrationInterface {
+  name = 'AddPostCommentEntity1718042652850';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
-      `CREATE TABLE "post_comment" ("id" SERIAL NOT NULL, "content" character varying NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "user_id" integer, "post_id" integer, "parent_comment_id" integer, CONSTRAINT "PK_5a0d63e41c3c55e11319613550c" PRIMARY KEY ("id"))`,
+      `CREATE TABLE "post_comment" ("id" SERIAL NOT NULL, "content" character varying NOT NULL, "user_id" integer NOT NULL, "post_id" integer NOT NULL, "parent_comment_id" integer, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_5a0d63e41c3c55e11319613550c" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
       `ALTER TABLE "post_comment" ADD CONSTRAINT "FK_c650660354f70a9fdfa72f106e9" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE`,

@@ -19,6 +19,28 @@ export class PostComment {
   @Column()
   content: string;
 
+  @Column({ name: 'user_id' })
+  userId: number;
+
+  @Column({ name: 'post_id' })
+  postId: number;
+
+  @Column({ name: 'parent_comment_id', nullable: true })
+  parentCommentId: number;
+
+  @CreateDateColumn({
+    name: 'created_at',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  createdAt: Date;
+
+  @UpdateDateColumn({
+    name: 'updated_at',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  updatedAt: Date;
+
+  // Relations
   @ManyToOne('Users', (user: Users) => user.comments, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
@@ -43,16 +65,4 @@ export class PostComment {
   @OneToMany(() => PostComment, (comment) => comment.parentComment)
   @JoinColumn({ name: 'parent_comment_id' })
   childComments: PostComment[];
-
-  @CreateDateColumn({
-    name: 'created_at',
-    default: () => 'CURRENT_TIMESTAMP',
-  })
-  createdAt: Date;
-
-  @UpdateDateColumn({
-    name: 'updated_at',
-    default: () => 'CURRENT_TIMESTAMP',
-  })
-  updatedAt: Date;
 }
