@@ -1,3 +1,4 @@
+import { PostComment } from '../../posts/comments/entities/comment.entity';
 import { Post } from '../../posts/entities/post.entity';
 import { Like } from '../../posts/likes/entities/like.entity';
 import { Follow } from '../../users/follows/entities/follow.entity';
@@ -10,4 +11,4 @@ export const entitiesObject = {
 };
 
 export type Entities = Users | SeederEntity | Post;
-export default [Users, SeederEntity, Post, Follow, Like];
+export default [Users, SeederEntity, Post, Follow, Like, PostComment];
