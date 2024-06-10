@@ -45,7 +45,6 @@ export class NavBarComponent {
   showAdminBoard = false;
   showModeratorBoard = false;
   username?: string;
-  items: MenuItem[];
   showProfileMenu = false;
   megaMenuItems: MegaMenuItem[] = [];
   sidebarVisible = false;
@@ -62,43 +61,6 @@ export class NavBarComponent {
   ) {
     this.userId = this.storageService.getUser()?.id as number
 
-    this.items = [
-      {
-        label: 'Home',
-        routerLink: 'home',
-      },
-      {
-        label: 'Admin Board',
-        routerLink: 'admin',
-        visible: this.showAdminBoard,
-      },
-      {
-        label: 'User Board',
-        routerLink: 'user',
-      },
-      {
-        label: 'Profile',
-        routerLink: 'profile',
-        visible: false,
-      },
-      {
-        label: 'Login',
-        routerLink: 'login',
-        visible: !this.isLoggedIn,
-        command: () => this.logout(),
-      },
-      {
-        label: 'Register',
-        routerLink: 'register',
-        visible: !this.isLoggedIn,
-      },
-      {
-        label: 'Logout',
-        command: () => this.logout(),
-        visible: this.isLoggedIn,
-      },
-      // Add more menu items as needed...
-    ];
 
     this.pMenuItems = [
       {
@@ -145,61 +107,11 @@ export class NavBarComponent {
     this.pMenuItems = [...this.pMenuItems];
   }
 
-  updateMenuItems(): void {
-    this.items = [
-      {
-        label: 'Home',
-        routerLink: 'home',
-      },
-      {
-        label: 'Admin Board',
-        routerLink: 'admin',
-        visible: this.showAdminBoard,
-      },
-      {
-        label: 'User Board',
-        routerLink: 'user',
-        visible: this.isLoggedIn,
-      },
-      {
-        label: 'Profile',
-        routerLink: 'profile',
-        // visible: this.isLoggedIn,
-        items: [
-          {
-            label: 'Profile',
-            routerLink: 'profile',
-          },
-          {
-            label: 'Logout',
-            command: () => this.logout(),
-          },
-        ],
-      },
-      {
-        label: 'Login',
-        routerLink: 'login',
-        visible: !this.isLoggedIn,
-      },
-      {
-        label: 'Register',
-        routerLink: 'register',
-        visible: !this.isLoggedIn,
-      },
-      {
-        label: 'Logout',
-        command: () => this.logout(),
-        visible: this.isLoggedIn,
-      },
-      // Add more menu items as needed...
-    ];
-  }
 
   ngOnInit(): void {
     this.authService.getIsLoggedIn().subscribe((loggedIn) => {
       this.isLoggedIn = loggedIn;
       this.username = this.authService.getLoggedInUserFromStorage()?.username;
-      this.updateMenuItems();
     });
     this.isLoggedIn = this.storageService.isLoggedIn();
 
@@ -208,7 +120,6 @@ export class NavBarComponent {
 
       this.username = user?.username;
     }
-    this.updateMenuItems();
   }
 
   logout(): void {
