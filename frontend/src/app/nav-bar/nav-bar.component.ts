@@ -59,14 +59,13 @@ export class NavBarComponent {
     private router: Router,
     private userService: UserService
   ) {
-    this.userId = this.storageService.getUser()?.id as number
-
+    this.userId = this.storageService.getUser()?.id as number;
+    console.log('this.userId', this.userId);
 
     this.pMenuItems = [
       {
         label: 'Profile',
         icon: 'pi pi-fw pi-user',
-        // routerLink: 'profile',
         routerLink: `profile/user/${this.userId}`,
       },
       {
@@ -104,9 +103,13 @@ export class NavBarComponent {
   }
 
   updatePMenusItems(): void {
-    this.pMenuItems = [...this.pMenuItems];
+    const profileItem = this.pMenuItems.find(
+      (item) => item.label === 'Profile'
+    );
+    if (profileItem) {
+      profileItem.routerLink = `profile/user/${this.userId}`;
+    }
   }
-
 
   ngOnInit(): void {
     this.authService.getIsLoggedIn().subscribe((loggedIn) => {
@@ -117,6 +120,8 @@ export class NavBarComponent {
 
     if (this.isLoggedIn) {
       const user = this.storageService.getUser();
+      this.userId = user?.id as number;
+      this.updatePMenusItems();
 
       this.username = user?.username;
     }
