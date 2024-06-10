@@ -16,6 +16,7 @@ import { DEFAULT_LANG } from '../lang';
 import { Post } from '../posts/entities/post.entity';
 import { Like } from '../posts/likes/entities/like.entity';
 import { Follow } from './follows/entities/follow.entity';
+import { PostComment } from '../posts/comments/entities/comment.entity';
 
 @Entity({
   name: 'users',
@@ -131,4 +132,8 @@ export class Users {
   @OneToMany('Follow', (follow: Follow) => follow.following)
   @JoinColumn({ name: 'id' })
   followers: Follow[];
+
+  @OneToMany('PostComment', (comment: PostComment) => comment.user)
+  @JoinColumn({ name: 'id' })
+  comments: PostComment[];
 }
