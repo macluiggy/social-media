@@ -6,9 +6,7 @@
           pButton
           type="button"
           class="pi pi-ellipsis-v"
-          (click)="
-            menu.toggle($event); isLoggedInUserPost(post)
-          "
+          (click)="menu.toggle($event); isLoggedInUserPost(post)"
         ></button>
         <p-menu
           #menu
@@ -44,5 +42,7 @@
       </a>
       }
     </div>
+
+    <app-comments ></app-comments>
   </p-card>
 </div>

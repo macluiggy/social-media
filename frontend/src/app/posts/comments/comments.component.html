@@ -1,1 +1,14 @@
-<p>comments works!</p>
+<div>
+  @for (comment of comments; track $index) {
+  <div class="comment">
+    &#64;
+    <a [routerLink]="['/profile/user', comment.user.id]">{{
+      comment.user.username
+    }}</a>
+    <p>{{ comment.content }}</p>
+    <p>
+      <small>{{ comment.createdAt | date }}</small>
+    </p>
+  </div>
+  }
+</div>

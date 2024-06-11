@@ -8,6 +8,8 @@ import { MenuModule } from 'primeng/menu';
 import { LikeButtonComponent } from '../like-button/like-button.component';
 import { ActivatedRoute } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
+import { PostCommentWithRelations } from '../../common/types/post-commnets.type';
+import { CommentsComponent } from '../comments/comments.component';
 const POST_MENU_ITEMS = {
   DELETE: 'delete',
   SAVE: 'save',
@@ -16,7 +18,13 @@ const POST_MENU_ITEMS = {
   selector: 'app-post',
   standalone: true,
   providers: [ConfirmationService],
-  imports: [CardModule, MenuModule, LikeButtonComponent, ButtonModule],
+  imports: [
+    CardModule,
+    MenuModule,
+    LikeButtonComponent,
+    ButtonModule,
+    CommentsComponent,
+  ],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss',
 })
