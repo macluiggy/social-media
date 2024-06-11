@@ -55,7 +55,27 @@ export class CommentsComponent {
   }
 
   addReply(comment: PostCommentWithRelations) {
-    console.log('add reply', comment);
+    this.commentsService
+      .addComment({
+        postId: this.postId,
+        content: comment.newReply as string,
+        parentCommentId: comment.id,
+        userId: this.userId,
+      })
+      .subscribe({
+        next: (res: any) => {
+          const newComment = {
+            ...res.data,
+            user: this.loggedInUser,
+            showReplyForm: false,
+          };
+          comment.childComments.unshift(newComment);
+          comment.newReply = '';
+        },
+        error: (error) => {
+          console.error(error);
+        },
+      });
   }
 
   toggleReplyForm(comment: PostCommentWithRelations) {

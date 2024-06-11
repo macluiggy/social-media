@@ -21,13 +21,13 @@
     <div class="replies">
       <div *ngFor="let reply of comment.childComments" class="reply">
         <div class="reply-header">
-          <a [routerLink]="['/profile/user', reply.user.id]">{{ reply.user.username }}</a>
+         &#64;<a [routerLink]="['/profile/user', reply.user.id]">{{ reply.user.username }}</a>
         </div>
         <div class="reply-body">
           <p>{{ reply.content }}</p>
         </div>
         <div class="reply-footer">
-          <small>{{ reply.createdAt }}</small>
+          <small>{{ reply.createdAt | date }}</small>
         </div>
       </div>
       <div *ngIf="comment.showReplyForm" class="add-reply">
