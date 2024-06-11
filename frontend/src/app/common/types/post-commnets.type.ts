@@ -18,6 +18,9 @@ type PostCommentWithRelations = PostComment & {
   user: BasicUserDetails;
   parentComment?: PostCommentWithRelations;
   childComments: PostCommentWithRelations[];
+  showReplyForm?: boolean;
+  newReply?: string;
+  
 };
 
 export { PostComment, PostCommentsWithUser, PostCommentWithRelations };

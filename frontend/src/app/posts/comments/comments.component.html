@@ -1,4 +1,9 @@
 <div class="comments-section">
+  <div class="add-comment">
+    <textarea [(ngModel)]="newComment" placeholder="Add a comment..."></textarea>
+    <button (click)="addComment()">Submit</button>
+  </div>
+  
   @for (comment of comments; track $index) {
   <div class="comment">
     <div class="comment-header">
@@ -9,6 +14,7 @@
     </div>
     <div class="comment-footer">
       <small>{{ comment.createdAt | date }}</small>
+      <button (click)="toggleReplyForm(comment)">Reply</button>
     </div>
     <div class="replies">
       <div *ngFor="let reply of comment.childComments" class="reply">
@@ -19,8 +25,12 @@
           <p>{{ reply.content }}</p>
         </div>
         <div class="reply-footer">
-          <small>{{ reply.createdAt | date }}</small>
+          <small>{{ reply.createdAt }}</small>
         </div>
+      </div>
+      <div *ngIf="comment.showReplyForm" class="add-reply">
+        <textarea [(ngModel)]="comment.newReply" placeholder="Reply to this comment..."></textarea>
+        <button (click)="addReply(comment)">Submit</button>
       </div>
     </div>
   </div>
