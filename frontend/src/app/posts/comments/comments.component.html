@@ -7,7 +7,9 @@
   @for (comment of comments; track $index) {
   <div class="comment">
     <div class="comment-header">
-      &#64;<a [routerLink]="['/profile/user', comment.user.id]">{{ comment.user.username }}</a>
+      @if (comment.user) {
+        &#64;<a [routerLink]="['/profile/user', comment.user.id]">{{ comment.user.username }}</a>
+      }
     </div>
     <div class="comment-body">
       <p>{{ comment.content }}</p>
