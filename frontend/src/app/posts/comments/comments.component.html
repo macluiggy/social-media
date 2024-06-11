@@ -1,14 +1,28 @@
-<div>
+<div class="comments-section">
   @for (comment of comments; track $index) {
   <div class="comment">
-    &#64;
-    <a [routerLink]="['/profile/user', comment.user.id]">{{
-      comment.user.username
-    }}</a>
-    <p>{{ comment.content }}</p>
-    <p>
+    <div class="comment-header">
+      &#64;<a [routerLink]="['/profile/user', comment.user.id]">{{ comment.user.username }}</a>
+    </div>
+    <div class="comment-body">
+      <p>{{ comment.content }}</p>
+    </div>
+    <div class="comment-footer">
       <small>{{ comment.createdAt | date }}</small>
-    </p>
+    </div>
+    <div class="replies">
+      <div *ngFor="let reply of comment.childComments" class="reply">
+        <div class="reply-header">
+          <a [routerLink]="['/profile/user', reply.user.id]">{{ reply.user.username }}</a>
+        </div>
+        <div class="reply-body">
+          <p>{{ reply.content }}</p>
+        </div>
+        <div class="reply-footer">
+          <small>{{ reply.createdAt | date }}</small>
+        </div>
+      </div>
+    </div>
   </div>
   }
 </div>

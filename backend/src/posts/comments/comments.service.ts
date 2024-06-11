@@ -29,7 +29,13 @@ export class CommentsService {
       .leftJoin('comment.parentComment', 'parentComment')
       .addSelect(['parentComment.id', 'parentComment.content'])
       .leftJoin('comment.childComments', 'childComments')
-      .addSelect(['childComments.id', 'childComments.content'])
+      .addSelect([
+        'childComments.id',
+        'childComments.content',
+        'childComments.createdAt',
+      ])
+      .leftJoin('childComments.user', 'childUser') // join the user table for the childComments
+      .addSelect(['childUser.id', 'childUser.username']) // select the user data for the childComments
       .where('comment.postId = :postId', { postId })
       .orderBy('comment.createdAt', 'DESC')
       .take(take)
