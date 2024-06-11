@@ -22,7 +22,7 @@ const typeOrmConfig: TypeOrmModuleOptions & SeederOptions = {
   migrations: migrations,
   seeds: seeders,
   factories: factories,
-  migrationsRun: true,
+  migrationsRun: !envVariables.isDevelopment,
 };
 if (envVariables.db.ssl) {
   Object.assign(typeOrmConfig, { ssl: envVariables.db.ssl });

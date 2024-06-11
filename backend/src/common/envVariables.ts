@@ -5,7 +5,8 @@ import { NODE_ENVIRONMENTS } from './constants';
 dotenv.config();
 
 const NODE_ENV = process.env.NODE_ENV || NODE_ENVIRONMENTS.DEVELOPMENT;
-const isProduction = NODE_ENV === 'production';
+const isProduction = NODE_ENV === NODE_ENVIRONMENTS.PRODUCTION;
+const isDevelopment = NODE_ENV === NODE_ENVIRONMENTS.DEVELOPMENT;
 
 const DB_HOST = process.env.DB_HOST;
 const DB_USER = process.env.DB_USER;
@@ -33,6 +34,7 @@ const envVariables = {
   },
   nodeEnviroment: NODE_ENV,
   isProduction,
+  isDevelopment,
   jwtSecret: process.env.JWT_SECRET,
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '1d',
   huggingFaceApiKey: process.env.HUGGINGFACE_API_KEY,

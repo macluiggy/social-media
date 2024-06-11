@@ -34,10 +34,11 @@ export class CommentsService {
   }
 
   update(id: number, updateCommentDto: UpdateCommentDto) {
-    return `This action updates a #${id} comment`;
+    const updated = this.postCommentRepository.create(updateCommentDto);
+    return this.postCommentRepository.update(id, updated);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} comment`;
+    return this.postCommentRepository.delete(id);
   }
 }
