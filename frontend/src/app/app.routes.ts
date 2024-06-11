@@ -9,7 +9,7 @@ import { BoardUserComponent } from './board-user/board-user.component';
 import { authGuard } from './guards/auth.guard';
 import { CreatePostComponent } from './posts/create-post/create-post.component';
 import { SettingsComponent } from './settings/settings.component';
-import { CommentsComponent } from './posts/comments/comments.component';
+import { PostComponent } from './posts/post/post.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -25,8 +25,8 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
-    path: 'post/comments/:postId',
-    component: CommentsComponent,
+    path: 'post/:postId',
+    component: PostComponent,
   },
   {
     path: 'settings',

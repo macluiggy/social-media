@@ -1,1 +1,48 @@
-<p>post works!</p>
+<div>
+  <p-card styleClass="postsCard" [style]="{}">
+    <p-header>
+      <div class="menu-container">
+        <button
+          pButton
+          type="button"
+          class="pi pi-ellipsis-v"
+          (click)="
+            menu.toggle($event); isLoggedInUserPost(post)
+          "
+        ></button>
+        <p-menu
+          #menu
+          [model]="postMenuItems"
+          styleClass="w-full md:w-15rem"
+          popup="true"
+        ></p-menu>
+      </div>
+      @if (post.user!) {
+      <div class="user-info">
+        &#64;
+        <a [routerLink]="['/profile/user', post.user.id]">{{
+          post.user.username
+        }}</a>
+      </div>
+      }
+      <div class="post-header-content">
+        <h2>{{ post.title }}</h2>
+        <!-- Add menu button here -->
+      </div>
+    </p-header>
+    <p>{{ post.content }}</p>
+    <div class="interactive-row">
+      @if (post.content) {
+      <app-like-button [post]="post"></app-like-button>
+      <a [routerLink]="['/post/', post.id]">
+        <button
+          pButton
+          type="button"
+          icon="pi pi-comment"
+          label="Comments"
+        ></button>
+      </a>
+      }
+    </div>
+  </p-card>
+</div>

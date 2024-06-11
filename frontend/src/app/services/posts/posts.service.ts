@@ -47,4 +47,8 @@ export class PostsService {
   deletePost(postId: number) {
     return this.http.delete(`${this.apiUrl}/posts/${postId}`);
   }
+
+  getPost(postId: number) {
+    return this.http.get(`${this.apiUrl}/posts/${postId}`);
+  }
 }

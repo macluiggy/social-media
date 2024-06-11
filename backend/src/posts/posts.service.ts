@@ -31,11 +31,12 @@ export class PostsService {
   }
 
   async findOne(id: number) {
-    const post = await this.postsRepository.findOneBy({ id });
+    const query = this.postsRepository
+      .createQueryBuilder('post')
+      .where('post.id = :id', { id })
+      .leftJoinAndSelect('post.user', 'user');
 
-    if (!post) {
-      throw new NotFoundException(this.messages.POST.NOT_FOUND);
-    }
+    const post = await query.getOne();
     return post;
   }
 

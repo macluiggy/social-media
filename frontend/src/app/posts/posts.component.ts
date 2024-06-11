@@ -15,6 +15,7 @@ import { ConfirmationService } from 'primeng/api';
 // p confirm dialog
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { LikeButtonComponent } from './like-button/like-button.component';
+import { PostComponent } from './post/post.component';
 
 const POST_MENU_ITEMS = {
   DELETE: 'delete',
@@ -36,6 +37,7 @@ const POST_MENU_ITEMS = {
     MenuModule,
     ConfirmDialogModule,
     LikeButtonComponent,
+    PostComponent
   ],
   templateUrl: './posts.component.html',
   styleUrl: './posts.component.scss',
