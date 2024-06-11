@@ -69,6 +69,9 @@ export class CommentsComponent {
             user: this.loggedInUser,
             showReplyForm: false,
           };
+          if (!comment.childComments) {
+            comment.childComments = [];
+          }
           comment.childComments.unshift(newComment);
           comment.newReply = '';
         },
