@@ -39,3 +39,9 @@
   border: none;
   color: var(--bootstrap4-light-purple);
 }
+
+.interactive-row {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+}

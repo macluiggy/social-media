@@ -37,6 +37,9 @@
           <p>Likes: {{ post.likes }}</p> -->
     <div class="interactive-row">
         <app-like-button [post]="post"></app-like-button>
+        <a [routerLink]="['/comments', post.id]">
+          <button pButton type="button" icon="pi pi-comment" label="Comments"></button>
+        </a>
     </div>
   </p-card>
 </div>
