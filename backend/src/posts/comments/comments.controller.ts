@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
@@ -41,5 +42,14 @@ export class CommentsController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.commentsService.remove(+id);
+  }
+
+  @Get('post/:postId')
+  getCommentsByPostId(
+    @Param('postId') postId: string,
+    @Query() query: { page: number; limit: number },
+  ) {
+    const { page = 1, limit = 10 } = query;
+    return this.commentsService.getCommentsByPostId(+postId, { page, limit });
   }
 }
