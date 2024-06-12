@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateLikeDto } from './dto/create-like.dto';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { Like } from './entities/like.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import StandardizedPaginateResult from '../../common/paginate/standarized.paginate.result';
@@ -10,10 +10,37 @@ export class LikesService {
   constructor(
     @InjectRepository(Like)
     private readonly likeRepository: Repository<Like>,
+    private dataSource: DataSource,
   ) {}
-  create(createLikeDto: CreateLikeDto) {
-    const created = this.likeRepository.create(createLikeDto);
-    return this.likeRepository.save(created);
+  async create(createLikeDto: CreateLikeDto) {
+    const { userId, postId } = createLikeDto;
+    // const deleted = await this.likeRepository.delete({ userId, postId });
+    // const like = this.likeRepository.create({ userId, postId });
+    // const inserted = await this.likeRepository.save(like);
+    // return { deleted, inserted };
+    const queryRunner = this.dataSource.createQueryRunner();
+
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    try {
+      const deleted = await queryRunner.manager.delete(Like, {
+        userId,
+        postId,
+      });
+      const inserted = await queryRunner.manager.insert(Like, {
+        userId,
+        postId,
+      });
+
+      await queryRunner.commitTransaction();
+      return { deleted, inserted };
+    } catch (err) {
+      await queryRunner.rollbackTransaction();
+      throw err;
+    } finally {
+      await queryRunner.release();
+    }
   }
 
   findAll() {
@@ -26,8 +53,24 @@ export class LikesService {
     });
   }
 
-  removeByPostIdAndUserId(postId: number, userId: number) {
-    return this.likeRepository.delete({ postId, userId });
+  async removeByPostIdAndUserId(postId: number, userId: number) {
+    // return this.likeRepository.delete({ postId, userId });
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      const deleted = await queryRunner.manager.delete(Like, {
+        postId,
+        userId,
+      });
+      await queryRunner.commitTransaction();
+      return deleted;
+    } catch (err) {
+      await queryRunner.rollbackTransaction();
+      throw err;
+    } finally {
+      await queryRunner.release();
+    }
   }
 
   remove(id: number) {
