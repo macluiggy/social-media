@@ -36,7 +36,9 @@ export class CommentsService {
       ])
       .leftJoin('childComments.user', 'childUser') // join the user table for the childComments
       .addSelect(['childUser.id', 'childUser.username']) // select the user data for the childComments
-      .where('comment.postId = :postId', { postId })
+      .where('comment.postId = :postId AND comment.parentCommentId IS NULL', {
+        postId,
+      })
       .orderBy('comment.createdAt', 'DESC')
       .take(take)
       .skip(skip);
