@@ -12,7 +12,7 @@ import factories from './factories';
 
 const { db } = envVariables;
 
-// detect entity files by ending with .entity.ts
+// detect entity files by ending with .entity.ts .
 const typeOrmConfig: TypeOrmModuleOptions & SeederOptions = {
   type: 'postgres',
   url: db.databaseUrl,
