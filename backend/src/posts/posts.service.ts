@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException, Scope } from '@nestjs/common';
+import { Inject, Injectable, Scope } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { Post } from './entities/post.entity';
@@ -7,6 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import getMessages from '../lang/getMessages';
 import Lang from '../lang/lang.type';
 import paginate from '../common/paginate/paginate';
+import StandardizedPaginateResult from '../common/paginate/standarized.paginate.result';
 // import wait from '../common/utils/wait';
 
 @Injectable({
@@ -102,12 +103,11 @@ export class PostsService {
 
     const total = await query.getCount();
 
-    // TODO: create a class so this way of result is standardized
-    return {
+    return new StandardizedPaginateResult({
       items: posts,
       total,
       page,
       limit,
-    };
+    });
   }
 }

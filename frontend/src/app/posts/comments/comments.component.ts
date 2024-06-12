@@ -20,6 +20,7 @@ export class CommentsComponent {
   postId = this.router.snapshot.params['postId'];
   loggedInUser = this.authService.getLoggedInUserFromStorage();
   userId = this.loggedInUser?.id as number;
+  isLoggedIn = this.authService.userIsLoggedIn();
   constructor(
     private commentsService: CommentsService,
     private router: ActivatedRoute,

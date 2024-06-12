@@ -1,14 +1,19 @@
 <div class="comments-section">
+  @if (isLoggedIn) {
   <div class="add-comment">
-    <textarea [(ngModel)]="newComment" placeholder="Add a comment..."></textarea>
+    <textarea
+      [(ngModel)]="newComment"
+      placeholder="Add a comment..."
+    ></textarea>
     <button (click)="addComment()">Submit</button>
   </div>
-  
-  @for (comment of comments; track $index) {
+  } @for (comment of comments; track $index) {
   <div class="comment">
     <div class="comment-header">
-      @if (comment.user) {
-        &#64;<a [routerLink]="['/profile/user', comment.user.id]">{{ comment.user.username }}</a>
+      @if (comment.user) { &#64;<a
+        [routerLink]="['/profile/user', comment.user.id]"
+        >{{ comment.user.username }}</a
+      >
       }
     </div>
     <div class="comment-body">
@@ -16,12 +21,16 @@
     </div>
     <div class="comment-footer">
       <small>{{ comment.createdAt | date }}</small>
-      <button (click)="toggleReplyForm(comment)">Reply</button>
+      @if(isLoggedIn) {
+        <button (click)="toggleReplyForm(comment)">Reply</button>
+      }
     </div>
     <div class="replies">
       <div *ngFor="let reply of comment.childComments" class="reply">
         <div class="reply-header">
-         &#64;<a [routerLink]="['/profile/user', reply.user.id]">{{ reply.user.username }}</a>
+          &#64;<a [routerLink]="['/profile/user', reply.user.id]">{{
+            reply.user.username
+          }}</a>
         </div>
         <div class="reply-body">
           <p>{{ reply.content }}</p>
@@ -31,7 +40,10 @@
         </div>
       </div>
       <div *ngIf="comment.showReplyForm" class="add-reply">
-        <textarea [(ngModel)]="comment.newReply" placeholder="Reply to this comment..."></textarea>
+        <textarea
+          [(ngModel)]="comment.newReply"
+          placeholder="Reply to this comment..."
+        ></textarea>
         <button (click)="addReply(comment)">Submit</button>
       </div>
     </div>

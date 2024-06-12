@@ -66,6 +66,7 @@ export class PostsController {
     return await this.postsService.findAll();
   }
 
+  @Public()
   @Get(':id')
   @ApiOperation({ summary: 'Get a post by id' })
   async findOne(@Param('id') id: number) {
