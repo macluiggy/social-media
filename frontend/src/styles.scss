@@ -35,6 +35,7 @@ body {
 
 button {
   border-radius: 1rem;
+  padding: .5rem;
 }
 
 .test {
@@ -133,4 +134,8 @@ p-button {
 
 .p-confirm-dialog .p-dialog-footer button {
   margin: 0.1rem;
+}
+
+.username {
+  color: var(--primary-color);
 }

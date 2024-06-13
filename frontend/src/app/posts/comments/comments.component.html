@@ -4,12 +4,13 @@
     <textarea
       [(ngModel)]="newComment"
       placeholder="Add a comment..."
+      pInputTextarea
     ></textarea>
-    <button (click)="addComment()">Submit</button>
+    <button pButton (click)="addComment()">Submit</button>
   </div>
   } @for (comment of comments; track $index) {
   <div class="comment">
-    <div class="comment-header">
+    <div class="username">
       @if (comment.user) { &#64;<a
         [routerLink]="['/profile/user', comment.user.id]"
         >{{ comment.user.username }}</a
@@ -22,12 +23,12 @@
     <div class="comment-footer">
       <small>{{ comment.createdAt | date }}</small>
       @if(isLoggedIn) {
-        <button (click)="toggleReplyForm(comment)">Reply</button>
+      <button pButton (click)="toggleReplyForm(comment)">Reply</button>
       }
     </div>
     <div class="replies">
       <div *ngFor="let reply of comment.childComments" class="reply">
-        <div class="reply-header">
+        <div class="username">
           &#64;<a [routerLink]="['/profile/user', reply.user.id]">{{
             reply.user.username
           }}</a>
@@ -39,12 +40,14 @@
           <small>{{ reply.createdAt | date }}</small>
         </div>
       </div>
-      <div *ngIf="comment.showReplyForm" class="add-reply">
+      <div *ngIf="true" class="add-reply">
+        <!-- <div *ngIf="comment.showReplyForm" class="add-reply"> -->
         <textarea
           [(ngModel)]="comment.newReply"
           placeholder="Reply to this comment..."
+          pInputTextarea
         ></textarea>
-        <button (click)="addReply(comment)">Submit</button>
+        <button pButton (click)="addReply(comment)">Submit</button>
       </div>
     </div>
   </div>
