@@ -30,7 +30,11 @@
 } @if(currentUser) {
 
 <p-tabView>
-  <p-tabPanel header="My Posts">
+  <p-tabPanel
+    [header]="
+      currentUser.username === loggedInUser?.username ? 'My Posts' : 'Posts'
+    "
+  >
     <app-posts
       [posts]="userPosts"
       [loading]="loading"
