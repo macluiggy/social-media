@@ -113,6 +113,13 @@ export class ProfileComponent implements OnChanges {
     });
   }
 
+  addFollower() {
+    this.followersCount++;
+  }
+  removeFollower() {
+    this.followersCount--;
+  }
+
   getUserPosts() {
     this.loading = true;
     this.postsService

@@ -35,6 +35,7 @@ body {
 
 button {
   border-radius: 1rem;
+  padding: 0.5rem;
 }
 
 .test {
@@ -133,4 +134,28 @@ p-button {
 
 .p-confirm-dialog .p-dialog-footer button {
   margin: 0.1rem;
+}
+
+.username {
+  color: var(--primary-color);
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.spinner {
+  border: 16px solid rgba(150, 150, 150, 0.2);
+  border-radius: 50%;
+  border-top: 16px solid var(--primary-color);
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

@@ -1,5 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
 import { FollowsService } from '../../services/follows/follows.service';
 import { ButtonModule } from 'primeng/button';
@@ -17,6 +24,8 @@ export class FollowButtonComponent implements OnChanges {
   loggedInUser = this.authService.getLoggedInUserFromStorage();
   currentUserIsLoggedInUser = this.userId == this.loggedInUser?.id;
   isLoggedIn = this.authService.userIsLoggedIn();
+  @Output() follow = new EventEmitter();
+  @Output() unfollow = new EventEmitter();
 
   constructor(
     private followService: FollowsService,
@@ -42,12 +51,14 @@ export class FollowButtonComponent implements OnChanges {
   followUser() {
     this.followService.followUser(this.userId).subscribe(() => {
       this.isFollowing = true;
+      this.follow.emit();
     });
   }
 
   unfollowUser() {
     this.followService.unfollowUser(this.userId).subscribe(() => {
       this.isFollowing = false;
+      this.unfollow.emit();
     });
   }
 }

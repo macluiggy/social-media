@@ -53,7 +53,7 @@ export class CommentsService {
     });
   }
 
-  create(createCommentDto: CreateCommentDto) {
+  async create(createCommentDto: CreateCommentDto) {
     const created = this.postCommentRepository.create(createCommentDto);
     return this.postCommentRepository.save(created);
   }

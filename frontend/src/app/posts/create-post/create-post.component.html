@@ -24,6 +24,7 @@
       placeholder="{{ 'enterContent' | translate }}"
       rows="3"
       (focus)="submitting = false"
+      pInputTextarea
     >
     </textarea>
     @if (postForm.get('content')?.invalid && submitting) {

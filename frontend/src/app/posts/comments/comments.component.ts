@@ -5,17 +5,28 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 @Component({
   selector: 'app-comments',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    ButtonModule,
+    InputTextModule,
+    InputTextareaModule
+  ],
   templateUrl: './comments.component.html',
   styleUrl: './comments.component.scss',
 })
 export class CommentsComponent {
   comments: PostCommentWithRelations[] = [];
-  loading = false;
+  loadingAddComment = false;
+  loadingAddReply = false;
   newComment = '';
   postId = this.router.snapshot.params['postId'];
   loggedInUser = this.authService.getLoggedInUserFromStorage();
@@ -26,12 +37,12 @@ export class CommentsComponent {
     private router: ActivatedRoute,
     private authService: AuthService
   ) {
-    console.log(this.loggedInUser);
 
     this.getComments(this.postId);
   }
 
   addComment() {
+    this.loadingAddComment = true;
     this.commentsService
       .addComment({
         postId: this.postId,
@@ -52,10 +63,14 @@ export class CommentsComponent {
         error: (error) => {
           console.error(error);
         },
+        complete: () => {
+          this.loadingAddComment = false;
+        }
       });
   }
 
   addReply(comment: PostCommentWithRelations) {
+    this.loadingAddReply = true;
     this.commentsService
       .addComment({
         postId: this.postId,
@@ -79,6 +94,9 @@ export class CommentsComponent {
         error: (error) => {
           console.error(error);
         },
+        complete: () => {
+          this.loadingAddReply = false;
+        }
       });
   }
 
@@ -88,16 +106,16 @@ export class CommentsComponent {
   }
 
   getComments(postId: number) {
-    this.loading = true;
+    this.loadingAddComment = true;
     this.commentsService.getPostComments(postId).subscribe({
       next: (res: any) => {
         this.comments = res.data.items;
 
-        this.loading = false;
+        this.loadingAddComment = false;
       },
       error: (error) => {
         console.error(error);
-        this.loading = false;
+        this.loadingAddComment = false;
       },
     });
   }

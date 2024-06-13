@@ -7,7 +7,7 @@
       class="profile-photo"
     />
     <div class="follow-info">
-      <app-follow-button [userId]="userId"></app-follow-button>
+      <app-follow-button [userId]="userId" (follow)="addFollower()" (unfollow)="removeFollower()"></app-follow-button>
       <div class="follow-counts">
         <p>
           <a (click)="showFollowsDialog()">
@@ -30,7 +30,11 @@
 } @if(currentUser) {
 
 <p-tabView>
-  <p-tabPanel header="My Posts">
+  <p-tabPanel
+    [header]="
+      currentUser.username === loggedInUser?.username ? 'My Posts' : 'Posts'
+    "
+  >
     <app-posts
       [posts]="userPosts"
       [loading]="loading"
