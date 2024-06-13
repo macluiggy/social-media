@@ -67,16 +67,25 @@ export class NavBarComponent {
         label: 'Profile',
         icon: 'pi pi-fw pi-user',
         routerLink: `profile/user/${this.userId}`,
+        visible: false
       },
       {
         label: 'Logout',
         icon: 'pi pi-fw pi-sign-out',
         command: () => this.logout(),
+        visible: false
       },
       {
         label: 'Settings',
         icon: 'pi pi-fw pi-cog',
         routerLink: 'settings',
+        visible: false
+      },
+      {
+        label: 'Switch Theme',
+        icon: 'pi pi-fw pi-palette',
+        // command: () => this.switchTheme(),
+        visible: false
       },
     ];
     this.authService.loggedInUser$.subscribe((user) => {

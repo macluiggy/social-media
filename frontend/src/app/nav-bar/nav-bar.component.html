@@ -267,33 +267,18 @@
       #menu
       [model]="pMenuItems"
       styleClass="w-full md:w-15rem"
-      popup="true"
+      [popup]="true"
     >
-      <ng-template pTemplate="start"> </ng-template>
-      @for (item of pMenuItems; track $index) {
-      <ng-template>
-        <a pRipple class="flex align-items-center p-menuitem-link">
-          <span [class]="item.icon"></span>
-          <span class="ml-2">{{ item.label }}</span>
-          <!-- <p-badge *ngIf="item.badge" class="ml-auto" [value]="item.badge" /> -->
-        </a>
-      </ng-template>
-      }
-      <ng-template pTemplate="end">
-        <!-- <button
-          pRipple
-          class="relative overflow-hidden w-full p-link flex align-items-center p-2 pl-3 text-color hover:surface-200 border-noround"
-        >
-          <p-avatar
-            image="https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png"
-            class="mr-2"
-            shape="circle"
-          />
-          <span class="inline-flex flex-column">
-            <span class="font-bold">Amy Elsner</span>
-            <span class="text-sm">Admin</span>
-          </span>
-        </button> -->
+      <ng-template pTemplate="start"
+        >@for (item of pMenuItems; track $index) {
+        <div class="container-menu-item">
+          <a [routerLink]="item.routerLink" pRipple class="flex align-items-center p-menuitem-link">
+            <span [class]="item.icon"></span>
+            <span class="ml-2">{{ item.label }}</span>
+            <!-- <p-badge *ngIf="item.badge" class="ml-auto" [value]="item.badge" /> -->
+          </a>
+        </div>
+        }
       </ng-template>
     </p-menu>
     }
