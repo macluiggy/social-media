@@ -31,7 +31,7 @@ const POST_MENU_ITEMS = {
 export class PostComponent implements OnInit, OnChanges {
   post: TPostWithUser = {} as TPostWithUser;
   firstLoad = true;
-  @Input() loading: boolean;
+  loading: boolean;
   loggedInUser = this.storageService.getUser();
   postMenuItems: MenuItem[] = [];
   currentPost: TPostWithUser | null = null;
@@ -64,7 +64,6 @@ export class PostComponent implements OnInit, OnChanges {
   }
 
   refreshPost() {
-    this.loading = true;
     this.getPost(this.postId);
   }
 
