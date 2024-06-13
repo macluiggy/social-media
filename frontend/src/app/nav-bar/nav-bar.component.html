@@ -276,6 +276,7 @@
             [routerLink]="item.routerLink"
             pRipple
             class="flex align-items-center p-menuitem-link"
+            (click)="item.command && item.command({})"
           >
             <span [class]="item.icon"></span>
             @if (item.id === P_MENU_ITEMS_IDS.SWITCH_THEME) {
