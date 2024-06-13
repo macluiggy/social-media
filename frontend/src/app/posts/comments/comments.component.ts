@@ -36,7 +36,6 @@ export class CommentsComponent {
     private router: ActivatedRoute,
     private authService: AuthService
   ) {
-    console.log(this.loggedInUser);
 
     this.getComments(this.postId);
   }

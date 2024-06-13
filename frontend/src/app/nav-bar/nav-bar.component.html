@@ -272,9 +272,19 @@
       <ng-template pTemplate="start"
         >@for (item of pMenuItems; track $index) {
         <div class="container-menu-item">
-          <a [routerLink]="item.routerLink" pRipple class="flex align-items-center p-menuitem-link">
+          <a
+            [routerLink]="item.routerLink"
+            pRipple
+            class="flex align-items-center p-menuitem-link"
+          >
             <span [class]="item.icon"></span>
+            @if (item.id === P_MENU_ITEMS_IDS.SWITCH_THEME) {
+            <span class="ml-2"
+              >{{ item.label }}<app-switch-theme></app-switch-theme
+            ></span>
+            } @else {
             <span class="ml-2">{{ item.label }}</span>
+            }
             <!-- <p-badge *ngIf="item.badge" class="ml-auto" [value]="item.badge" /> -->
           </a>
         </div>

@@ -17,6 +17,7 @@ import { DialogModule } from 'primeng/dialog';
 import { CreatePostComponent } from '../posts/create-post/create-post.component';
 import { UserService } from '../services/user/user.service';
 import { User } from '../common/types';
+import { SwitchThemeComponent } from './switch-theme/switch-theme.component';
 
 @Component({
   selector: 'app-nav-bar',
@@ -35,6 +36,7 @@ import { User } from '../common/types';
     ToastModule,
     DialogModule,
     CreatePostComponent,
+    SwitchThemeComponent,
   ],
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.scss',
@@ -52,6 +54,12 @@ export class NavBarComponent {
   displayCreatePostDialog = false;
   userId: number;
   loggedInUser: User | null = this.storageService.getUser();
+  P_MENU_ITEMS_IDS = {
+    PROFILE: 'Profile',
+    LOGOUT: 'Logout',
+    SETTINGS: 'Settings',
+    SWITCH_THEME: 'Switch Theme',
+  };
 
   constructor(
     private storageService: StorageService,
@@ -60,32 +68,35 @@ export class NavBarComponent {
     private userService: UserService
   ) {
     this.userId = this.storageService.getUser()?.id as number;
-    console.log('this.userId', this.userId);
 
     this.pMenuItems = [
       {
+        id: this.P_MENU_ITEMS_IDS.PROFILE,
         label: 'Profile',
         icon: 'pi pi-fw pi-user',
         routerLink: `profile/user/${this.userId}`,
-        visible: false
+        visible: false,
       },
       {
+        id: this.P_MENU_ITEMS_IDS.LOGOUT,
         label: 'Logout',
         icon: 'pi pi-fw pi-sign-out',
         command: () => this.logout(),
-        visible: false
+        visible: false,
       },
       {
+        id: this.P_MENU_ITEMS_IDS.SETTINGS,
         label: 'Settings',
         icon: 'pi pi-fw pi-cog',
         routerLink: 'settings',
-        visible: false
+        visible: false,
       },
       {
+        id: this.P_MENU_ITEMS_IDS.SWITCH_THEME,
         label: 'Switch Theme',
         icon: 'pi pi-fw pi-palette',
         // command: () => this.switchTheme(),
-        visible: false
+        visible: false,
       },
     ];
     this.authService.loggedInUser$.subscribe((user) => {
