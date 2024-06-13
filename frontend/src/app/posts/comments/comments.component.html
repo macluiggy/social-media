@@ -6,7 +6,7 @@
       placeholder="Add a comment..."
       pInputTextarea
     ></textarea>
-    <button pButton (click)="addComment()">Submit</button>
+    <button pButton (click)="addComment()" [loading]="loadingAddComment">Submit</button>
   </div>
   } @for (comment of comments; track $index) {
   <div class="comment">
@@ -47,7 +47,7 @@
           placeholder="Reply to this comment..."
           pInputTextarea
         ></textarea>
-        <button pButton (click)="addReply(comment)">Submit</button>
+        <button pButton (click)="addReply(comment)" [loading]="loadingAddReply">Submit</button>
       </div>
     </div>
   </div>
