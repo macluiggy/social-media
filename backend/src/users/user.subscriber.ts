@@ -38,8 +38,8 @@ export class UserSubscriber implements EntitySubscriberInterface<Users> {
   }
   async beforeRemove(event: RemoveEvent<Users>): Promise<any> {
     if (
-      event.entity.email === EMAIL_FOR_TESTING ||
-      event.entity.username === USERNAME_FOR_TESTING
+      event.entity?.email === EMAIL_FOR_TESTING ||
+      event.entity?.username === USERNAME_FOR_TESTING
     ) {
       throw new Error(
         `You should not delete the user for testing purposes with email: ${EMAIL_FOR_TESTING} or username: ${USERNAME_FOR_TESTING}`,

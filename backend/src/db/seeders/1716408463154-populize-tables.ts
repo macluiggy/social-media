@@ -1,4 +1,4 @@
-import { DataSource } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { Seeder, SeederFactory, SeederFactoryManager } from 'typeorm-extension';
 import { SeederEntity } from '../seeders.entity';
 import { Users } from '../../users/users.entity';
@@ -25,17 +25,21 @@ export class PopulizeTables1716408463154 implements Seeder {
     //   return;
     // }
 
+    // repositories
+    const usersRepository = dataSource.getRepository(Users);
+    const followsRepository = dataSource.getRepository(Follow);
+    const likesRepository = dataSource.getRepository(Like);
+
+    const userQueryBuilder = usersRepository.createQueryBuilder();
     // delete all users that have the email starting with 'dummy.'
-    const usersRepository = dataSource
-      .getRepository(Users)
-      .createQueryBuilder();
-    usersRepository.delete().where('email like :email', { email: 'dummy.%' });
+    await userQueryBuilder
+      .delete()
+      .where('email like :email', { email: 'dummy.%' })
+      .execute();
 
     // factories
     const userFactory = factoryManager.get(Users);
     const postsFactory = factoryManager.get(Post);
-    const likeFactory = factoryManager.get(Like);
-    const followFactory = factoryManager.get(Follow);
 
     const usersSaved = await this.seedUsersTable({ userFactory });
     const postsSaved = await this.seedPostsTable({
@@ -44,14 +48,14 @@ export class PopulizeTables1716408463154 implements Seeder {
     });
 
     await this.seedLikesTable({
-      likeFactory,
       posts: postsSaved,
       users: usersSaved,
+      likeRepository: likesRepository,
     });
 
     await this.seedFollowsTable({
-      followFactory,
       users: usersSaved,
+      followRepository: followsRepository,
     });
 
     if (seeder) {
@@ -92,62 +96,59 @@ export class PopulizeTables1716408463154 implements Seeder {
     return populatedPosts.flat();
   }
 
-  /**
-   * Make every user follow every other user
-   * Note: This is a cuadratic operation O(n^2), so it can be slow with a large number of users, so please only add a few users in the userFactory
-   * @param param0
-   */
   async seedFollowsTable({
-    followFactory,
     users,
+    followRepository,
   }: {
-    followFactory: SeederFactory<Follow, unknown>;
     users: Users[];
+    followRepository: Repository<Follow>;
   }) {
-    const polulatedFollows: Follow[] = [];
-    // make every user follow every other user
+    const follows = [];
+
     for (const user of users) {
       for (const otherUser of users) {
-        if (user.id === otherUser.id) {
-          continue;
+        if (user.id !== otherUser.id) {
+          follows.push({
+            following: user,
+            follower: otherUser,
+          });
         }
-        const follow = await followFactory.save({
-          following: user,
-          follower: otherUser,
-        });
-        polulatedFollows.push(follow);
       }
     }
+
+    await followRepository
+      .createQueryBuilder()
+      .insert()
+      .into(Follow)
+      .values(follows)
+      .execute();
   }
 
-  /**
-   * Make every user like every post
-   * Note: This is a cuadratic operation O(n^2), so it can be slow with a large number of users and posts, so please only add a few users and posts in the userFactory and postsFactory
-   * @param param0
-   * @returns
-   */
   async seedLikesTable({
-    likeFactory,
     posts,
     users,
+    likeRepository,
   }: {
-    likeFactory: SeederFactory<Like, unknown>;
     posts: Post[];
     users: Users[];
+    likeRepository: Repository<Like>;
   }) {
-    const populatedLikes: Like[] = [];
-    // make every user like every post
+    const likes = [];
+
     for (const post of posts) {
       for (const user of users) {
-        const like = await likeFactory.save({
+        likes.push({
           post,
           user,
         });
-        populatedLikes.push(like);
       }
     }
 
-    return populatedLikes;
+    await likeRepository
+      .createQueryBuilder()
+      .insert()
+      .into(Like)
+      .values(likes)
+      .execute();
   }
 }
-//
