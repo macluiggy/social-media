@@ -33,7 +33,7 @@ export class AppComponent {
     private translate: TranslateService,
     @Inject(DOCUMENT) private document: Document,
     private themeService: ThemeService,
-    private router: Router
+    private router: Router,
   ) {
     this.router.events.subscribe(() => {
       this.currentRoute = this.router.url.split('/')[1];

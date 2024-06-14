@@ -59,7 +59,7 @@
     </button>
     } @else {
     <div class="alert alert-success">
-      Logged in as {{ user.username || user.fullName }}.
+      Logged in as {{ user?.username || user?.fullName }}.
     </div>
     }
   </div>

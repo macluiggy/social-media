@@ -16,13 +16,14 @@ import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { UserDto } from '../users/dto/users.dto';
 // import { LocalAuthGuard } from './guards/local-auth.guard';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 import ApiStandardResponse from '../common/interceptors/api-response';
 import getApiEndpoint from '../common/utils/getApiEndpoint';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthGuard } from '@nestjs/passport';
 import { GoogleGuard } from './guards/google.guard';
 import envVariables from '../common/envVariables';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @ApiTags('auth')
 @Controller(getApiEndpoint('auth'))
@@ -40,16 +41,19 @@ export class AuthController {
   // http://localhost:3000/auth/google/callback
   @Get('google/callback')
   @UseGuards(GoogleGuard)
-  async googleLoginCallback(@Req() req, @Res() res) {
+  async googleLoginCallback(@Req() req, @Res() res: Response) {
     // Handles the Google OAuth2 callback
     const user = req.user;
-    console.log(user);
 
     // Here you would usually create a JWT token and send it to the user
-    const { accessToken } = await this.authService.singInWithGoogle(user);
-    console.log(accessToken);
+    const dataToken = await this.authService.singInWithGoogle(user);
+    const token = dataToken.accessToken;
 
-    res.redirect(envVariables.frontedUrl);
+    if (token) {
+      res.redirect(`${envVariables.frontedUrl}/login/success?token=${token}`);
+    } else {
+      res.redirect(`${envVariables.frontedUrl}/login/failure`);
+    }
   }
 
   @Get('protected')
@@ -98,7 +102,14 @@ export class AuthController {
   }
 
   @Post('logout')
-  async logout() {
-    return await this.authService.logout();
+  async logout(@Res() res: Response) {
+    return res.status(200).json({ message: 'Logged out successfully' });
+  }
+
+  // endpoint to get the decoded user from the JWT
+  @Get('me')
+  @UseGuards(JwtAuthGuard)
+  async getMe(@Req() req: Request & { user: any }) {
+    return req.user;
   }
 }

@@ -6,12 +6,14 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import envVariables from './common/envVariables';
 import { NestFastifyApplication } from '@nestjs/platform-fastify';
 import { ValidationPipe } from '@nestjs/common';
+import cookieParser from 'cookie-parser';
 
 const port = envVariables.port;
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(AppModule);
   app.useGlobalFilters(new HttpExceptionFilter());
+  app.use(cookieParser());
   app.enableCors({
     origin: [
       'http://localhost:4200',

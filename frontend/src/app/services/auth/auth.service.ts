@@ -115,4 +115,25 @@ export class AuthService {
     window.location.href = this.googleAuthUrl;
     // return this.http.get(`${this.apiUrl}/auth/google`);
   }
+
+  /**
+   * This is to validate the user and store it in the local storage, it does it by calling the backend API passi`ng the token and getting the decoded user data from the token and storing it in the local storage
+   * @returns
+   */
+  validateAndStoreUser() {
+    return this.http.get(`${this.apiUrl}/auth/me`).pipe(
+      tap((response: any) => {
+        const data = response.data;
+        if (data?.username) {
+          // save the user in the local storage
+          this.storageService.saveUser(data);
+          this.updateLoggedInUser(data);
+          this.setIsLoggedIn(true);
+        }
+      }),
+      catchError((error) => {
+        throw error;
+      })
+    );
+  }
 }

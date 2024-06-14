@@ -10,6 +10,7 @@ import { authGuard } from './guards/auth.guard';
 import { CreatePostComponent } from './posts/create-post/create-post.component';
 import { SettingsComponent } from './settings/settings.component';
 import { PostComponent } from './posts/post/post.component';
+import { SuccessComponent } from './login/success/success.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -32,6 +33,10 @@ export const routes: Routes = [
     path: 'settings',
     component: SettingsComponent,
     canActivate: [authGuard],
+  },
+  {
+    path:'login/success',
+    component: SuccessComponent,
   },
   { path: '**', component: NotFoundComponent }, // dont put any routes after this one, it will always redirect to the not found component
 ];

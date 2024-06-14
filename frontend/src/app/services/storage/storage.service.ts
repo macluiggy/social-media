@@ -48,7 +48,8 @@ export class StorageService {
   public getUser(): User | null {
     if (isPlatformBrowser(this.platformId)) {
       const user = localStorage.getItem(USER_KEY);
-      if (user) {
+
+      if (user && user != 'undefined') {
         return JSON.parse(user);
       }
     }
