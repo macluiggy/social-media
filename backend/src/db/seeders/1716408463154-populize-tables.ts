@@ -31,6 +31,7 @@ export class PopulizeTables1716408463154 implements Seeder {
     const followsRepository = dataSource.getRepository(Follow);
     const likesRepository = dataSource.getRepository(Like);
     const postCommentRepository = dataSource.getRepository(PostComment);
+    const postsRepository = dataSource.getRepository(Post);
 
     const userQueryBuilder = usersRepository.createQueryBuilder();
     // delete all users that have the email starting with 'dummy.'
@@ -47,6 +48,7 @@ export class PopulizeTables1716408463154 implements Seeder {
     const usersSaved = await this.seedUsersTable({ userFactory });
     const postsSaved = await this.seedPostsTable({
       postsFactory,
+      postsRepository,
       users: usersSaved,
     });
 
@@ -92,18 +94,23 @@ export class PopulizeTables1716408463154 implements Seeder {
   async seedPostsTable({
     postsFactory,
     users,
+    postsRepository,
   }: {
     postsFactory: SeederFactory<Post, unknown>;
     users: Users[];
+    postsRepository: Repository<Post>;
   }) {
-    const postsPromises = users.map(async (user) => {
-      const postsSaved = await postsFactory.saveMany(2, {
-        user,
-      });
-      return postsSaved;
-    });
-    const populatedPosts = await Promise.all(postsPromises);
-    return populatedPosts.flat();
+    const posts = [];
+    for (const user of users) {
+      for (let i = 0; i < 2; i++) {
+        const post = await postsFactory.make({ user });
+        posts.push(post);
+      }
+    }
+
+    const postsSaved = postsRepository.create(posts);
+    await postsRepository.save(postsSaved);
+    return postsSaved;
   }
 
   async seedFollowsTable({
