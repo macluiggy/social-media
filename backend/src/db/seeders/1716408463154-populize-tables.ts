@@ -1,10 +1,11 @@
-import { DataSource } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { Seeder, SeederFactory, SeederFactoryManager } from 'typeorm-extension';
 import { SeederEntity } from '../seeders.entity';
 import { Users } from '../../users/users.entity';
 import { Post } from '../../posts/entities/post.entity';
 import { Follow } from '../../users/follows/entities/follow.entity';
 import { Like } from '../../posts/likes/entities/like.entity';
+import { PostComment } from '../../posts/comments/entities/comment.entity';
 
 export class PopulizeTables1716408463154 implements Seeder {
   track = false;
@@ -20,32 +21,53 @@ export class PopulizeTables1716408463154 implements Seeder {
       where: { name: seederName },
     });
 
-    if (seeder) {
-      console.log(`Seeder "${seederName}" already executed. Skipping...`);
-      return;
-    }
+    // if (seeder) {
+    //   console.log(`Seeder "${seederName}" already executed. Skipping...`);
+    //   return;
+    // }
+
+    // repositories
+    const usersRepository = dataSource.getRepository(Users);
+    const followsRepository = dataSource.getRepository(Follow);
+    const likesRepository = dataSource.getRepository(Like);
+    const postCommentRepository = dataSource.getRepository(PostComment);
+    const postsRepository = dataSource.getRepository(Post);
+
+    const userQueryBuilder = usersRepository.createQueryBuilder();
+    // delete all users that have the email starting with 'dummy.'
+    await userQueryBuilder
+      .delete()
+      .where('email like :email', { email: 'dummy.%' })
+      .execute();
 
     // factories
     const userFactory = factoryManager.get(Users);
     const postsFactory = factoryManager.get(Post);
-    const likeFactory = factoryManager.get(Like);
-    const followFactory = factoryManager.get(Follow);
+    const postCommentFactory = factoryManager.get(PostComment);
 
     const usersSaved = await this.seedUsersTable({ userFactory });
     const postsSaved = await this.seedPostsTable({
       postsFactory,
+      postsRepository,
       users: usersSaved,
     });
 
     await this.seedLikesTable({
-      likeFactory,
       posts: postsSaved,
       users: usersSaved,
+      likeRepository: likesRepository,
     });
 
     await this.seedFollowsTable({
-      followFactory,
       users: usersSaved,
+      followRepository: followsRepository,
+    });
+
+    await this.seedPostCommentsTable({
+      posts: postsSaved,
+      users: usersSaved,
+      postCommentRepository,
+      postCommentFactory,
     });
 
     if (seeder) {
@@ -72,76 +94,122 @@ export class PopulizeTables1716408463154 implements Seeder {
   async seedPostsTable({
     postsFactory,
     users,
+    postsRepository,
   }: {
     postsFactory: SeederFactory<Post, unknown>;
     users: Users[];
+    postsRepository: Repository<Post>;
   }) {
-    const postsPromises = users.map(async (user) => {
-      const postsSaved = await postsFactory.saveMany(2, {
-        user,
-      });
-      return postsSaved;
-    });
-    const populatedPosts = await Promise.all(postsPromises);
-    return populatedPosts.flat();
-  }
-
-  /**
-   * Make every user follow every other user
-   * Note: This is a cuadratic operation O(n^2), so it can be slow with a large number of users, so please only add a few users in the userFactory
-   * @param param0
-   */
-  async seedFollowsTable({
-    followFactory,
-    users,
-  }: {
-    followFactory: SeederFactory<Follow, unknown>;
-    users: Users[];
-  }) {
-    const polulatedFollows: Follow[] = [];
-    // make every user follow every other user
+    const posts = [];
     for (const user of users) {
-      for (const otherUser of users) {
-        if (user.id === otherUser.id) {
-          continue;
-        }
-        const follow = await followFactory.save({
-          following: user,
-          follower: otherUser,
-        });
-        polulatedFollows.push(follow);
+      for (let i = 0; i < 2; i++) {
+        const post = await postsFactory.make({ user });
+        posts.push(post);
       }
     }
+
+    const postsSaved = postsRepository.create(posts);
+    await postsRepository.save(postsSaved);
+    return postsSaved;
   }
 
-  /**
-   * Make every user like every post
-   * Note: This is a cuadratic operation O(n^2), so it can be slow with a large number of users and posts, so please only add a few users and posts in the userFactory and postsFactory
-   * @param param0
-   * @returns
-   */
+  async seedFollowsTable({
+    users,
+    followRepository,
+  }: {
+    users: Users[];
+    followRepository: Repository<Follow>;
+  }) {
+    const follows = [];
+
+    for (const user of users) {
+      for (const otherUser of users) {
+        if (user.id !== otherUser.id) {
+          follows.push({
+            following: user,
+            follower: otherUser,
+          });
+        }
+      }
+    }
+
+    await followRepository
+      .createQueryBuilder()
+      .insert()
+      .into(Follow)
+      .values(follows)
+      .execute();
+  }
+
   async seedLikesTable({
-    likeFactory,
     posts,
     users,
+    likeRepository,
   }: {
-    likeFactory: SeederFactory<Like, unknown>;
     posts: Post[];
     users: Users[];
+    likeRepository: Repository<Like>;
   }) {
-    const populatedLikes: Like[] = [];
-    // make every user like every post
+    const likes = [];
+
     for (const post of posts) {
       for (const user of users) {
-        const like = await likeFactory.save({
+        likes.push({
           post,
           user,
         });
-        populatedLikes.push(like);
       }
     }
 
-    return populatedLikes;
+    await likeRepository
+      .createQueryBuilder()
+      .insert()
+      .into(Like)
+      .values(likes)
+      .execute();
+  }
+
+  async seedPostCommentsTable({
+    posts,
+    users,
+    postCommentRepository,
+    postCommentFactory,
+  }: {
+    posts: Post[];
+    users: Users[];
+    postCommentRepository: Repository<PostComment>;
+    postCommentFactory: SeederFactory<PostComment, unknown>;
+  }) {
+    const comments = [];
+
+    for (const post of posts) {
+      for (const user of users) {
+        const comment = await postCommentFactory.make({
+          post,
+          user,
+        });
+        comments.push(comment);
+      }
+    }
+
+    const postComments = postCommentRepository.create(comments);
+    await postCommentRepository.save(postComments);
+
+    // add replies to the created comments
+    const replies = [];
+    for (const comment of postComments) {
+      // add two replies to each comment
+      for (let i = 0; i < 2; i++) {
+        const reply = await postCommentFactory.make({
+          post: comment.post,
+          user: users[Math.floor(Math.random() * users.length)],
+          parentComment: comment,
+        });
+        replies.push(reply);
+      }
+    }
+
+    const postCommentReplies = postCommentRepository.create(replies);
+    await postCommentRepository.save(postCommentReplies);
   }
 }
-//

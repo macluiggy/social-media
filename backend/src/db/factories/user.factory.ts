@@ -11,6 +11,8 @@ export default setSeederFactory(Users, (faker) => {
     firstName: user.firstName,
     lastName: user.lastName,
   });
+  // add dummy so the dummy users can be easily identified and deleted in database
+  user.email = `dummy.${user.email}`; // use something like: select * from users where email like 'dummy.%'; to find all dummy users
   user.password = faker.internet.password();
   user.phone = faker.phone.number();
   user.username = faker.internet.userName({

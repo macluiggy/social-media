@@ -40,7 +40,7 @@
           <small>{{ reply.createdAt | date }}</small>
         </div>
       </div>
-      <div *ngIf="true" class="add-reply">
+      <div *ngIf="comment.showReplyForm" class="add-reply">
         <!-- <div *ngIf="comment.showReplyForm" class="add-reply"> -->
         <textarea
           [(ngModel)]="comment.newReply"

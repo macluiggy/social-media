@@ -18,7 +18,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     FormsModule,
     ButtonModule,
     InputTextModule,
-    InputTextareaModule
+    InputTextareaModule,
   ],
   templateUrl: './comments.component.html',
   styleUrl: './comments.component.scss',
@@ -37,7 +37,6 @@ export class CommentsComponent {
     private router: ActivatedRoute,
     private authService: AuthService
   ) {
-
     this.getComments(this.postId);
   }
 
@@ -45,7 +44,7 @@ export class CommentsComponent {
     this.loadingAddComment = true;
     this.commentsService
       .addComment({
-        postId: this.postId,
+        postId: +this.postId,
         content: this.newComment,
         parentCommentId: null,
         userId: this.userId,
@@ -63,9 +62,9 @@ export class CommentsComponent {
         error: (error) => {
           console.error(error);
         },
-        complete: () => {
-          this.loadingAddComment = false;
-        }
+      })
+      .add(() => {
+        this.loadingAddComment = false;
       });
   }
 
@@ -73,9 +72,9 @@ export class CommentsComponent {
     this.loadingAddReply = true;
     this.commentsService
       .addComment({
-        postId: this.postId,
-        content: comment.newReply as string,
-        parentCommentId: comment.id,
+        postId: +this.postId,
+        content: comment?.newReply || '',
+        parentCommentId: +comment.id,
         userId: this.userId,
       })
       .subscribe({
@@ -94,9 +93,9 @@ export class CommentsComponent {
         error: (error) => {
           console.error(error);
         },
-        complete: () => {
-          this.loadingAddReply = false;
-        }
+      })
+      .add(() => {
+        this.loadingAddReply = false;
       });
   }
 
@@ -107,16 +106,18 @@ export class CommentsComponent {
 
   getComments(postId: number) {
     this.loadingAddComment = true;
-    this.commentsService.getPostComments(postId).subscribe({
-      next: (res: any) => {
-        this.comments = res.data.items;
-
+    this.commentsService
+      .getPostComments(postId)
+      .subscribe({
+        next: (res: any) => {
+          this.comments = res.data.items;
+        },
+        error: (error) => {
+          console.error(error);
+        },
+      })
+      .add(() => {
         this.loadingAddComment = false;
-      },
-      error: (error) => {
-        console.error(error);
-        this.loadingAddComment = false;
-      },
-    });
+      });
   }
 }
