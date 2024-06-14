@@ -43,11 +43,13 @@ export class ProfileComponent implements OnChanges {
   userId: number;
   userPosts: TPostWithUser[] = [];
   loading = false;
+  loadingUserInformation = false;
   page = 1;
   limit = 2;
   displayFollowsDialog = false;
   followersCount = 0;
   followingCount = 0;
+  allPostsLoaded = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -82,7 +84,7 @@ export class ProfileComponent implements OnChanges {
   }
 
   getUserInfo() {
-    this.loading = true;
+    this.loadingUserInformation = true;
     this.userService.getUserByUserId(this.userId).subscribe({
       next: (res: any) => {
         this.currentUser = res.data;
@@ -96,17 +98,19 @@ export class ProfileComponent implements OnChanges {
         console.error(err);
       },
     });
-    this.followService.getFollowersCount(this.userId).subscribe({
-      next: (res: any) => {
-        this.followersCount = res.data.count;
-      },
-      error: (err) => {
-        console.error(err);
-      },
-      complete: () => {
-        this.loading = false;
-      }
-    });
+    this.followService
+      .getFollowersCount(this.userId)
+      .subscribe({
+        next: (res: any) => {
+          this.followersCount = res.data.count;
+        },
+        error: (err) => {
+          console.error(err);
+        },
+      })
+      .add(() => {
+        this.loadingUserInformation = false;
+      });
     this.followService.getFollowingCount(this.userId).subscribe({
       next: (res: any) => {
         this.followingCount = res.data.count;
@@ -125,6 +129,9 @@ export class ProfileComponent implements OnChanges {
   }
 
   getUserPosts() {
+    if (this.loading || this.allPostsLoaded) {
+      return;
+    }
     this.loading = true;
     this.postsService
       .getUserPosts({
@@ -135,13 +142,16 @@ export class ProfileComponent implements OnChanges {
       .subscribe({
         next: (res: any) => {
           this.userPosts = [...this.userPosts, ...res.data.items];
+          if (res.data.items.length < this.limit) {
+            this.allPostsLoaded = true;
+          }
         },
         error: (err) => {
           console.error(err);
         },
-        complete: () => {
-          this.loading = false;
-        },
+      })
+      .add(() => {
+        this.loading = false;
       });
   }
 

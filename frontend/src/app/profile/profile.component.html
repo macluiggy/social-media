@@ -1,4 +1,4 @@
-@if (currentUser && !loading) {
+@if (currentUser && !loadingUserInformation) {
 <p-card [header]="currentUser.username">
   <p-header>
     <img
@@ -45,6 +45,7 @@
       [infiniteScrollThrottle]="5"
       (scrolled)="onScroll()"
       [loading]="loading"
+      [infiniteScrollDisabled]="allPostsLoaded"
     ></app-posts>
   </p-tabPanel>
 </p-tabView>
