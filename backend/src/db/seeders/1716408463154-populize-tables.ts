@@ -20,10 +20,16 @@ export class PopulizeTables1716408463154 implements Seeder {
       where: { name: seederName },
     });
 
-    if (seeder) {
-      console.log(`Seeder "${seederName}" already executed. Skipping...`);
-      return;
-    }
+    // if (seeder) {
+    //   console.log(`Seeder "${seederName}" already executed. Skipping...`);
+    //   return;
+    // }
+
+    // delete all users that have the email starting with 'dummy.'
+    const usersRepository = dataSource
+      .getRepository(Users)
+      .createQueryBuilder();
+    usersRepository.delete().where('email like :email', { email: 'dummy.%' });
 
     // factories
     const userFactory = factoryManager.get(Users);
