@@ -5,6 +5,7 @@ import { Users } from '../../users/users.entity';
 import { Post } from '../../posts/entities/post.entity';
 import { Follow } from '../../users/follows/entities/follow.entity';
 import { Like } from '../../posts/likes/entities/like.entity';
+import { PostComment } from '../../posts/comments/entities/comment.entity';
 
 export class PopulizeTables1716408463154 implements Seeder {
   track = false;
@@ -29,6 +30,7 @@ export class PopulizeTables1716408463154 implements Seeder {
     const usersRepository = dataSource.getRepository(Users);
     const followsRepository = dataSource.getRepository(Follow);
     const likesRepository = dataSource.getRepository(Like);
+    const postCommentRepository = dataSource.getRepository(PostComment);
 
     const userQueryBuilder = usersRepository.createQueryBuilder();
     // delete all users that have the email starting with 'dummy.'
@@ -40,6 +42,7 @@ export class PopulizeTables1716408463154 implements Seeder {
     // factories
     const userFactory = factoryManager.get(Users);
     const postsFactory = factoryManager.get(Post);
+    const postCommentFactory = factoryManager.get(PostComment);
 
     const usersSaved = await this.seedUsersTable({ userFactory });
     const postsSaved = await this.seedPostsTable({
@@ -56,6 +59,13 @@ export class PopulizeTables1716408463154 implements Seeder {
     await this.seedFollowsTable({
       users: usersSaved,
       followRepository: followsRepository,
+    });
+
+    await this.seedPostCommentsTable({
+      posts: postsSaved,
+      users: usersSaved,
+      postCommentRepository,
+      postCommentFactory,
     });
 
     if (seeder) {
@@ -150,5 +160,49 @@ export class PopulizeTables1716408463154 implements Seeder {
       .into(Like)
       .values(likes)
       .execute();
+  }
+
+  async seedPostCommentsTable({
+    posts,
+    users,
+    postCommentRepository,
+    postCommentFactory,
+  }: {
+    posts: Post[];
+    users: Users[];
+    postCommentRepository: Repository<PostComment>;
+    postCommentFactory: SeederFactory<PostComment, unknown>;
+  }) {
+    const comments = [];
+
+    for (const post of posts) {
+      for (const user of users) {
+        const comment = await postCommentFactory.make({
+          post,
+          user,
+        });
+        comments.push(comment);
+      }
+    }
+
+    const postComments = postCommentRepository.create(comments);
+    await postCommentRepository.save(postComments);
+
+    // add replies to the created comments
+    const replies = [];
+    for (const comment of postComments) {
+      // add two replies to each comment
+      for (let i = 0; i < 2; i++) {
+        const reply = await postCommentFactory.make({
+          post: comment.post,
+          user: users[Math.floor(Math.random() * users.length)],
+          parentComment: comment,
+        });
+        replies.push(reply);
+      }
+    }
+
+    const postCommentReplies = postCommentRepository.create(replies);
+    await postCommentRepository.save(postCommentReplies);
   }
 }
