@@ -50,7 +50,7 @@ describe('AppController (e2e)', () => {
   it('/ (GET)', () => {
     return request(app.getHttpServer()).get('/').expect(200).expect({
       statusCode: 200,
-      data: HELLO_WORLD_MESSAGE_FROM_APP_SERVICE, 
+      data: HELLO_WORLD_MESSAGE_FROM_APP_SERVICE,
       message: 'OK',
     });
   });
