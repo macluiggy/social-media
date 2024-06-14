@@ -36,16 +36,21 @@
     <!-- <p>Comments: {{ post.comments.length }}</p>
           <p>Likes: {{ post.likes }}</p> -->
     <div class="interactive-row">
-        <app-like-button [post]="post"></app-like-button>
-        <a [routerLink]="['/post/', post.id]">
-          <button pButton type="button" icon="pi pi-comment" label="Comments"></button>
-        </a>
+      <app-like-button [post]="post"></app-like-button>
+      <a [routerLink]="['/post/', post.id]">
+        <button
+          pButton
+          type="button"
+          icon="pi pi-comment"
+          label="Comments"
+        ></button>
+      </a>
     </div>
   </p-card>
 </div>
 } @if (loading) {
 <div class="spinner-container">
-  <p-progressSpinner></p-progressSpinner>
+  <div class="spinner"></div>
 </div>
 }
 

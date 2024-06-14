@@ -18,6 +18,7 @@ export class LikeButtonComponent implements OnInit {
   likesCount = 0;
   isLoggedIn = this.authService.userIsLoggedIn();
   isProcessingClick = false;
+  isLoadingLikes = false;
   constructor(
     private likesService: LikesService,
     private authService: AuthService
@@ -92,9 +93,13 @@ export class LikeButtonComponent implements OnInit {
   }
 
   getLikes() {
+    this.isLoadingLikes = true;
     this.likesService.getLikes(this.postId).subscribe({
       next: (res: any) => {
         this.likesCount = res.data.total;
+      },
+      complete: () => {
+        this.isLoadingLikes = false;
       },
     });
   }

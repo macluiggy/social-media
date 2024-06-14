@@ -1,8 +1,14 @@
+@if (!isLoadingLikes) {
 <p-button
   [icon]="liked ? 'pi pi-thumbs-up-fill' : 'pi pi-thumbs-up'"
   (click)="clickLikeButton()"
 >
-<strong>
-  {{ likesCount }}
-</strong>
+  <strong>
+    {{ likesCount }}
+  </strong>
 </p-button>
+} @else {
+  <div class="spinner-container">
+    <div class="spinner"></div>
+  </div>
+}
