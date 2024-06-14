@@ -82,6 +82,7 @@ export class ProfileComponent implements OnChanges {
   }
 
   getUserInfo() {
+    this.loading = true;
     this.userService.getUserByUserId(this.userId).subscribe({
       next: (res: any) => {
         this.currentUser = res.data;
@@ -102,6 +103,9 @@ export class ProfileComponent implements OnChanges {
       error: (err) => {
         console.error(err);
       },
+      complete: () => {
+        this.loading = false;
+      }
     });
     this.followService.getFollowingCount(this.userId).subscribe({
       next: (res: any) => {

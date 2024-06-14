@@ -1,4 +1,4 @@
-@if (currentUser) {
+@if (currentUser && !loading) {
 <p-card [header]="currentUser.username">
   <p-header>
     <img
@@ -7,7 +7,11 @@
       class="profile-photo"
     />
     <div class="follow-info">
-      <app-follow-button [userId]="userId" (follow)="addFollower()" (unfollow)="removeFollower()"></app-follow-button>
+      <app-follow-button
+        [userId]="userId"
+        (follow)="addFollower()"
+        (unfollow)="removeFollower()"
+      ></app-follow-button>
       <div class="follow-counts">
         <p>
           <a (click)="showFollowsDialog()">
@@ -26,9 +30,7 @@
     <p><strong>Name:</strong> {{ currentUser.firstName }}</p>
   </div>
 </p-card>
-
 } @if(currentUser) {
-
 <p-tabView>
   <p-tabPanel
     [header]="
@@ -45,13 +47,11 @@
       [loading]="loading"
     ></app-posts>
   </p-tabPanel>
-  <!-- <p-tabPanel header="Shared Posts"> -->
-  <!-- <p-card *ngFor="let post of currentUser.sharedPosts">
-      <p-header>{{ post.title }}</p-header>
-      <p>{{ post.content }}</p>
-    </p-card> -->
-  <!-- </p-tabPanel> -->
 </p-tabView>
+} @else {
+<div class="spinner-container">
+  <div class="spinner"></div>
+</div>
 }
 
 <p-dialog
