@@ -45,8 +45,13 @@ const envVariables = {
     accountId: process.env.CLOUDFLARE_ACCOUNT_ID,
     s3BucketName: process.env.CLOUDFLARE_S3_BUCKET_NAME,
   },
+  google: {
+    clientId: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackUrl: process.env.GOOGLE_CALLBACK_URL,
+  },
 };
-//
+
 if (DB_SSL_CERT) {
   Object.assign(envVariables.db, {
     ssl: {

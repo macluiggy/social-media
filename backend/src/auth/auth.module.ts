@@ -13,10 +13,11 @@ import { LocalStrategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { DeleteDummyUserMiddleware } from './middleware/delete.dummy.user';
 import { API_VERSION } from '../common/constants';
+import { GoogleStrategy } from './strategies/google.strategy';
 
 const authModuleMetadata: ModuleMetadata = {
   controllers: [AuthController],
-  providers: [AuthService, LocalStrategy, JwtStrategy],
+  providers: [AuthService, LocalStrategy, JwtStrategy, GoogleStrategy],
   imports: [
     UsersModule,
     PassportModule,

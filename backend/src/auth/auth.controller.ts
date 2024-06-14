@@ -2,11 +2,13 @@ import {
   Body,
   Controller,
   FileTypeValidator,
+  Get,
   MaxFileSizeValidator,
   ParseFilePipe,
   Post,
   Req /**, UseGuards */,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
@@ -17,11 +19,38 @@ import { Request } from 'express';
 import ApiStandardResponse from '../common/interceptors/api-response';
 import getApiEndpoint from '../common/utils/getApiEndpoint';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { AuthGuard } from '@nestjs/passport';
+import { GoogleGuard } from './guards/google.guard';
 
 @ApiTags('auth')
 @Controller(getApiEndpoint('auth'))
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
+
+  @Get('google')
+  @UseGuards(GoogleGuard)
+  googleLogin() {
+    console.log('google login');
+
+    // Initiates the Google OAuth2 login flow
+  }
+
+  // http://localhost:3000/auth/google/callback
+  @Get('google/callback')
+  @UseGuards(GoogleGuard)
+  googleLoginCallback(@Req() req) {
+    // Handles the Google OAuth2 callback
+    const user = req.user;
+    console.log(user);
+
+    // Here you would usually create a JWT token and send it to the user
+  }
+
+  @Get('protected')
+  @UseGuards(AuthGuard('jwt'))
+  protectedResource() {
+    return 'JWT is working!';
+  }
   // @UseGuards(LocalAuthGuard)
   @Post('signin')
   async signIn(@Req() req: Request & { user: any }) {
