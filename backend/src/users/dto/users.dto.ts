@@ -21,6 +21,11 @@ export class UserDto {
   @IsString()
   firstName: string;
 
+  @ApiProperty({ example: 'Doe' })
+  @IsOptional()
+  @IsString()
+  lastName?: string;
+
   @ApiProperty({ example: 'john.doe@example.com' })
   @IsNotEmpty()
   @IsString()
@@ -30,12 +35,12 @@ export class UserDto {
   @ApiProperty({ example: 'password123' })
   @IsOptional()
   @IsString()
-  password: string;
+  password?: string;
 
   @ApiProperty({ example: true })
   @IsOptional()
   @IsBoolean()
-  isPasswordReset: boolean;
+  isPasswordReset?: boolean;
 
   @ApiProperty({ example: 'This is my signature' })
   @IsOptional()
@@ -46,17 +51,17 @@ export class UserDto {
   @ApiProperty({ example: true })
   @IsOptional()
   @IsBoolean()
-  isActive: boolean;
+  isActive?: boolean;
 
   @ApiProperty({ example: 'admin' })
   @IsOptional()
   @IsString()
-  role: string;
+  role?: string;
 
   @ApiProperty({ example: '2022-01-01T00:00:00Z' })
   @IsOptional()
   @IsDateString()
-  createdAt: Date;
+  createdAt?: Date;
 
   @ApiProperty({ example: '2022-01-01T00:00:00Z' })
   @IsOptional()

@@ -44,6 +44,7 @@ export class AuthController {
     console.log(user);
 
     // Here you would usually create a JWT token and send it to the user
+    return this.authService.singInWithGoogle(user);
   }
 
   @Get('protected')
