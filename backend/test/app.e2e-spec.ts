@@ -12,6 +12,7 @@ import { AiApiService } from '../src/ai-api/ai-api.service';
 import { FileStorageService } from '../src/file-storage/file-storage.service';
 import generateUser from '../src/users/generate.user';
 import { Users } from '../src/users/users.entity';
+import { HELLO_WORLD_MESSAGE_FROM_APP_SERVICE } from '../src/app.service';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -49,7 +50,7 @@ describe('AppController (e2e)', () => {
   it('/ (GET)', () => {
     return request(app.getHttpServer()).get('/').expect(200).expect({
       statusCode: 200,
-      data: 'Hello World!',
+      data: HELLO_WORLD_MESSAGE_FROM_APP_SERVICE, 
       message: 'OK',
     });
   });
