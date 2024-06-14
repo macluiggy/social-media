@@ -50,6 +50,7 @@ const envVariables = {
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackUrl: process.env.GOOGLE_CALLBACK_URL,
   },
+  frontedUrl: process.env.FRONTEND_URL,
 };
 
 if (DB_SSL_CERT) {

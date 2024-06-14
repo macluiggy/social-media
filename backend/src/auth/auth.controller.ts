@@ -7,6 +7,7 @@ import {
   ParseFilePipe,
   Post,
   Req /**, UseGuards */,
+  Res,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -21,6 +22,7 @@ import getApiEndpoint from '../common/utils/getApiEndpoint';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthGuard } from '@nestjs/passport';
 import { GoogleGuard } from './guards/google.guard';
+import envVariables from '../common/envVariables';
 
 @ApiTags('auth')
 @Controller(getApiEndpoint('auth'))
@@ -38,13 +40,16 @@ export class AuthController {
   // http://localhost:3000/auth/google/callback
   @Get('google/callback')
   @UseGuards(GoogleGuard)
-  googleLoginCallback(@Req() req) {
+  async googleLoginCallback(@Req() req, @Res() res) {
     // Handles the Google OAuth2 callback
     const user = req.user;
     console.log(user);
 
     // Here you would usually create a JWT token and send it to the user
-    return this.authService.singInWithGoogle(user);
+    const { accessToken } = await this.authService.singInWithGoogle(user);
+    console.log(accessToken);
+
+    res.redirect(envVariables.frontedUrl);
   }
 
   @Get('protected')

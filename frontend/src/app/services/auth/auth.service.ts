@@ -109,4 +109,10 @@ export class AuthService {
   getLoggedInUserFromStorage() {
     return this.storageService.getUser();
   }
+
+  private googleAuthUrl = `${this.apiUrl}/auth/google`;
+  loginWithGoogle() {
+    window.location.href = this.googleAuthUrl;
+    // return this.http.get(`${this.apiUrl}/auth/google`);
+  }
 }

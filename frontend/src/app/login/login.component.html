@@ -53,6 +53,10 @@
         <p-button type="submit" label="Login"></p-button>
       </div>
     </form>
+
+    <button (click)="loginWithGoogle()">
+      login with google
+    </button>
     } @else {
     <div class="alert alert-success">
       Logged in as {{ user.username || user.fullName }}.

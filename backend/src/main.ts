@@ -17,6 +17,7 @@ async function bootstrap() {
       'http://localhost:4200',
       'https://social-media-8yq.pages.dev',
       'https://staging-social-media.pages.dev',
+      envVariables.frontedUrl,
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     allowedHeaders: 'Content-Type, Accept, Authorization',
