@@ -31,7 +31,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     // Add your JWT validation logic here
     return this.validateRequest(request);
   }
-
+  //
   validateRequest(request: any): boolean {
     const authHeader = request.headers.authorization;
 
