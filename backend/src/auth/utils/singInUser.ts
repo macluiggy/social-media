@@ -32,7 +32,6 @@ class Singleton {
       const response = await request(app.getHttpServer())
         .post(endpoint)
         .send({ email: EMAIL_FOR_TESTING, password: PASSWORD_FOR_TESTING });
-      console.log('response.body', response.body);
 
       this.instance = response.body?.data;
     }
