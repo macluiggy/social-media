@@ -5,7 +5,7 @@ import {
   PASSWORD_FOR_TESTING,
   USERNAME_FOR_TESTING,
 } from '../../auth/utils/singInUser';
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt';
 
 export class FirstOne1717866680475 implements MigrationInterface {
   name = 'FirstOne1717866680475';
