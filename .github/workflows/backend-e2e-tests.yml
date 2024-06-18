@@ -45,17 +45,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: backend  
-        run: bun install  # Use the appropriate command for your project
-
-      - name: Build the project
-        working-directory: backend  
-        run: bun run build  # Use the appropriate build command for your project
-        
-      # - name: Run migrations
-      #   run: bun run typeorm:run-migrations
-      #   env:
-      #     DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
-      #   working-directory: backend  
+        run: bun install   
 
       - name: Run e2e tests
         run: bun run test:e2e
