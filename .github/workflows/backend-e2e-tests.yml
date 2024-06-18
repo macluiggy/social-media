@@ -36,8 +36,8 @@ jobs:
       DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
       JWT_SECRET: some_secret
       JWT_EXPIRES_IN: 300d
-      GOOGLE_CLIENT_ID: 887392150454-hsdlv669fbinkrn6poncm48te1mrq9qm.apps.googleusercontent.com
-      GOOGLE_CLIENT_SECRET: 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
+      GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+      GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
 
     steps:
       - name: Checkout code
