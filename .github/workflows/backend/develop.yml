@@ -2,8 +2,15 @@ name: Deploy Backend to Vercel to staging
 
 on:
   push:
+    paths:
+      - 'backend/**'
     branches:
-      - develop  # Change this to your default branch if different
+      - develop
+  pull_request:
+    paths:
+      - 'backend/**'
+    branches:
+      - develop 
 
 jobs:
   deploy:

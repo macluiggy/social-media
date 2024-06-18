@@ -2,9 +2,15 @@ name: Deploy Backend to Vercel to production
 
 on:
   push:
+    paths:
+      - 'backend/**'
     branches:
-      - main  # Change this to your default branch if different
-
+      - main
+  pull_request:
+    paths:
+      - 'backend/**'
+    branches:
+      - main 
 jobs:
   deploy:
     runs-on: ubuntu-latest
