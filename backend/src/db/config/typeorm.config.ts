@@ -13,7 +13,7 @@ import factories from './factories';
 const { db } = envVariables;
 
 // detect entity files by ending with .entity.ts .
-const typeOrmConfig: TypeOrmModuleOptions & SeederOptions = {
+const typeOrmConfigPostgres: TypeOrmModuleOptions & SeederOptions = {
   type: 'postgres',
   url: db.databaseUrl,
   entities: entities,
@@ -29,9 +29,9 @@ const typeOrmConfig: TypeOrmModuleOptions & SeederOptions = {
   },
 };
 if (envVariables.db.ssl) {
-  Object.assign(typeOrmConfig, { ssl: envVariables.db.ssl });
+  Object.assign(typeOrmConfigPostgres, { ssl: envVariables.db.ssl });
 }
-// const typeOrmConfig: TypeOrmModuleOptions & SeederOptions = {
+// const typeOrmConfigSqlLite: TypeOrmModuleOptions & SeederOptions = {
 //   type: 'sqlite',
 //   database: 'database.sqlite',
 //   entities: entities,
@@ -40,9 +40,11 @@ if (envVariables.db.ssl) {
 //   migrations: migrations,
 //   seeds: seeders,
 //   factories: factories,
-//   migrationsRun: true,
 // };
 
+const typeOrmConfig = envVariables.isTesting
+  ? typeOrmConfigPostgres
+  : typeOrmConfigPostgres;
 export { typeOrmConfig };
 
-export default new DataSource(typeOrmConfig as any);
+export default new DataSource(typeOrmConfigPostgres as any);

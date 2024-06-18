@@ -9,7 +9,7 @@ import setupTestingModule from '../../test/setUpTestingModule';
 import generateUser from '../users/generate.user';
 import { authModuleMetadata } from './auth.module';
 
-describe('AppController (e2e)', () => {
+describe('AuthController (e2e)', () => {
   let app: INestApplication;
   let userRepository: Repository<Users>;
 

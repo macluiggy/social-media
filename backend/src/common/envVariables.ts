@@ -35,6 +35,7 @@ const envVariables = {
   nodeEnviroment: NODE_ENV,
   isProduction,
   isDevelopment,
+  isTesting: NODE_ENV === NODE_ENVIRONMENTS.TEST,
   jwtSecret: process.env.JWT_SECRET,
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '1d',
   huggingFaceApiKey: process.env.HUGGINGFACE_API_KEY,
