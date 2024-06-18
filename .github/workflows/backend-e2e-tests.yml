@@ -48,11 +48,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: backend  
-        run: bun install  # Use the appropriate command for your project
-
-      - name: Build the project
-        working-directory: backend  
-        run: bun run build  # Use the appropriate build command for your project
+        run: bun install
         
       - name: Run migrations
         run: npm run typeorm:run-migrations

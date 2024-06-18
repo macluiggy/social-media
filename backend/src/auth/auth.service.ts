@@ -1,4 +1,9 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserDto } from '../users/dto/users.dto';
 import { UsersService } from '../users/users.service';
@@ -57,6 +62,10 @@ export class AuthService {
 
   async signIn(user: { email: string; password: string }) {
     const userFromDB = await this.userService.findByEmail(user.email);
+
+    if (!userFromDB) {
+      throw new NotFoundException('User not found');
+    }
     const preferredLanguage = userFromDB?.['preferredLanguage'] || DEFAULT_LANG;
     const isValidPassword = await this.userService.checkPassword(
       user.password,
