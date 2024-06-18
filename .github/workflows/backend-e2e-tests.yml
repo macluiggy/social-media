@@ -2,13 +2,13 @@ name: Run E2E tests for the backend
 
 on:
   push:
-    # paths:
-    #   - 'backend/**'
+    paths:
+      - 'backend/**'
     branches:
       - develop
   pull_request:
-    # paths:
-    #   - 'backend/**'
+    paths:
+      - 'backend/**'
     branches:
       - develop 
 
