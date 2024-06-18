@@ -7,6 +7,28 @@ export class FirstOne1717866680475 implements MigrationInterface {
     await queryRunner.query(
       `CREATE TABLE "users" ("id" SERIAL NOT NULL, "username" character varying(50) NOT NULL, "first_name" character varying(100) NOT NULL, "last_name" character varying(100), "email" character varying(100) NOT NULL, "password" character varying(150), "is_password_reset" boolean NOT NULL DEFAULT false, "signature" character varying(255), "is_active" boolean NOT NULL DEFAULT true, "role" character varying(50) NOT NULL DEFAULT 'user', "preferred_language" character varying NOT NULL DEFAULT 'en', "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "deleted_at" TIMESTAMP, "phone" character varying(100) NOT NULL DEFAULT '', "profile_image_key" character varying(255), CONSTRAINT "UQ_fe0bb3f6520ee0469504521e710" UNIQUE ("username"), CONSTRAINT "UQ_97672ac88f789774dd47f7c8be3" UNIQUE ("email"), CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))`,
     );
+
+    const EMAIL_FOR_TESTING = 'user-for-testing@test.com';
+    const PASSWORD_FOR_TESTING = '123456'; // Make sure to hash this password before inserting it into the database
+    const USERNAME_FOR_TESTING = 'user-for-testing';
+    const FULL_NAME_FOR_TESTING = 'Test User For Testing';
+
+    await queryRunner.query(
+      `INSERT INTO "users" ("username", "first_name", "last_name", "email", "password", "is_password_reset", "is_active", "role", "preferred_language", "phone") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
+      [
+        USERNAME_FOR_TESTING,
+        FULL_NAME_FOR_TESTING,
+        '',
+        EMAIL_FOR_TESTING,
+        PASSWORD_FOR_TESTING,
+        false,
+        true,
+        'user',
+        'en',
+        '',
+      ],
+    );
+
     await queryRunner.query(
       `CREATE TABLE "posts" ("id" SERIAL NOT NULL, "user_id" integer NOT NULL, "title" character varying(255), "content" text NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_2829ac61eff60fcec60d7274b9e" PRIMARY KEY ("id"))`,
     );

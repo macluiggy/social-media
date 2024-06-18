@@ -57,7 +57,7 @@ export class AuthService {
 
   async signIn(user: { email: string; password: string }) {
     const userFromDB = await this.userService.findByEmail(user.email);
-    const preferredLanguage = userFromDB['preferredLanguage'] || DEFAULT_LANG;
+    const preferredLanguage = userFromDB?.['preferredLanguage'] || DEFAULT_LANG;
     const isValidPassword = await this.userService.checkPassword(
       user.password,
       userFromDB.password,
