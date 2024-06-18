@@ -1,14 +1,14 @@
-name: Deploy Backend to Vercel to staging
+name: Run E2E tests for the backend
 
 on:
   push:
-    paths:
-      - 'backend/**'
+    # paths:
+    #   - 'backend/**'
     branches:
       - develop
   pull_request:
-    paths:
-      - 'backend/**'
+    # paths:
+    #   - 'backend/**'
     branches:
       - develop 
 
@@ -44,11 +44,11 @@ jobs:
         working-directory: backend  
         run: bun run build  # Use the appropriate build command for your project
         
-      - name: Run migrations
-        run: bun run typeorm:run-migrations
-        env:
-          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
-        working-directory: backend  
+      # - name: Run migrations
+      #   run: bun run typeorm:run-migrations
+      #   env:
+      #     DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
+      #   working-directory: backend  
 
       - name: Run e2e tests
         run: bun run test:e2e
