@@ -22,7 +22,8 @@ const typeOrmConfigPostgres: TypeOrmModuleOptions & SeederOptions = {
   migrations: migrations,
   seeds: seeders,
   factories: factories,
-  migrationsRun: !envVariables.isDevelopment,
+  // run migrations automatically if not in development or testing
+  migrationsRun: !envVariables.isDevelopment && !envVariables.isTesting,
   extra: {
     max: 10,
     min: 2,

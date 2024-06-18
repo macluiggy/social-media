@@ -25,7 +25,7 @@ jobs:
           POSTGRES_DB: postgres
         ports:
           - 5432:5432
-        # options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     
     env:
       DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
@@ -43,9 +43,22 @@ jobs:
         with:
           bun-version: 'latest'
 
+      - name: Install npm with Bun
+        run: bun install -g npm
+
       - name: Install dependencies
         working-directory: backend  
-        run: bun install   
+        run: bun install  # Use the appropriate command for your project
+
+      - name: Build the project
+        working-directory: backend  
+        run: bun run build  # Use the appropriate build command for your project
+        
+      - name: Run migrations
+        run: npm run typeorm:run-migrations
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
+        working-directory: backend  
 
       - name: Run e2e tests
         run: bun run test:e2e
