@@ -11,7 +11,7 @@ import { Repository } from 'typeorm';
 import getApiEndpoint from '../../common/utils/getApiEndpoint';
 import generateComment from './generate.comment';
 
-describe('Post Controller (e2e)', () => {
+describe('Comment Controller (e2e)', () => {
   let app: INestApplication;
   let accessToken: string;
   let user: Users;

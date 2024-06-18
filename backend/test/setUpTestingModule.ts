@@ -17,7 +17,9 @@ export default async function setupTestingModule({
   const moduleFixture: TestingModule = await Test.createTestingModule({
     imports: [
       AppModule,
-      TypeOrmModule.forRoot(typeOrmConfig),
+      TypeOrmModule.forRoot({
+        ...typeOrmConfig,
+      }),
       TypeOrmModule.forFeature(entities),
       ...imports,
     ],

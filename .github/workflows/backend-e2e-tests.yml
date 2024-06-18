@@ -1,0 +1,57 @@
+name: Deploy Backend to Vercel to staging
+
+on:
+  push:
+    paths:
+      - 'backend/**'
+    branches:
+      - develop
+  pull_request:
+    paths:
+      - 'backend/**'
+    branches:
+      - develop 
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: 'latest'
+
+      - name: Install dependencies
+        working-directory: backend  
+        run: bun install  # Use the appropriate command for your project
+
+      - name: Build the project
+        working-directory: backend  
+        run: bun run build  # Use the appropriate build command for your project
+        
+      - name: Run migrations
+        run: bun run typeorm:run-migrations
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
+        working-directory: backend  
+
+      - name: Run e2e tests
+        run: bun run test:e2e
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
+        working-directory: backend  
