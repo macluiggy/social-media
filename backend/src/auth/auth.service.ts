@@ -62,6 +62,7 @@ export class AuthService {
 
   async signIn(user: { email: string; password: string }) {
     const userFromDB = await this.userService.findByEmail(user.email);
+    console.log('userFromDB', userFromDB, 'user', user);
 
     if (!userFromDB) {
       throw new NotFoundException('User not found');
