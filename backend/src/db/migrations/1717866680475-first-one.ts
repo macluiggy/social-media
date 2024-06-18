@@ -5,6 +5,7 @@ import {
   PASSWORD_FOR_TESTING,
   USERNAME_FOR_TESTING,
 } from '../../auth/utils/singInUser';
+import bcrypt from 'bcrypt';
 
 export class FirstOne1717866680475 implements MigrationInterface {
   name = 'FirstOne1717866680475';
@@ -14,6 +15,8 @@ export class FirstOne1717866680475 implements MigrationInterface {
       `CREATE TABLE "users" ("id" SERIAL NOT NULL, "username" character varying(50) NOT NULL, "first_name" character varying(100) NOT NULL, "last_name" character varying(100), "email" character varying(100) NOT NULL, "password" character varying(150), "is_password_reset" boolean NOT NULL DEFAULT false, "signature" character varying(255), "is_active" boolean NOT NULL DEFAULT true, "role" character varying(50) NOT NULL DEFAULT 'user', "preferred_language" character varying NOT NULL DEFAULT 'en', "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "deleted_at" TIMESTAMP, "phone" character varying(100) NOT NULL DEFAULT '', "profile_image_key" character varying(255), CONSTRAINT "UQ_fe0bb3f6520ee0469504521e710" UNIQUE ("username"), CONSTRAINT "UQ_97672ac88f789774dd47f7c8be3" UNIQUE ("email"), CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))`,
     );
 
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(PASSWORD_FOR_TESTING, salt);
     await queryRunner.query(
       `INSERT INTO "users" ("username", "first_name", "last_name", "email", "password", "is_password_reset", "is_active", "role", "preferred_language", "phone") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
       [
@@ -21,7 +24,7 @@ export class FirstOne1717866680475 implements MigrationInterface {
         FULL_NAME_FOR_TESTING,
         '',
         EMAIL_FOR_TESTING,
-        PASSWORD_FOR_TESTING,
+        hashedPassword,
         false,
         true,
         'user',
