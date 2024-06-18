@@ -37,6 +37,7 @@ describe('Comment Controller (e2e)', () => {
     post = await postsRepository.save(post);
   });
 
+  let parentCommentId: number;
   it('/post-comments POST, should create a comment', async () => {
     // create a comment
     const comment = generateComment({ postId: post.id, userId: user.id });
@@ -50,7 +51,42 @@ describe('Comment Controller (e2e)', () => {
       })
       .send(comment);
 
+    parentCommentId = res.body.data.id;
+
     return expect(res.status).toBe(201);
+  });
+
+  it('/post-comments POST, should create a child comment', async () => {
+    // create a child comment
+    const comment = generateComment({
+      postId: post.id,
+      userId: user.id,
+      parentCommentId,
+    });
+
+    const endpoint = getApiEndpoint(`${baseUrl}`);
+
+    const res = await request(app.getHttpServer())
+      .post(endpoint)
+      .set({
+        authorization: `Bearer ${accessToken}`,
+      })
+      .send(comment);
+
+    return expect(res.status).toBe(201);
+  });
+
+  it('/post-comments/post/:postId GET, should get all comments by post id', async () => {
+    const endpoint = getApiEndpoint(`${baseUrl}/post/${post.id}`);
+
+    const res = await request(app.getHttpServer()).get(endpoint);
+
+    expect(res.status).toBe(200);
+    // the total number of comments should be 1
+    expect(res.body.data.total).toBe(1);
+    // it should have 1 item and the item should have a parentCommentId of null
+    expect(res.body.data.items.length).toBe(1);
+    expect(res.body.data.items[0].parentCommentId).toBeNull();
   });
 
   afterAll(async () => {
