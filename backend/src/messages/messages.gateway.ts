@@ -28,14 +28,12 @@ export class MessagesGateway {
       content: string;
     },
   ) {
-    console.log('Message received:', message);
     const { senderId, receiverId, content } = message;
-    const newMessage = await this.messagesService.saveMessage({
+    await this.messagesService.saveMessage({
       senderId,
       receiverId,
       content,
     });
-    console.log('New message:', newMessage);
 
     this.server.emit('receiveMessage', message);
   }
