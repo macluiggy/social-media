@@ -5,8 +5,14 @@ import {
   MessageBody,
 } from '@nestjs/websockets';
 import { Server } from 'socket.io';
+import { CORS_ORIGINS } from '../common/constants';
 
-@WebSocketGateway()
+@WebSocketGateway({
+  cors: {
+    origin: CORS_ORIGINS,
+    methods: ['GET', 'POST'],
+  },
+})
 export class MessagesGateway {
   @WebSocketServer()
   server: Server;

@@ -7,20 +7,15 @@ import envVariables from './common/envVariables';
 import { NestFastifyApplication } from '@nestjs/platform-fastify';
 import { ValidationPipe } from '@nestjs/common';
 import cookieParser from 'cookie-parser';
+import { CORS_ORIGINS } from './common/constants';
 
 const port = envVariables.port;
-
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(AppModule);
   app.useGlobalFilters(new HttpExceptionFilter());
   app.use(cookieParser());
   app.enableCors({
-    origin: [
-      'http://localhost:4200',
-      'https://social-media-8yq.pages.dev',
-      'https://staging-social-media.pages.dev',
-      envVariables.frontedUrl,
-    ],
+    origin: CORS_ORIGINS,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     allowedHeaders: 'Content-Type, Accept, Authorization',
     credentials: true,

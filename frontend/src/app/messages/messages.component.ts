@@ -11,7 +11,12 @@ import { CommonModule } from '@angular/common';
   styleUrl: './messages.component.scss',
 })
 export class MessagesComponent implements OnInit {
-  messages: { sender: string; content: string }[] = [];
+  messages: { sender: string; content: string }[] = [
+    {
+      sender: 'Admin',
+      content: 'Welcome to the chat!',
+    },
+  ];
   newMessage: string = '';
   username: string = 'User';
 
@@ -20,6 +25,8 @@ export class MessagesComponent implements OnInit {
   ngOnInit(): void {
     this.socketService.onMessage().subscribe((message) => {
       this.messages.push(message);
+      console.log('received message:', message);
+      
     });
   }
 

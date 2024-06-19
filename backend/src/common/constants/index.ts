@@ -13,6 +13,13 @@ const NODE_ENVIRONMENTS = {
 
 const ONE_WEEK_IN_SECONDS = 60 * 60 * 24 * 7;
 
+const CORS_ORIGINS = [
+  'http://localhost:4200',
+  'https://social-media-8yq.pages.dev',
+  'https://staging-social-media.pages.dev',
+  process.env.FRONTEND_URL,
+];
+
 function sealAndFreezeObj(...objs) {
   // return Object.freeze(Object.seal(Object.assign({}, ...objs)));
   for (const obj of objs) {
@@ -21,6 +28,13 @@ function sealAndFreezeObj(...objs) {
   }
 }
 
-sealAndFreezeObj(OBJECT, API_VERSION, NODE_ENVIRONMENTS, USER);
+sealAndFreezeObj(OBJECT, API_VERSION, NODE_ENVIRONMENTS, USER, CORS_ORIGINS);
 
-export { API_VERSION, OBJECT, NODE_ENVIRONMENTS, ONE_WEEK_IN_SECONDS, USER };
+export {
+  API_VERSION,
+  OBJECT,
+  NODE_ENVIRONMENTS,
+  ONE_WEEK_IN_SECONDS,
+  USER,
+  CORS_ORIGINS,
+};
