@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { MessagesService } from '../services/messages/messages.service';
 import { Message } from '../common/types/messages.type';
 import { AuthService } from '../services/auth/auth.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-messages',
@@ -17,16 +18,16 @@ export class MessagesComponent implements OnInit {
   loggedInUser = this.authService.getLoggedInUserFromStorage();
   loggedInUserId = this.loggedInUser?.id;
   senderId = this.loggedInUserId as number;
-  receiverId: number = 76;
+  receiverId: number = this.activatedRoute.snapshot.params['receiverId'];
   messages: Message[] = [];
   newMessage: string = '';
   username: string = 'User';
 
   constructor(
     private socketService: SocketService,
-
     private messageService: MessagesService,
-    private authService: AuthService
+    private authService: AuthService,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {

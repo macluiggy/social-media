@@ -40,7 +40,7 @@ export const routes: Routes = [
     component: SuccessComponent,
   },
   {
-    path: 'messages',
+    path: 'messages/:receiverId',
     component: MessagesComponent,
   },
   { path: '**', component: NotFoundComponent }, // dont put any routes after this one, it will always redirect to the not found component
