@@ -2,15 +2,15 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateFollowDto } from './dto/create-follow.dto';
 import { UpdateFollowDto } from './dto/update-follow.dto';
 import { Repository } from 'typeorm';
-import { Follow } from './entities/follow.entity';
+import { FollowEntity } from './entities/follow.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FileStorageService } from '../../file-storage/file-storage.service';
 
 @Injectable({})
 export class FollowsService {
   constructor(
-    @InjectRepository(Follow)
-    private readonly followsRepository: Repository<Follow>,
+    @InjectRepository(FollowEntity)
+    private readonly followsRepository: Repository<FollowEntity>,
     private fileStorageService: FileStorageService,
   ) {}
 

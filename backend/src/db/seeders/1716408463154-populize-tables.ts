@@ -3,7 +3,7 @@ import { Seeder, SeederFactory, SeederFactoryManager } from 'typeorm-extension';
 import { SeederEntity } from '../seeders.entity';
 import { UserEntity } from '../../users/users.entity';
 import { PostEntity } from '../../posts/entities/post.entity';
-import { Follow } from '../../users/follows/entities/follow.entity';
+import { FollowEntity } from '../../users/follows/entities/follow.entity';
 import { Like } from '../../posts/likes/entities/like.entity';
 import { PostCommentEntity } from '../../posts/comments/entities/comment.entity';
 import { DEFAULT_LANG } from '../../lang';
@@ -36,7 +36,7 @@ export class PopulizeTables1716408463154 implements Seeder {
 
     // repositories
     const usersRepository = dataSource.getRepository(UserEntity);
-    const followsRepository = dataSource.getRepository(Follow);
+    const followsRepository = dataSource.getRepository(FollowEntity);
     const likesRepository = dataSource.getRepository(Like);
     const postCommentRepository = dataSource.getRepository(PostCommentEntity);
     const postsRepository = dataSource.getRepository(PostEntity);
@@ -169,7 +169,7 @@ export class PopulizeTables1716408463154 implements Seeder {
     followRepository,
   }: {
     users: UserEntity[];
-    followRepository: Repository<Follow>;
+    followRepository: Repository<FollowEntity>;
   }) {
     const follows = [];
 
@@ -187,7 +187,7 @@ export class PopulizeTables1716408463154 implements Seeder {
     await followRepository
       .createQueryBuilder()
       .insert()
-      .into(Follow)
+      .into(FollowEntity)
       .values(follows)
       .execute();
   }

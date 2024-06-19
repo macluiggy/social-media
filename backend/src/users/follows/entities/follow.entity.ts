@@ -10,9 +10,11 @@ import {
 import { UserEntity } from '../../users.entity';
 
 // typeorm entity
-@Entity('follows')
+@Entity({
+  name: 'follows',
+})
 @Unique('UQ_FOLLOWER_FOLLOWING', ['followerId', 'followingId'])
-export class Follow {
+export class FollowEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

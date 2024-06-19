@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { FollowsService } from './follows.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Follow } from './entities/follow.entity';
+import { FollowEntity } from './entities/follow.entity';
 import { FileStorageService } from '../../file-storage/file-storage.service';
 import { vi } from 'vitest';
 
@@ -14,7 +14,7 @@ describe('FollowsService', () => {
       providers: [
         FollowsService,
         {
-          provide: getRepositoryToken(Follow),
+          provide: getRepositoryToken(FollowEntity),
           useValue: {
             createQueryBuilder: vi.fn().mockReturnThis(),
             leftJoinAndSelect: vi.fn().mockReturnThis(),
@@ -46,7 +46,7 @@ describe('FollowsService', () => {
 
     await service.getUserFollowers(userId);
 
-    const followRepository = module.get(getRepositoryToken(Follow));
+    const followRepository = module.get(getRepositoryToken(FollowEntity));
     expect(followRepository.createQueryBuilder).toHaveBeenCalledWith('f2');
     expect(followRepository.addSelect).toHaveBeenCalledWith([
       'user.id',

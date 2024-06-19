@@ -15,7 +15,7 @@ import * as bcrypt from 'bcrypt';
 import { DEFAULT_LANG } from '../lang';
 import { PostEntity } from '../posts/entities/post.entity';
 import { Like } from '../posts/likes/entities/like.entity';
-import { Follow } from './follows/entities/follow.entity';
+import { FollowEntity } from './follows/entities/follow.entity';
 import { PostCommentEntity } from '../posts/comments/entities/comment.entity';
 import { MessageEntity } from '../messages/entities/message.entity';
 
@@ -128,13 +128,13 @@ export class UserEntity {
   @JoinColumn({ name: 'id' })
   posts: PostEntity[];
 
-  @OneToMany('Follow', (follow: Follow) => follow.follower)
+  @OneToMany('FollowEntity', (follow: FollowEntity) => follow.follower)
   @JoinColumn({ name: 'id' })
-  following: Follow[];
+  following: FollowEntity[];
 
-  @OneToMany('Follow', (follow: Follow) => follow.following)
+  @OneToMany('FollowEntity', (follow: FollowEntity) => follow.following)
   @JoinColumn({ name: 'id' })
-  followers: Follow[];
+  followers: FollowEntity[];
 
   @OneToMany('PostCommentEntity', (comment: PostCommentEntity) => comment.user)
   @JoinColumn({ name: 'id' })
