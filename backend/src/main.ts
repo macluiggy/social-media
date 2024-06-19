@@ -8,6 +8,7 @@ import { NestFastifyApplication } from '@nestjs/platform-fastify';
 import { ValidationPipe } from '@nestjs/common';
 import cookieParser from 'cookie-parser';
 import { CORS_ORIGINS } from './common/constants';
+import { IoAdapter } from '@nestjs/platform-socket.io';
 
 const port = envVariables.port;
 async function bootstrap() {
@@ -20,6 +21,7 @@ async function bootstrap() {
     allowedHeaders: 'Content-Type, Accept, Authorization',
     credentials: true,
   });
+  app.useWebSocketAdapter(new IoAdapter(app));
   app.useGlobalInterceptors(new SuccesResponseInterceptor());
   app.useGlobalPipes(new ValidationPipe());
 

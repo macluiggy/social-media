@@ -10,11 +10,19 @@ import {
 import { MessagesService } from './messages.service';
 import { CreateMessageDto } from './dto/create-message.dto';
 import { UpdateMessageDto } from './dto/update-message.dto';
+import getApiEndpoint from '../common/utils/getApiEndpoint';
 
-@Controller('messages')
+@Controller({
+  path: getApiEndpoint('messages'),
+})
 export class MessagesController {
   constructor(private readonly messagesService: MessagesService) {}
 
+  @Get('sender/:senderId/receiver/:receiverId')
+  getMessages(@Param() params: any) {
+    const { senderId = 0, receiverId = 0 } = params;
+    return this.messagesService.getMessages(+senderId, +receiverId);
+  }
   @Post()
   create(@Body() createMessageDto: CreateMessageDto) {
     return this.messagesService.create(createMessageDto);
