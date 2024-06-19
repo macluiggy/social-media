@@ -2,7 +2,7 @@ import { DataSource, Repository } from 'typeorm';
 import { Seeder, SeederFactory, SeederFactoryManager } from 'typeorm-extension';
 import { SeederEntity } from '../seeders.entity';
 import { UserEntity } from '../../users/users.entity';
-import { Post } from '../../posts/entities/post.entity';
+import { PostEntity } from '../../posts/entities/post.entity';
 import { Follow } from '../../users/follows/entities/follow.entity';
 import { Like } from '../../posts/likes/entities/like.entity';
 import { PostCommentEntity } from '../../posts/comments/entities/comment.entity';
@@ -39,7 +39,7 @@ export class PopulizeTables1716408463154 implements Seeder {
     const followsRepository = dataSource.getRepository(Follow);
     const likesRepository = dataSource.getRepository(Like);
     const postCommentRepository = dataSource.getRepository(PostCommentEntity);
-    const postsRepository = dataSource.getRepository(Post);
+    const postsRepository = dataSource.getRepository(PostEntity);
 
     const userQueryBuilder = usersRepository.createQueryBuilder();
     // delete all users that have the email starting with 'dummy.'
@@ -50,7 +50,7 @@ export class PopulizeTables1716408463154 implements Seeder {
 
     // factories
     const userFactory = factoryManager.get(UserEntity);
-    const postsFactory = factoryManager.get(Post);
+    const postsFactory = factoryManager.get(PostEntity);
     const postCommentFactory = factoryManager.get(PostCommentEntity);
 
     // seed default users
@@ -147,9 +147,9 @@ export class PopulizeTables1716408463154 implements Seeder {
     users,
     postsRepository,
   }: {
-    postsFactory: SeederFactory<Post, unknown>;
+    postsFactory: SeederFactory<PostEntity, unknown>;
     users: UserEntity[];
-    postsRepository: Repository<Post>;
+    postsRepository: Repository<PostEntity>;
   }) {
     const posts = [];
     for (const user of users) {
@@ -197,7 +197,7 @@ export class PopulizeTables1716408463154 implements Seeder {
     users,
     likeRepository,
   }: {
-    posts: Post[];
+    posts: PostEntity[];
     users: UserEntity[];
     likeRepository: Repository<Like>;
   }) {
@@ -226,7 +226,7 @@ export class PopulizeTables1716408463154 implements Seeder {
     postCommentRepository,
     postCommentFactory,
   }: {
-    posts: Post[];
+    posts: PostEntity[];
     users: UserEntity[];
     postCommentRepository: Repository<PostCommentEntity>;
     postCommentFactory: SeederFactory<PostCommentEntity, unknown>;

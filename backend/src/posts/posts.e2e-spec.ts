@@ -7,7 +7,7 @@ import { it } from 'vitest';
 import { UserEntity } from '../users/users.entity';
 import { PostsModule } from './posts.module';
 import { UsersModule } from '../users/users.module';
-import { Post } from './entities/post.entity';
+import { PostEntity } from './entities/post.entity';
 import generatePost from './generate.post';
 import { signInUser } from '../auth/utils/singInUser';
 import { AuthModule } from '../auth/auth.module';
@@ -17,9 +17,9 @@ import { Repository } from 'typeorm';
 describe('Post Controller (e2e)', () => {
   let app: INestApplication;
   let user: UserEntity;
-  let post: Post;
+  let post: PostEntity;
   let accessToken: string;
-  let postsRepository: Repository<Post>;
+  let postsRepository: Repository<PostEntity>;
 
   beforeAll(async () => {
     const testingModule = await setupTestingModule({
@@ -40,7 +40,7 @@ describe('Post Controller (e2e)', () => {
 
     post = generatePost({ userId: user.id });
 
-    postsRepository = module.get(getRepositoryToken(Post));
+    postsRepository = module.get(getRepositoryToken(PostEntity));
   });
 
   it('/post POST, should create a post', async () => {

@@ -10,7 +10,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { UserEntity } from '../../../users/users.entity';
-import { Post } from '../../entities/post.entity';
+import { PostEntity } from '../../entities/post.entity';
 
 @Entity('likes')
 @Unique('UQ_USER_POST', ['userId', 'postId'])
@@ -51,10 +51,10 @@ export class Like {
   @JoinColumn({ name: 'user_id' })
   user: UserEntity;
 
-  @ManyToOne('Post', (post: Post) => post.likes, {
+  @ManyToOne('PostEntity', (post: PostEntity) => post.likes, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
   @JoinColumn({ name: 'post_id' })
-  post: Post;
+  post: PostEntity;
 }

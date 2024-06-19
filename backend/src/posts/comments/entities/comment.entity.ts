@@ -8,7 +8,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Post } from '../../entities/post.entity';
+import { PostEntity } from '../../entities/post.entity';
 import { UserEntity } from '../../../users/users.entity';
 
 @Entity({
@@ -50,12 +50,12 @@ export class PostCommentEntity {
   @JoinColumn({ name: 'user_id' })
   user: UserEntity;
 
-  @ManyToOne('Post', (post: Post) => post.comments, {
+  @ManyToOne('PostEntity', (post: PostEntity) => post.comments, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
   @JoinColumn({ name: 'post_id' })
-  post: Post;
+  post: PostEntity;
 
   @ManyToOne(() => PostCommentEntity, (comment) => comment.childComments, {
     onDelete: 'CASCADE',

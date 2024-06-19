@@ -1,6 +1,6 @@
 import { MessageEntity } from '../../messages/entities/message.entity';
 import { PostCommentEntity } from '../../posts/comments/entities/comment.entity';
-import { Post } from '../../posts/entities/post.entity';
+import { PostEntity } from '../../posts/entities/post.entity';
 import { Like } from '../../posts/likes/entities/like.entity';
 import { Follow } from '../../users/follows/entities/follow.entity';
 import { UserEntity } from '../../users/users.entity';
@@ -11,11 +11,11 @@ export const entitiesObject = {
   SeederEntity,
 };
 
-export type Entities = UserEntity | SeederEntity | Post;
+export type Entities = UserEntity | SeederEntity | PostEntity;
 export default [
   UserEntity,
   SeederEntity,
-  Post,
+  PostEntity,
   Follow,
   Like,
   PostCommentEntity,

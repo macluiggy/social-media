@@ -13,7 +13,7 @@ import {
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { DEFAULT_LANG } from '../lang';
-import { Post } from '../posts/entities/post.entity';
+import { PostEntity } from '../posts/entities/post.entity';
 import { Like } from '../posts/likes/entities/like.entity';
 import { Follow } from './follows/entities/follow.entity';
 import { PostCommentEntity } from '../posts/comments/entities/comment.entity';
@@ -124,9 +124,9 @@ export class UserEntity {
   @JoinColumn({ name: 'id' })
   likes: Like[];
 
-  @OneToMany('Post', (post: Post) => post.user)
+  @OneToMany('PostEntity', (post: PostEntity) => post.user)
   @JoinColumn({ name: 'id' })
-  posts: Post[];
+  posts: PostEntity[];
 
   @OneToMany('Follow', (follow: Follow) => follow.follower)
   @JoinColumn({ name: 'id' })

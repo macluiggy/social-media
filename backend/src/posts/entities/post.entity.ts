@@ -12,8 +12,10 @@ import { UserEntity } from '../../users/users.entity';
 import { Like } from '../likes/entities/like.entity';
 import { PostCommentEntity } from '../comments/entities/comment.entity';
 
-@Entity('posts')
-export class Post {
+@Entity({
+  name: 'posts',
+})
+export class PostEntity {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
