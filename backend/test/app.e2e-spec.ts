@@ -11,7 +11,7 @@ import {
 import { AiApiService } from '../src/ai-api/ai-api.service';
 import { FileStorageService } from '../src/file-storage/file-storage.service';
 import generateUser from '../src/users/generate.user';
-import { Users } from '../src/users/users.entity';
+import { UserEntity } from '../src/users/users.entity';
 import { HELLO_WORLD_MESSAGE_FROM_APP_SERVICE } from '../src/app.service';
 
 describe('AppController (e2e)', () => {
@@ -36,7 +36,7 @@ describe('AppController (e2e)', () => {
         username: USERNAME_FOR_TESTING,
         password: PASSWORD_FOR_TESTING,
         firstName: FULL_NAME_FOR_TESTING,
-      } as Users),
+      } as UserEntity),
     );
   });
 

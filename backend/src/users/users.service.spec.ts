@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UsersService } from './users.service';
 import { vi } from 'vitest';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Users } from './users.entity';
+import { UserEntity } from './users.entity';
 import { DataSource } from 'typeorm';
 import { MOCK_REQUEST } from '../common/tests/constants';
 import { AiApiService } from '../ai-api/ai-api.service';
@@ -22,7 +22,10 @@ describe('UsersService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         UsersService,
-        { provide: getRepositoryToken(Users), useValue: mockUsersRepository },
+        {
+          provide: getRepositoryToken(UserEntity),
+          useValue: mockUsersRepository,
+        },
         { provide: DataSource, useValue: {} },
         { provide: 'REQUEST', useValue: MOCK_REQUEST },
         AiApiService,

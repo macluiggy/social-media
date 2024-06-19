@@ -9,7 +9,7 @@ import {
   DeleteDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Users } from '../../../users/users.entity';
+import { UserEntity } from '../../../users/users.entity';
 import { Post } from '../../entities/post.entity';
 
 @Entity('likes')
@@ -44,12 +44,12 @@ export class Like {
   deletedAt: Date | null;
 
   // relations
-  @ManyToOne('Users', (user: Users) => user.likes, {
+  @ManyToOne('UserEntity', (user: UserEntity) => user.likes, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
   @JoinColumn({ name: 'user_id' })
-  user: Users;
+  user: UserEntity;
 
   @ManyToOne('Post', (post: Post) => post.likes, {
     onDelete: 'CASCADE',

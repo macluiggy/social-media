@@ -4,16 +4,16 @@ import { signInUser } from '../../auth/utils/singInUser';
 import { followsModuleMetadata } from './follows.module';
 import getApiEndpoint from '../../common/utils/getApiEndpoint';
 import request from 'supertest';
-import { Users } from '../users.entity';
+import { UserEntity } from '../users.entity';
 import { Repository } from 'typeorm';
 import generateUser from '../generate.user';
 
 describe('Follow e2e', () => {
   let app: INestApplication;
-  let user: Users;
+  let user: UserEntity;
   let accessToken: string;
-  let userRespository: Repository<Users>;
-  let randomUser: Users;
+  let userRespository: Repository<UserEntity>;
+  let randomUser: UserEntity;
 
   beforeAll(async () => {
     const testingModule = await setupTestingModule(followsModuleMetadata);
@@ -25,7 +25,7 @@ describe('Follow e2e', () => {
 
     user = data.user;
 
-    userRespository = module.get('UsersRepository');
+    userRespository = module.get('UserEntityRepository');
     randomUser = generateUser();
     await userRespository.save(randomUser);
   });
@@ -69,7 +69,9 @@ describe('Follow e2e', () => {
     const body = res.body;
 
     // find the user that was followed
-    const followedUser = body.data.find((u: Users) => +u.id === +randomUser.id);
+    const followedUser = body.data.find(
+      (u: UserEntity) => +u.id === +randomUser.id,
+    );
 
     expect(followedUser).toBeDefined();
     expect(followedUser.id).toBe(randomUser.id);
@@ -91,7 +93,7 @@ describe('Follow e2e', () => {
     const body = res.body;
 
     // find the user that was followed
-    const followerUser = body.data.find((u: Users) => +u.id === +user.id);
+    const followerUser = body.data.find((u: UserEntity) => +u.id === +user.id);
 
     expect(followerUser).toBeDefined();
     expect(followerUser.id).toBe(user.id);

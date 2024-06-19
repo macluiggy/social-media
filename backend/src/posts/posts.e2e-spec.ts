@@ -4,7 +4,7 @@ import { TypeOrmModule, getRepositoryToken } from '@nestjs/typeorm';
 import { typeOrmConfig } from '../db/config/typeorm.config';
 import getApiEndpoint from '../common/utils/getApiEndpoint';
 import { it } from 'vitest';
-import { Users } from '../users/users.entity';
+import { UserEntity } from '../users/users.entity';
 import { PostsModule } from './posts.module';
 import { UsersModule } from '../users/users.module';
 import { Post } from './entities/post.entity';
@@ -16,7 +16,7 @@ import { Repository } from 'typeorm';
 
 describe('Post Controller (e2e)', () => {
   let app: INestApplication;
-  let user: Users;
+  let user: UserEntity;
   let post: Post;
   let accessToken: string;
   let postsRepository: Repository<Post>;

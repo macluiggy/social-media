@@ -7,7 +7,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Users } from '../../users/users.entity';
+import { UserEntity } from '../../users/users.entity';
 
 @Entity({
   name: 'messages',
@@ -43,17 +43,17 @@ export class MessageEntity {
   updatedAt: Date;
 
   // Relations
-  @ManyToOne('Users', (user: Users) => user.sentMessages, {
+  @ManyToOne('UserEntity', (user: UserEntity) => user.sentMessages, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
   @JoinColumn({ name: 'sender_id' })
-  sender: Users;
+  sender: UserEntity;
 
-  @ManyToOne('Users', (user: Users) => user.receivedMessages, {
+  @ManyToOne('UserEntity', (user: UserEntity) => user.receivedMessages, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
   @JoinColumn({ name: 'receiver_id' })
-  receiver: Users;
+  receiver: UserEntity;
 }

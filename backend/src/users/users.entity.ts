@@ -22,7 +22,7 @@ import { MessageEntity } from '../messages/entities/message.entity';
 @Entity({
   name: 'users',
 })
-export class Users {
+export class UserEntity {
   @PrimaryGeneratedColumn('increment')
   id: number;
 

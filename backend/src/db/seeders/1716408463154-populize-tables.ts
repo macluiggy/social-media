@@ -1,7 +1,7 @@
 import { DataSource, Repository } from 'typeorm';
 import { Seeder, SeederFactory, SeederFactoryManager } from 'typeorm-extension';
 import { SeederEntity } from '../seeders.entity';
-import { Users } from '../../users/users.entity';
+import { UserEntity } from '../../users/users.entity';
 import { Post } from '../../posts/entities/post.entity';
 import { Follow } from '../../users/follows/entities/follow.entity';
 import { Like } from '../../posts/likes/entities/like.entity';
@@ -35,7 +35,7 @@ export class PopulizeTables1716408463154 implements Seeder {
     // }
 
     // repositories
-    const usersRepository = dataSource.getRepository(Users);
+    const usersRepository = dataSource.getRepository(UserEntity);
     const followsRepository = dataSource.getRepository(Follow);
     const likesRepository = dataSource.getRepository(Like);
     const postCommentRepository = dataSource.getRepository(PostComment);
@@ -49,7 +49,7 @@ export class PopulizeTables1716408463154 implements Seeder {
       .execute();
 
     // factories
-    const userFactory = factoryManager.get(Users);
+    const userFactory = factoryManager.get(UserEntity);
     const postsFactory = factoryManager.get(Post);
     const postCommentFactory = factoryManager.get(PostComment);
 
@@ -95,7 +95,7 @@ export class PopulizeTables1716408463154 implements Seeder {
   async seedDefaultUsers({
     userRepository,
   }: {
-    userRepository: Repository<Users>;
+    userRepository: Repository<UserEntity>;
   }) {
     const users = [
       {
@@ -136,7 +136,7 @@ export class PopulizeTables1716408463154 implements Seeder {
   async seedUsersTable({
     userFactory,
   }: {
-    userFactory: SeederFactory<Users, unknown>;
+    userFactory: SeederFactory<UserEntity, unknown>;
   }) {
     const usersSaved = await userFactory.saveMany(10);
     return usersSaved;
@@ -148,7 +148,7 @@ export class PopulizeTables1716408463154 implements Seeder {
     postsRepository,
   }: {
     postsFactory: SeederFactory<Post, unknown>;
-    users: Users[];
+    users: UserEntity[];
     postsRepository: Repository<Post>;
   }) {
     const posts = [];
@@ -168,7 +168,7 @@ export class PopulizeTables1716408463154 implements Seeder {
     users,
     followRepository,
   }: {
-    users: Users[];
+    users: UserEntity[];
     followRepository: Repository<Follow>;
   }) {
     const follows = [];
@@ -198,7 +198,7 @@ export class PopulizeTables1716408463154 implements Seeder {
     likeRepository,
   }: {
     posts: Post[];
-    users: Users[];
+    users: UserEntity[];
     likeRepository: Repository<Like>;
   }) {
     const likes = [];
@@ -227,7 +227,7 @@ export class PopulizeTables1716408463154 implements Seeder {
     postCommentFactory,
   }: {
     posts: Post[];
-    users: Users[];
+    users: UserEntity[];
     postCommentRepository: Repository<PostComment>;
     postCommentFactory: SeederFactory<PostComment, unknown>;
   }) {

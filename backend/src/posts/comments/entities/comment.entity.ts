@@ -9,7 +9,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Post } from '../../entities/post.entity';
-import { Users } from '../../../users/users.entity';
+import { UserEntity } from '../../../users/users.entity';
 
 @Entity()
 export class PostComment {
@@ -41,12 +41,12 @@ export class PostComment {
   updatedAt: Date;
 
   // Relations
-  @ManyToOne('Users', (user: Users) => user.comments, {
+  @ManyToOne('UserEntity', (user: UserEntity) => user.comments, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
   @JoinColumn({ name: 'user_id' })
-  user: Users;
+  user: UserEntity;
 
   @ManyToOne('Post', (post: Post) => post.comments, {
     onDelete: 'CASCADE',

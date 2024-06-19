@@ -3,7 +3,7 @@ import request from 'supertest';
 import setupTestingModule from '../../../test/setUpTestingModule';
 import { commentsModuleMetadata } from './comments.module';
 import { signInUser } from '../../auth/utils/singInUser';
-import { Users } from '../../users/users.entity';
+import { UserEntity } from '../../users/users.entity';
 import generatePost from '../generate.post';
 import { Post } from '../entities/post.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
@@ -14,7 +14,7 @@ import generateComment from './generate.comment';
 describe('Comment Controller (e2e)', () => {
   let app: INestApplication;
   let accessToken: string;
-  let user: Users;
+  let user: UserEntity;
   let post: Post;
   let postsRepository: Repository<Post>;
   const baseUrl = 'post-comments';
