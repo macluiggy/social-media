@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MessagesService } from '../services/messages/messages.service';
 import { Message } from '../common/types/messages.type';
+import { AuthService } from '../services/auth/auth.service';
 
 @Component({
   selector: 'app-messages',
@@ -13,7 +14,9 @@ import { Message } from '../common/types/messages.type';
   styleUrl: './messages.component.scss',
 })
 export class MessagesComponent implements OnInit {
-  senderId: number = 75;
+  loggedInUser = this.authService.getLoggedInUserFromStorage();
+  loggedInUserId = this.loggedInUser?.id;
+  senderId = this.loggedInUserId as number;
   receiverId: number = 76;
   messages: Message[] = [];
   newMessage: string = '';
@@ -22,7 +25,8 @@ export class MessagesComponent implements OnInit {
   constructor(
     private socketService: SocketService,
 
-    private messageService: MessagesService
+    private messageService: MessagesService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {

@@ -18,12 +18,27 @@ export class MessagesService {
   }
 
   async getMessages(senderId: number, receiverId: number) {
-    return await this.messageRepository.find({
-      where: [
-        { senderId, receiverId },
-        { senderId: receiverId, receiverId: senderId },
-      ],
-    });
+    // return await this.messageRepository.find({
+    //   where: [
+    //     { senderId, receiverId },
+    //     { senderId: receiverId, receiverId: senderId },
+    //   ],
+    // });
+    const queryBuilder = this.messageRepository
+      .createQueryBuilder('messages')
+      .where('sender_id = :senderId AND receiver_id = :receiverId', {
+        senderId,
+        receiverId,
+      })
+      .orWhere('sender_id = :receiverId AND receiver_id = :senderId', {
+        senderId,
+        receiverId,
+      })
+      .leftJoin('messages.sender', 'sender')
+      .addSelect(['sender.id', 'sender.username'])
+      .leftJoin('messages.receiver', 'receiver')
+      .addSelect(['receiver.id', 'receiver.username']);
+    return await queryBuilder.getMany();
   }
 
   create(createMessageDto: CreateMessageDto) {

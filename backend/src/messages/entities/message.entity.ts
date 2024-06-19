@@ -9,8 +9,9 @@ import {
 } from 'typeorm';
 import { UserEntity } from '../../users/users.entity';
 
+export const MESSAGE_TABLE_NAME = 'messages';
 @Entity({
-  name: 'messages',
+  name: MESSAGE_TABLE_NAME,
 })
 export class MessageEntity {
   @PrimaryGeneratedColumn()
