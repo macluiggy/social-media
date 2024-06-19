@@ -16,7 +16,7 @@ import { DEFAULT_LANG } from '../lang';
 import { Post } from '../posts/entities/post.entity';
 import { Like } from '../posts/likes/entities/like.entity';
 import { Follow } from './follows/entities/follow.entity';
-import { PostComment } from '../posts/comments/entities/comment.entity';
+import { PostCommentEntity } from '../posts/comments/entities/comment.entity';
 import { MessageEntity } from '../messages/entities/message.entity';
 
 @Entity({
@@ -136,9 +136,9 @@ export class UserEntity {
   @JoinColumn({ name: 'id' })
   followers: Follow[];
 
-  @OneToMany('PostComment', (comment: PostComment) => comment.user)
+  @OneToMany('PostCommentEntity', (comment: PostCommentEntity) => comment.user)
   @JoinColumn({ name: 'id' })
-  comments: PostComment[];
+  comments: PostCommentEntity[];
 
   @OneToMany('MessageEntity', (message: MessageEntity) => message.sender)
   @JoinColumn({ name: 'id' })

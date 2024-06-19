@@ -5,7 +5,7 @@ import { UserEntity } from '../../users/users.entity';
 import { Post } from '../../posts/entities/post.entity';
 import { Follow } from '../../users/follows/entities/follow.entity';
 import { Like } from '../../posts/likes/entities/like.entity';
-import { PostComment } from '../../posts/comments/entities/comment.entity';
+import { PostCommentEntity } from '../../posts/comments/entities/comment.entity';
 import { DEFAULT_LANG } from '../../lang';
 import {
   EMAIL_FOR_TESTING,
@@ -38,7 +38,7 @@ export class PopulizeTables1716408463154 implements Seeder {
     const usersRepository = dataSource.getRepository(UserEntity);
     const followsRepository = dataSource.getRepository(Follow);
     const likesRepository = dataSource.getRepository(Like);
-    const postCommentRepository = dataSource.getRepository(PostComment);
+    const postCommentRepository = dataSource.getRepository(PostCommentEntity);
     const postsRepository = dataSource.getRepository(Post);
 
     const userQueryBuilder = usersRepository.createQueryBuilder();
@@ -51,7 +51,7 @@ export class PopulizeTables1716408463154 implements Seeder {
     // factories
     const userFactory = factoryManager.get(UserEntity);
     const postsFactory = factoryManager.get(Post);
-    const postCommentFactory = factoryManager.get(PostComment);
+    const postCommentFactory = factoryManager.get(PostCommentEntity);
 
     // seed default users
     await this.seedDefaultUsers({ userRepository: usersRepository });
@@ -228,8 +228,8 @@ export class PopulizeTables1716408463154 implements Seeder {
   }: {
     posts: Post[];
     users: UserEntity[];
-    postCommentRepository: Repository<PostComment>;
-    postCommentFactory: SeederFactory<PostComment, unknown>;
+    postCommentRepository: Repository<PostCommentEntity>;
+    postCommentFactory: SeederFactory<PostCommentEntity, unknown>;
   }) {
     const comments = [];
 

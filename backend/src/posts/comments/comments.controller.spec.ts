@@ -1,6 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CommentsController } from './comments.controller';
 import { CommentsService } from './comments.service';
+import { PostCommentEntity } from './entities/comment.entity';
+import { getRepositoryToken } from '@nestjs/typeorm';
 
 describe('CommentsController', () => {
   let controller: CommentsController;
@@ -15,7 +17,7 @@ describe('CommentsController', () => {
           useValue: {},
         },
         {
-          provide: 'PostCommentRepository',
+          provide: getRepositoryToken(PostCommentEntity),
           useValue: {},
         },
       ],
