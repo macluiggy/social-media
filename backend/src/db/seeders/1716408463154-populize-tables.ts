@@ -6,6 +6,14 @@ import { Post } from '../../posts/entities/post.entity';
 import { Follow } from '../../users/follows/entities/follow.entity';
 import { Like } from '../../posts/likes/entities/like.entity';
 import { PostComment } from '../../posts/comments/entities/comment.entity';
+import { DEFAULT_LANG } from '../../lang';
+import {
+  EMAIL_FOR_TESTING,
+  FULL_NAME_FOR_TESTING,
+  PASSWORD_FOR_TESTING,
+  USERNAME_FOR_TESTING,
+} from '../../auth/utils/singInUser';
+import * as bcrypt from 'bcrypt';
 
 export class PopulizeTables1716408463154 implements Seeder {
   track = false;
@@ -45,6 +53,8 @@ export class PopulizeTables1716408463154 implements Seeder {
     const postsFactory = factoryManager.get(Post);
     const postCommentFactory = factoryManager.get(PostComment);
 
+    // seed default users
+    await this.seedDefaultUsers({ userRepository: usersRepository });
     const usersSaved = await this.seedUsersTable({ userFactory });
     const postsSaved = await this.seedPostsTable({
       postsFactory,
@@ -80,6 +90,47 @@ export class PopulizeTables1716408463154 implements Seeder {
     }
 
     console.log('PopulizeTables1716408463154 seeder executed');
+  }
+
+  async seedDefaultUsers({
+    userRepository,
+  }: {
+    userRepository: Repository<Users>;
+  }) {
+    const users = [
+      {
+        firstName: 'luiggy',
+        lastName: 'ferrin',
+        email: 'ferrinluiggy@gmail.com',
+        password: await bcrypt.hash('123456', 10),
+        phone: '123456789',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        username: 'macluiggy',
+        preferredLanguage: DEFAULT_LANG,
+      },
+      {
+        firstName: FULL_NAME_FOR_TESTING,
+        lastName: 'ferrin',
+        email: EMAIL_FOR_TESTING,
+        password: await bcrypt.hash(PASSWORD_FOR_TESTING, 10),
+        phone: '123456789',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        username: USERNAME_FOR_TESTING,
+        preferredLanguage: DEFAULT_LANG,
+      },
+    ];
+
+    for (const user of users) {
+      const existingUser = await userRepository.findOne({
+        where: [{ email: user.email }, { username: user.username }],
+      });
+
+      if (!existingUser) {
+        await userRepository.insert(user);
+      }
+    }
   }
 
   async seedUsersTable({

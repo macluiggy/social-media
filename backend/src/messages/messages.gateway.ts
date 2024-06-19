@@ -15,6 +15,8 @@ export class MessagesGateway {
   handleMessage(
     @MessageBody() message: { sender: string; content: string },
   ): void {
+    console.log('Message received:', message);
+
     this.server.emit('receiveMessage', message);
   }
 }

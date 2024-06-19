@@ -1,12 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { SocketService } from '../services/socket/socket.service';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-messages',
   standalone: true,
-  imports: [],
+  imports: [FormsModule, CommonModule],
   templateUrl: './messages.component.html',
-  styleUrl: './messages.component.scss'
+  styleUrl: './messages.component.scss',
 })
-export class MessagesComponent {
+export class MessagesComponent implements OnInit {
+  messages: { sender: string; content: string }[] = [];
+  newMessage: string = '';
+  username: string = 'User';
 
+  constructor(private socketService: SocketService) {}
+
+  ngOnInit(): void {
+    this.socketService.onMessage().subscribe((message) => {
+      this.messages.push(message);
+    });
+  }
+
+  sendMessage(): void {
+    const message = { sender: this.username, content: this.newMessage };
+    this.socketService.sendMessage(message);
+    this.newMessage = '';
+  }
 }
