@@ -1,3 +1,4 @@
+import { MessageEntity } from '../../messages/entities/message.entity';
 import { PostComment } from '../../posts/comments/entities/comment.entity';
 import { Post } from '../../posts/entities/post.entity';
 import { Like } from '../../posts/likes/entities/like.entity';
@@ -11,4 +12,12 @@ export const entitiesObject = {
 };
 
 export type Entities = Users | SeederEntity | Post;
-export default [Users, SeederEntity, Post, Follow, Like, PostComment];
+export default [
+  Users,
+  SeederEntity,
+  Post,
+  Follow,
+  Like,
+  PostComment,
+  MessageEntity,
+];

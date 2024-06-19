@@ -17,6 +17,7 @@ import { Post } from '../posts/entities/post.entity';
 import { Like } from '../posts/likes/entities/like.entity';
 import { Follow } from './follows/entities/follow.entity';
 import { PostComment } from '../posts/comments/entities/comment.entity';
+import { MessageEntity } from '../messages/entities/message.entity';
 
 @Entity({
   name: 'users',
@@ -138,4 +139,12 @@ export class Users {
   @OneToMany('PostComment', (comment: PostComment) => comment.user)
   @JoinColumn({ name: 'id' })
   comments: PostComment[];
+
+  @OneToMany('MessageEntity', (message: MessageEntity) => message.sender)
+  @JoinColumn({ name: 'id' })
+  sentMessages: MessageEntity[];
+
+  @OneToMany('MessageEntity', (message: MessageEntity) => message.receiver)
+  @JoinColumn({ name: 'id' })
+  receivedMessages: MessageEntity[];
 }
