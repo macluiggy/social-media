@@ -6,11 +6,14 @@ import { Message } from '../../common/types/messages.type';
 import { SocketService } from '../../services/socket/socket.service';
 import { MessagesService } from '../../services/messages/messages.service';
 import { AuthService } from '../../services/auth/auth.service';
+import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-messages',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, CardModule, InputTextModule, ButtonModule, ],
   templateUrl: './message.component.html',
   styleUrl: './message.component.scss',
 })
