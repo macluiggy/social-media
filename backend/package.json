@@ -35,8 +35,7 @@
     "db:drop": "ts-node ./node_modules/typeorm-extension/bin/cli.cjs db:drop",
     "seed:run": "ts-node ./node_modules/typeorm-extension/bin/cli.cjs seed:run seed -d src/db/seeders/index.ts",
     "seed:create": "ts-node ./node_modules/typeorm-extension/bin/cli.cjs seed:create --name src/db/seeders/$npm_config_name",
-    "seed": "ts-node ./node_modules/typeorm-extension/bin/cli.cjs seed:run -d src/db/seeders/index.ts",
-    "test-push": "npm run test:all && git add . && git commit -m 'test' && git push"
+    "seed": "ts-node ./node_modules/typeorm-extension/bin/cli.cjs seed:run -d src/db/seeders/index.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.577.0",
