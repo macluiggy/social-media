@@ -24,9 +24,9 @@
           </a>
         </p>
       </div>
-      @if ( currentUser.id !== loggedInUser?.id ) {
+      @if ( currentUser.id !== loggedInUser?.id && loggedInUser) {
       <div>
-        <button [routerLink]="['/messages/', userId]">Send Message</button>
+        <button pButton [routerLink]="['/messages/', userId]">Send Message</button>
       </div>
       }
     </div>

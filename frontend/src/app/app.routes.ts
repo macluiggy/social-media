@@ -43,6 +43,7 @@ export const routes: Routes = [
   {
     path: 'messages/:receiverId',
     component: MessageComponent,
+    canActivate: [authGuard],
   },
   { path: '**', component: NotFoundComponent }, // dont put any routes after this one, it will always redirect to the not found component
 ];
