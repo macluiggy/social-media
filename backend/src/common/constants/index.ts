@@ -18,6 +18,7 @@ const CORS_ORIGINS = [
   'https://social-media-8yq.pages.dev',
   'https://staging-social-media.pages.dev',
   process.env.FRONTEND_URL,
+  'https://srng5l6h-4200.use2.devtunnels.ms',
 ];
 
 function sealAndFreezeObj(...objs) {
