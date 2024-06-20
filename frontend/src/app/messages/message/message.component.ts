@@ -13,7 +13,13 @@ import { ButtonModule } from 'primeng/button';
 @Component({
   selector: 'app-messages',
   standalone: true,
-  imports: [FormsModule, CommonModule, CardModule, InputTextModule, ButtonModule, ],
+  imports: [
+    FormsModule,
+    CommonModule,
+    CardModule,
+    InputTextModule,
+    ButtonModule,
+  ],
   templateUrl: './message.component.html',
   styleUrl: './message.component.scss',
 })
