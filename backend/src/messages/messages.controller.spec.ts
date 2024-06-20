@@ -1,15 +1,13 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { MessagesController } from './messages.controller';
-import { MessagesService } from './messages.service';
+import { messagesModuleMetadata } from './messages.module';
+import setupTestingModule from '../../test/setUpTestingModule';
 
 describe('MessagesController', () => {
   let controller: MessagesController;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [MessagesController],
-      providers: [MessagesService],
-    }).compile();
+    const result = await setupTestingModule(messagesModuleMetadata);
+    const module = result.testingModule;
 
     controller = module.get<MessagesController>(MessagesController);
   });
