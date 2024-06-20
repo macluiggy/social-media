@@ -2,15 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { PostComment } from './entities/comment.entity';
+import { PostCommentEntity } from './entities/comment.entity';
 import { Repository } from 'typeorm';
 import StandardizedPaginateResult from '../../common/paginate/standarized.paginate.result';
 
 @Injectable()
 export class CommentsService {
   constructor(
-    @InjectRepository(PostComment)
-    private postCommentRepository: Repository<PostComment>,
+    @InjectRepository(PostCommentEntity)
+    private postCommentRepository: Repository<PostCommentEntity>,
   ) {}
 
   async getCommentsByPostId(

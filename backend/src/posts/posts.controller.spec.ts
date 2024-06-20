@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PostsController } from './posts.controller';
 import { PostsService } from './posts.service';
-import { Post } from './entities/post.entity';
+import { PostEntity } from './entities/post.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { vi } from 'vitest';
 import { CreatePostDto } from './dto/create-post.dto';
@@ -35,7 +35,7 @@ describe('PostsController', () => {
       providers: [
         PostsService,
         {
-          provide: getRepositoryToken(Post),
+          provide: getRepositoryToken(PostEntity),
           useValue: mockPostRepository,
         },
         {

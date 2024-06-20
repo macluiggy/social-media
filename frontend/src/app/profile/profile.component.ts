@@ -17,6 +17,7 @@ import { FollowersComponent } from './followers/followers.component';
 import { FollowingComponent } from './following/following.component';
 import { FollowsComponent } from './follows/follows.component';
 import { FollowsService } from '../services/follows/follows.service';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-profile',
@@ -33,6 +34,7 @@ import { FollowsService } from '../services/follows/follows.service';
     FollowersComponent,
     FollowingComponent,
     FollowsComponent,
+    ButtonModule,
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',

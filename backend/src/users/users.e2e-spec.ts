@@ -2,14 +2,14 @@ import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import getApiEndpoint from '../common/utils/getApiEndpoint';
 import { it } from 'vitest';
-import { Users } from '../users/users.entity';
+import { UserEntity } from '../users/users.entity';
 import { userModuleMetadata } from '../users/users.module';
 import { USERNAME_FOR_TESTING, signInUser } from '../auth/utils/singInUser';
 import setupTestingModule from '../../test/setUpTestingModule';
 
 describe('UsersController (e2e)', () => {
   let app: INestApplication;
-  let user: Users;
+  let user: UserEntity;
   let accessToken: string;
 
   beforeAll(async () => {

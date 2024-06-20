@@ -8,12 +8,14 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from 'typeorm';
-import { Users } from '../../users/users.entity';
+import { UserEntity } from '../../users/users.entity';
 import { Like } from '../likes/entities/like.entity';
-import { PostComment } from '../comments/entities/comment.entity';
+import { PostCommentEntity } from '../comments/entities/comment.entity';
 
-@Entity('posts')
-export class Post {
+@Entity({
+  name: 'posts',
+})
+export class PostEntity {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
@@ -38,18 +40,18 @@ export class Post {
   })
   updatedAt: Date;
 
-  @ManyToOne('Users', (user: Users) => user.posts, {
+  @ManyToOne('UserEntity', (user: UserEntity) => user.posts, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
   @JoinColumn({ name: 'user_id' })
-  user: Users;
+  user: UserEntity;
 
   @OneToMany('Like', (like: Like) => like.post)
   @JoinColumn({ name: 'id' })
   likes: Like[];
 
-  @OneToMany('PostComment', (comment: PostComment) => comment.post)
+  @OneToMany('PostCommentEntity', (comment: PostCommentEntity) => comment.post)
   @JoinColumn({ name: 'id' })
-  comments: PostComment[];
+  comments: PostCommentEntity[];
 }

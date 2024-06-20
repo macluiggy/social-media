@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { LikesController } from './likes.controller';
 import { LikesService } from './likes.service';
+import { DataSource } from 'typeorm';
 
 describe('LikesController', () => {
   let controller: LikesController;
@@ -8,7 +9,21 @@ describe('LikesController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [LikesController],
-      providers: [LikesService],
+      providers: [
+        LikesService,
+        {
+          provide: 'REQUEST',
+          useValue: {},
+        },
+        {
+          provide: 'LikeRepository',
+          useValue: {},
+        },
+        {
+          provide: DataSource,
+          useValue: {},
+        },
+      ],
     }).compile();
 
     controller = module.get<LikesController>(LikesController);

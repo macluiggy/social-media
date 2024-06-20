@@ -1,11 +1,19 @@
 import { DataSource, Repository } from 'typeorm';
 import { Seeder, SeederFactory, SeederFactoryManager } from 'typeorm-extension';
 import { SeederEntity } from '../seeders.entity';
-import { Users } from '../../users/users.entity';
-import { Post } from '../../posts/entities/post.entity';
-import { Follow } from '../../users/follows/entities/follow.entity';
+import { UserEntity } from '../../users/users.entity';
+import { PostEntity } from '../../posts/entities/post.entity';
+import { FollowEntity } from '../../users/follows/entities/follow.entity';
 import { Like } from '../../posts/likes/entities/like.entity';
-import { PostComment } from '../../posts/comments/entities/comment.entity';
+import { PostCommentEntity } from '../../posts/comments/entities/comment.entity';
+import { DEFAULT_LANG } from '../../lang';
+import {
+  EMAIL_FOR_TESTING,
+  FULL_NAME_FOR_TESTING,
+  PASSWORD_FOR_TESTING,
+  USERNAME_FOR_TESTING,
+} from '../../auth/utils/singInUser';
+import * as bcrypt from 'bcrypt';
 
 export class PopulizeTables1716408463154 implements Seeder {
   track = false;
@@ -27,11 +35,11 @@ export class PopulizeTables1716408463154 implements Seeder {
     // }
 
     // repositories
-    const usersRepository = dataSource.getRepository(Users);
-    const followsRepository = dataSource.getRepository(Follow);
+    const usersRepository = dataSource.getRepository(UserEntity);
+    const followsRepository = dataSource.getRepository(FollowEntity);
     const likesRepository = dataSource.getRepository(Like);
-    const postCommentRepository = dataSource.getRepository(PostComment);
-    const postsRepository = dataSource.getRepository(Post);
+    const postCommentRepository = dataSource.getRepository(PostCommentEntity);
+    const postsRepository = dataSource.getRepository(PostEntity);
 
     const userQueryBuilder = usersRepository.createQueryBuilder();
     // delete all users that have the email starting with 'dummy.'
@@ -41,10 +49,12 @@ export class PopulizeTables1716408463154 implements Seeder {
       .execute();
 
     // factories
-    const userFactory = factoryManager.get(Users);
-    const postsFactory = factoryManager.get(Post);
-    const postCommentFactory = factoryManager.get(PostComment);
+    const userFactory = factoryManager.get(UserEntity);
+    const postsFactory = factoryManager.get(PostEntity);
+    const postCommentFactory = factoryManager.get(PostCommentEntity);
 
+    // seed default users
+    await this.seedDefaultUsers({ userRepository: usersRepository });
     const usersSaved = await this.seedUsersTable({ userFactory });
     const postsSaved = await this.seedPostsTable({
       postsFactory,
@@ -82,10 +92,51 @@ export class PopulizeTables1716408463154 implements Seeder {
     console.log('PopulizeTables1716408463154 seeder executed');
   }
 
+  async seedDefaultUsers({
+    userRepository,
+  }: {
+    userRepository: Repository<UserEntity>;
+  }) {
+    const users = [
+      {
+        firstName: 'luiggy',
+        lastName: 'ferrin',
+        email: 'ferrinluiggy@gmail.com',
+        password: await bcrypt.hash('123456', 10),
+        phone: '123456789',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        username: 'macluiggy',
+        preferredLanguage: DEFAULT_LANG,
+      },
+      {
+        firstName: FULL_NAME_FOR_TESTING,
+        lastName: 'ferrin',
+        email: EMAIL_FOR_TESTING,
+        password: await bcrypt.hash(PASSWORD_FOR_TESTING, 10),
+        phone: '123456789',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        username: USERNAME_FOR_TESTING,
+        preferredLanguage: DEFAULT_LANG,
+      },
+    ];
+
+    for (const user of users) {
+      const existingUser = await userRepository.findOne({
+        where: [{ email: user.email }, { username: user.username }],
+      });
+
+      if (!existingUser) {
+        await userRepository.insert(user);
+      }
+    }
+  }
+
   async seedUsersTable({
     userFactory,
   }: {
-    userFactory: SeederFactory<Users, unknown>;
+    userFactory: SeederFactory<UserEntity, unknown>;
   }) {
     const usersSaved = await userFactory.saveMany(10);
     return usersSaved;
@@ -96,9 +147,9 @@ export class PopulizeTables1716408463154 implements Seeder {
     users,
     postsRepository,
   }: {
-    postsFactory: SeederFactory<Post, unknown>;
-    users: Users[];
-    postsRepository: Repository<Post>;
+    postsFactory: SeederFactory<PostEntity, unknown>;
+    users: UserEntity[];
+    postsRepository: Repository<PostEntity>;
   }) {
     const posts = [];
     for (const user of users) {
@@ -117,8 +168,8 @@ export class PopulizeTables1716408463154 implements Seeder {
     users,
     followRepository,
   }: {
-    users: Users[];
-    followRepository: Repository<Follow>;
+    users: UserEntity[];
+    followRepository: Repository<FollowEntity>;
   }) {
     const follows = [];
 
@@ -136,7 +187,7 @@ export class PopulizeTables1716408463154 implements Seeder {
     await followRepository
       .createQueryBuilder()
       .insert()
-      .into(Follow)
+      .into(FollowEntity)
       .values(follows)
       .execute();
   }
@@ -146,8 +197,8 @@ export class PopulizeTables1716408463154 implements Seeder {
     users,
     likeRepository,
   }: {
-    posts: Post[];
-    users: Users[];
+    posts: PostEntity[];
+    users: UserEntity[];
     likeRepository: Repository<Like>;
   }) {
     const likes = [];
@@ -175,10 +226,10 @@ export class PopulizeTables1716408463154 implements Seeder {
     postCommentRepository,
     postCommentFactory,
   }: {
-    posts: Post[];
-    users: Users[];
-    postCommentRepository: Repository<PostComment>;
-    postCommentFactory: SeederFactory<PostComment, unknown>;
+    posts: PostEntity[];
+    users: UserEntity[];
+    postCommentRepository: Repository<PostCommentEntity>;
+    postCommentFactory: SeederFactory<PostCommentEntity, unknown>;
   }) {
     const comments = [];
 

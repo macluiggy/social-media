@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PostsService } from './posts.service';
 import { vi } from 'vitest';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Post } from './entities/post.entity';
+import { PostEntity } from './entities/post.entity';
 
 const mockPostRepository = {
   find: vi.fn(),
@@ -27,7 +27,7 @@ describe('PostsService', () => {
           useValue: mockRequest,
         },
         {
-          provide: getRepositoryToken(Post),
+          provide: getRepositoryToken(PostEntity),
           useValue: mockPostRepository,
         },
       ],

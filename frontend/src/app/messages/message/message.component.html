@@ -1,0 +1,28 @@
+<div class="chat-container">
+  <div
+    *ngFor="let message of messages"
+    class="message"
+    [ngClass]="{
+      right: message.senderId === loggedInUserId,
+      left: message.senderId !== loggedInUserId
+    }"
+  >
+    <p-card class="message-card">
+      <p-header class="message-header">
+        <!-- <strong>{{ message.senderId === loggedInUserId ? 'You' : 'User ' + message.senderId }}:</strong> -->
+      </p-header>
+      <p>{{ message.content }}</p>
+    </p-card>
+  </div>
+  
+  <div class="input-container">
+    <input
+      pInputText
+      type="text"
+      [(ngModel)]="newMessage"
+      placeholder="Type your message here"
+      class="message-input"
+    />
+    <button pButton type="button" label="Send" (click)="sendMessage()" class="send-button"></button>
+  </div>
+</div>

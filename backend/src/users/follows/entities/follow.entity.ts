@@ -7,12 +7,14 @@ import {
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
-import { Users } from '../../users.entity';
+import { UserEntity } from '../../users.entity';
 
 // typeorm entity
-@Entity('follows')
+@Entity({
+  name: 'follows',
+})
 @Unique('UQ_FOLLOWER_FOLLOWING', ['followerId', 'followingId'])
-export class Follow {
+export class FollowEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -28,15 +30,15 @@ export class Follow {
   @CreateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
-  @ManyToOne(() => Users, (user: Users) => user.followers, {
+  @ManyToOne(() => UserEntity, (user: UserEntity) => user.followers, {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'follower_id' })
-  follower: Users;
+  follower: UserEntity;
 
-  @ManyToOne(() => Users, (user: Users) => user.following, {
+  @ManyToOne(() => UserEntity, (user: UserEntity) => user.following, {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'following_id' })
-  following: Users;
+  following: UserEntity;
 }

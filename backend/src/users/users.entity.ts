@@ -13,15 +13,16 @@ import {
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { DEFAULT_LANG } from '../lang';
-import { Post } from '../posts/entities/post.entity';
+import { PostEntity } from '../posts/entities/post.entity';
 import { Like } from '../posts/likes/entities/like.entity';
-import { Follow } from './follows/entities/follow.entity';
-import { PostComment } from '../posts/comments/entities/comment.entity';
+import { FollowEntity } from './follows/entities/follow.entity';
+import { PostCommentEntity } from '../posts/comments/entities/comment.entity';
+import { MessageEntity } from '../messages/entities/message.entity';
 
 @Entity({
   name: 'users',
 })
-export class Users {
+export class UserEntity {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
@@ -123,19 +124,27 @@ export class Users {
   @JoinColumn({ name: 'id' })
   likes: Like[];
 
-  @OneToMany('Post', (post: Post) => post.user)
+  @OneToMany('PostEntity', (post: PostEntity) => post.user)
   @JoinColumn({ name: 'id' })
-  posts: Post[];
+  posts: PostEntity[];
 
-  @OneToMany('Follow', (follow: Follow) => follow.follower)
+  @OneToMany('FollowEntity', (follow: FollowEntity) => follow.follower)
   @JoinColumn({ name: 'id' })
-  following: Follow[];
+  following: FollowEntity[];
 
-  @OneToMany('Follow', (follow: Follow) => follow.following)
+  @OneToMany('FollowEntity', (follow: FollowEntity) => follow.following)
   @JoinColumn({ name: 'id' })
-  followers: Follow[];
+  followers: FollowEntity[];
 
-  @OneToMany('PostComment', (comment: PostComment) => comment.user)
+  @OneToMany('PostCommentEntity', (comment: PostCommentEntity) => comment.user)
   @JoinColumn({ name: 'id' })
-  comments: PostComment[];
+  comments: PostCommentEntity[];
+
+  @OneToMany('MessageEntity', (message: MessageEntity) => message.sender)
+  @JoinColumn({ name: 'id' })
+  sentMessages: MessageEntity[];
+
+  @OneToMany('MessageEntity', (message: MessageEntity) => message.receiver)
+  @JoinColumn({ name: 'id' })
+  receivedMessages: MessageEntity[];
 }

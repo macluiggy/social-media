@@ -1,7 +1,7 @@
 import { Inject, Injectable, Scope } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
-import { Post } from './entities/post.entity';
+import { PostEntity } from './entities/post.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import getMessages from '../lang/getMessages';
@@ -16,8 +16,8 @@ import StandardizedPaginateResult from '../common/paginate/standarized.paginate.
 export class PostsService {
   private messages: Lang;
   constructor(
-    @InjectRepository(Post)
-    private readonly postsRepository: Repository<Post>,
+    @InjectRepository(PostEntity)
+    private readonly postsRepository: Repository<PostEntity>,
     @Inject('REQUEST') private readonly request: Request,
   ) {
     const lang = this.request['preferredLanguage'];

@@ -3,9 +3,9 @@ import request from 'supertest';
 import setupTestingModule from '../../../test/setUpTestingModule';
 import { commentsModuleMetadata } from './comments.module';
 import { signInUser } from '../../auth/utils/singInUser';
-import { Users } from '../../users/users.entity';
+import { UserEntity } from '../../users/users.entity';
 import generatePost from '../generate.post';
-import { Post } from '../entities/post.entity';
+import { PostEntity } from '../entities/post.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import getApiEndpoint from '../../common/utils/getApiEndpoint';
@@ -14,9 +14,9 @@ import generateComment from './generate.comment';
 describe('Comment Controller (e2e)', () => {
   let app: INestApplication;
   let accessToken: string;
-  let user: Users;
-  let post: Post;
-  let postsRepository: Repository<Post>;
+  let user: UserEntity;
+  let post: PostEntity;
+  let postsRepository: Repository<PostEntity>;
   const baseUrl = 'post-comments';
 
   beforeAll(async () => {
@@ -31,7 +31,7 @@ describe('Comment Controller (e2e)', () => {
 
     post = generatePost({ userId: user.id });
 
-    postsRepository = module.get(getRepositoryToken(Post));
+    postsRepository = module.get(getRepositoryToken(PostEntity));
 
     // create a post
     post = await postsRepository.save(post);

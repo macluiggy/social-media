@@ -3,7 +3,7 @@ import request from 'supertest';
 // import { AppModule } from './../src/app.module';
 import getApiEndpoint from '../common/utils/getApiEndpoint';
 import { it } from 'vitest';
-import { Users } from '../users/users.entity';
+import { UserEntity } from '../users/users.entity';
 import { Repository } from 'typeorm';
 import setupTestingModule from '../../test/setUpTestingModule';
 import generateUser from '../users/generate.user';
@@ -11,7 +11,7 @@ import { authModuleMetadata } from './auth.module';
 
 describe('AuthController (e2e)', () => {
   let app: INestApplication;
-  let userRepository: Repository<Users>;
+  let userRepository: Repository<UserEntity>;
 
   // const user = { email: 'test@test.com', password: 'password', };
   const user = generateUser();
@@ -21,7 +21,7 @@ describe('AuthController (e2e)', () => {
 
     app = testingModule.app;
     const moduleFixture = testingModule.testingModule;
-    userRepository = moduleFixture.get('UsersRepository');
+    userRepository = moduleFixture.get('UserEntityRepository');
     await app.init();
   });
 

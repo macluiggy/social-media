@@ -1,8 +1,10 @@
 import { faker } from '@faker-js/faker';
-import { Users } from './users.entity';
+import { UserEntity } from './users.entity';
 
-export default function generateUser(userData: Users = {} as Users): Users {
-  const user = new Users();
+export default function generateUser(
+  userData: UserEntity = {} as UserEntity,
+): UserEntity {
+  const user = new UserEntity();
   user.firstName = userData.firstName || faker.person.firstName();
   user.lastName = faker.person.lastName();
   user.username =

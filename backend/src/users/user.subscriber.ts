@@ -6,7 +6,7 @@ import {
   RemoveEvent,
 } from 'typeorm';
 import { validateOrReject } from 'class-validator';
-import { Users } from './users.entity';
+import { UserEntity } from './users.entity';
 import { FileStorageService } from '../file-storage/file-storage.service';
 import {
   EMAIL_FOR_TESTING,
@@ -14,21 +14,21 @@ import {
 } from '../auth/utils/singInUser';
 
 @EventSubscriber()
-export class UserSubscriber implements EntitySubscriberInterface<Users> {
+export class UserSubscriber implements EntitySubscriberInterface<UserEntity> {
   private fileStorageService: FileStorageService = new FileStorageService();
   constructor() {}
   listenTo() {
-    return Users;
+    return UserEntity;
   }
 
-  async beforeInsert(event: InsertEvent<Users>) {
+  async beforeInsert(event: InsertEvent<UserEntity>) {
     await validateOrReject(event.entity);
   }
 
-  async beforeUpdate(event: UpdateEvent<Users>) {
+  async beforeUpdate(event: UpdateEvent<UserEntity>) {
     await validateOrReject(event.entity);
   }
-  async afterLoad(entity: Users): Promise<any> {
+  async afterLoad(entity: UserEntity): Promise<any> {
     if (entity.profileImageKey) {
       const profileImageUrl = await this.fileStorageService.getSignedUrl(
         entity.profileImageKey,
@@ -36,7 +36,7 @@ export class UserSubscriber implements EntitySubscriberInterface<Users> {
       entity.profileImageUrl = profileImageUrl;
     }
   }
-  async beforeRemove(event: RemoveEvent<Users>): Promise<any> {
+  async beforeRemove(event: RemoveEvent<UserEntity>): Promise<any> {
     if (
       event.entity?.email === EMAIL_FOR_TESTING ||
       event.entity?.username === USERNAME_FOR_TESTING

@@ -13,6 +13,7 @@ import { PostsModule } from './posts/posts.module';
 import { AiApiModule } from './ai-api/ai-api.module';
 import { FileStorageModule } from './file-storage/file-storage.module';
 import { FileStorageService } from './file-storage/file-storage.service';
+import { MessagesModule } from './messages/messages.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { FileStorageService } from './file-storage/file-storage.service';
     PostsModule,
     AiApiModule,
     FileStorageModule,
+    MessagesModule,
   ],
   controllers: [AppController],
   providers: [AppService, FileStorageService],

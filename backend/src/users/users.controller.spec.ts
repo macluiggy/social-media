@@ -30,7 +30,7 @@ describe('UsersController', () => {
           useValue: MOCK_REQUEST,
         },
         {
-          provide: 'UsersRepository',
+          provide: 'UserEntityRepository',
           useValue: mockUsersRepository,
         },
         {

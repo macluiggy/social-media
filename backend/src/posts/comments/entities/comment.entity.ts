@@ -8,11 +8,13 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Post } from '../../entities/post.entity';
-import { Users } from '../../../users/users.entity';
+import { PostEntity } from '../../entities/post.entity';
+import { UserEntity } from '../../../users/users.entity';
 
-@Entity()
-export class PostComment {
+@Entity({
+  name: 'post_comment',
+})
+export class PostCommentEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -41,28 +43,28 @@ export class PostComment {
   updatedAt: Date;
 
   // Relations
-  @ManyToOne('Users', (user: Users) => user.comments, {
+  @ManyToOne('UserEntity', (user: UserEntity) => user.comments, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
   @JoinColumn({ name: 'user_id' })
-  user: Users;
+  user: UserEntity;
 
-  @ManyToOne('Post', (post: Post) => post.comments, {
+  @ManyToOne('PostEntity', (post: PostEntity) => post.comments, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
   @JoinColumn({ name: 'post_id' })
-  post: Post;
+  post: PostEntity;
 
-  @ManyToOne(() => PostComment, (comment) => comment.childComments, {
+  @ManyToOne(() => PostCommentEntity, (comment) => comment.childComments, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
   @JoinColumn({ name: 'parent_comment_id' })
-  parentComment: PostComment;
+  parentComment: PostCommentEntity;
 
-  @OneToMany(() => PostComment, (comment) => comment.parentComment)
+  @OneToMany(() => PostCommentEntity, (comment) => comment.parentComment)
   @JoinColumn({ name: 'parent_comment_id' })
-  childComments: PostComment[];
+  childComments: PostCommentEntity[];
 }

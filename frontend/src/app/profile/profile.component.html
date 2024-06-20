@@ -24,6 +24,11 @@
           </a>
         </p>
       </div>
+      @if ( currentUser.id !== loggedInUser?.id && loggedInUser) {
+      <div>
+        <button pButton [routerLink]="['/messages/', userId]">Send Message</button>
+      </div>
+      }
     </div>
   </p-header>
   <div class="container">
