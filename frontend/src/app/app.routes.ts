@@ -12,6 +12,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { PostComponent } from './posts/post/post.component';
 import { SuccessComponent } from './login/success/success.component';
 import { MessagesComponent } from './messages/messages.component';
+import { MessageComponent } from './messages/message/message.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -41,7 +42,7 @@ export const routes: Routes = [
   },
   {
     path: 'messages/:receiverId',
-    component: MessagesComponent,
+    component: MessageComponent,
   },
   { path: '**', component: NotFoundComponent }, // dont put any routes after this one, it will always redirect to the not found component
 ];
